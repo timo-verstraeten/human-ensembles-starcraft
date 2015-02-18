@@ -2,6 +2,7 @@
 #ifndef INC_FUNCTION_APPROXIMATOR_H
 #define INC_FUNCTION_APPROXIMATOR_H
 
+#include "Action.h"
 #include "State.h"
 #include "StateResolution.h"
 
@@ -13,12 +14,12 @@ public:
 
 	virtual void setState(const State &state);
 
-	virtual double computeQ(int action) = 0;
+	virtual double computeQ(Action action) = 0;
 	virtual void updateWeights(double delta, double alpha) = 0;
 
-	virtual void clearTraces(int action) = 0;
+	virtual void clearTraces(Action action) = 0;
 	virtual void decayTraces(double decayRate) = 0;
-	virtual void updateTraces(int action) = 0;
+	virtual void updateTraces(Action action) = 0;
 
 protected:
 	StateResolution m_stateResolution;
