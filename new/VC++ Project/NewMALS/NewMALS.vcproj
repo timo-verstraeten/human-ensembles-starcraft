@@ -182,6 +182,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\FunctionApproximator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\FunctionApproximator.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\SeminarAIModule.cpp"
 			>
 		</File>
@@ -207,6 +215,14 @@
 		</File>
 		<File
 			RelativePath="..\..\State.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\StateResolution.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\StateResolution.h"
 			>
 		</File>
 		<File

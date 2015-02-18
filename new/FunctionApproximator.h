@@ -2,12 +2,13 @@
 #ifndef INC_FUNCTION_APPROXIMATOR_H
 #define INC_FUNCTION_APPROXIMATOR_H
 
-#include "SMDPAgent.h"
+#include "State.h"
+#include "StateResolution.h"
 
 class FunctionApproximator
 {
 public:
-	FunctionApproximator(const std::vector<double> &minValues, const std::vector<double> &ranges, const std::vector<double> &resolutions);
+	FunctionApproximator(const StateResolution &stateResolution);
 	virtual ~FunctionApproximator() {}
 
 	virtual void setState(const State &state);
@@ -15,15 +16,13 @@ public:
 	virtual double computeQ(int action) = 0;
 	virtual void updateWeights(double delta, double alpha) = 0;
 
-	virtual void clearTraces(int action ) = 0;
+	virtual void clearTraces(int action) = 0;
 	virtual void decayTraces(double decayRate) = 0;
 	virtual void updateTraces(int action) = 0;
 
 protected:
-	std::vector<double> m_state;
-	std::vector<double> m_minValues;
-	std::vector<double> m_ranges;
-	std::vector<double> m_resolutions;
+	StateResolution m_stateResolution;
+	State m_state;
 };
 
 #endif // INC_FUNCTION_APPROXIMATOR_H

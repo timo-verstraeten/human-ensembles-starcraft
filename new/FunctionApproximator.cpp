@@ -1,24 +1,11 @@
 #include "FunctionApproximator.h"
 
-FunctionApproximator::FunctionApproximator( int numF, int numA, 
-					    double r[],
-					    double m[],
-					    double res[] )
+FunctionApproximator::FunctionApproximator(const StateResolution &stateResolution)
+	: m_stateResolution(stateResolution)
 {
-  numFeatures = numF;
-  numActions  = numA;
-
-  for ( int i = 0; i < numFeatures; i++ ) {
-    ranges     [ i ] = r  [ i ];
-    minValues  [ i ] = m  [ i ];
-    resolutions[ i ] = res[ i ];
-  }
 }
 
-
-void FunctionApproximator::setState( double s[] )
+void FunctionApproximator::setState(const State &state)
 {
-  for ( int i = 0; i < numFeatures; i++ ) {
-    state[ i ] = s[ i ];
-  }
+	m_state = state;
 }

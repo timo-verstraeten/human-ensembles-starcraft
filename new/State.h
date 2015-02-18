@@ -13,18 +13,6 @@ public:
 	int hitPointDifference; // difference in hit points between me and enemy (-50 - 50)
 	bool enemyActive;       // enemy is moving/attacking? (0 or 1)
 	double enemyAngle;      // angle of enemy relative to me (pi - pi)
-
-	std::vector<double> toVector() const
-	{
-		std::vector<double> vector;
-		vector.push_back(x);
-		vector.push_back(y);
-		vector.push_back(enemyDistance);
-		vector.push_back(hitPointDifference);
-		vector.push_back(enemyActive);
-		vector.push_back(enemyAngle);
-		return vector;
-	}
 };
 
 #endif // INC_STATE_H
