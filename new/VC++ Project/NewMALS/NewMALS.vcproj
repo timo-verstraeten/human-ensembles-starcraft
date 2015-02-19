@@ -198,6 +198,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\SarsaAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\SarsaAgent.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\SeminarAIModule.cpp"
 			>
 		</File>
@@ -219,6 +227,10 @@
 		</File>
 		<File
 			RelativePath="..\..\SeminarTrial.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\SMDPAgent.h"
 			>
 		</File>
 		<File
