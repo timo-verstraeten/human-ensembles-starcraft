@@ -41,6 +41,8 @@ SeminarTrial::SeminarTrial(unsigned int number, Parameters parameters)
 SeminarTrial::~SeminarTrial()
 {
 	writeOutput();
+	delete m_agent;
+	delete m_functionApproximator;
 }
 
 Action SeminarTrial::step(const State &state, std::ostream &output)
@@ -49,7 +51,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	Action action;
 	if (m_step > CUTOFF_EPISODE_LIMIT) {
 		output << "Cutoff episode: Trying to die" << std::endl;
-		action = STOP;
+		action = MOVE_TOWARDS_ENEMY;
 	}
 	else if (m_step == 0) {
 		action = m_agent->startEpisode(state, output);
