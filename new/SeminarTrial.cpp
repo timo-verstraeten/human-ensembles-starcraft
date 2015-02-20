@@ -34,15 +34,14 @@ const unsigned int SeminarTrial::TILINGS_PER_GROUP = 1;
 SeminarTrial::SeminarTrial(unsigned int number, Parameters parameters)
 	: Trial(number), m_parameters(parameters), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
-	m_functionApproximator = new CMAC(StateResolution(RESOLUTIONS), TILINGS_PER_GROUP);
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, m_functionApproximator);
+	FunctionApproximator *functionApproximator = new CMAC(StateResolution(RESOLUTIONS), TILINGS_PER_GROUP);
+	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator);
 }
 
 SeminarTrial::~SeminarTrial()
 {
 	writeOutput();
 	delete m_agent;
-	delete m_functionApproximator;
 }
 
 Action SeminarTrial::step(const State &state, std::ostream &output)

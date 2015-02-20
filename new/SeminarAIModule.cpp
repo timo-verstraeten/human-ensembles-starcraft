@@ -57,14 +57,16 @@ void SeminarAIModule::onFrame()
 
 		std::stringstream output;
 		
-		Action nextAction = m_trial->step(getState(), output);
-		executeAction(nextAction);
+		if (getOwnUnit() && getEnemyUnit()) {
+			Action nextAction = m_trial->step(getState(), output);
+			executeAction(nextAction);
 
-		std::string outputString = output.str();
-		if (outputString.length() > 0) {
-			Broodwar->printf("%s", outputString.c_str());
-			if (m_log_file.is_open()) {
-				m_log_file << outputString << std::endl;
+			std::string outputString = output.str();
+			if (outputString.length() > 0) {
+				Broodwar->printf("%s", outputString.c_str());
+				if (m_log_file.is_open()) {
+					m_log_file << outputString << std::endl;
+				}
 			}
 		}
 	}
@@ -100,17 +102,19 @@ void SeminarAIModule::onSendText(std::string text)
 
 Unit *SeminarAIModule::getOwnUnit()
 {
-	assert(Broodwar->self()->getUnits().size() == 1 && "Something's wrong. There should be only one own unit!");
+	if (Broodwar->self()->getUnits().size() < 1)
+		return 0;
+
 	Unit *unit = *Broodwar->self()->getUnits().begin();
-	assert(unit && "Own unit is a nullptr!");
 	return unit;
 }
 
 Unit *SeminarAIModule::getEnemyUnit()
 {
-	assert(Broodwar->enemy()->getUnits().size() == 1 && "Something's wrong. There should be only one enemy unit!");
+	if (Broodwar->enemy()->getUnits().size() < 1)
+		return 0;
+
 	Unit *unit = *Broodwar->enemy()->getUnits().begin();
-	assert(unit && "Enemy unit is a nullptr!");
 	return unit;
 }
 
@@ -121,15 +125,15 @@ State SeminarAIModule::getState()
 	Unit *ownUnit = getOwnUnit();
 	Unit *enemyUnit = getEnemyUnit();
 
-	Position ownPosition = ownUnit->getPosition();
-	Position enemyPosition = enemyUnit->getPosition();
+	Position ownPosition = ownUnit ? ownUnit->getPosition() : Position();
+	Position enemyPosition = enemyUnit ? enemyUnit->getPosition() : Position();
 
 	state.x = ownPosition.x();
 	state.y = ownPosition.y();
-	state.enemyDistance = ownUnit->getDistance(enemyUnit);
-	state.hitPointDifference = ownUnit->getHitPoints() - enemyUnit->getHitPoints();
-	state.enemyActive = enemyUnit->isAttacking() || enemyUnit->isMoving() || enemyUnit->isAttackFrame() || enemyUnit->isStartingAttack();
-	state.enemyAngle = atan2(static_cast<double>(ownPosition.y() - enemyPosition.y()), static_cast<double>(ownPosition.x() - enemyPosition.y())); // TODO WTF!?
+	state.enemyDistance = (ownUnit && enemyUnit) ? ownUnit->getDistance(enemyUnit) : 0;
+	state.hitPointDifference = (ownUnit ? ownUnit->getHitPoints() : 0) - (enemyUnit ? enemyUnit->getHitPoints() : 0);
+	state.enemyActive = enemyUnit && (enemyUnit->isAttacking() || enemyUnit->isMoving() || enemyUnit->isAttackFrame() || enemyUnit->isStartingAttack());
+	state.enemyAngle = (ownUnit && enemyUnit) ? atan2(static_cast<double>(ownPosition.y() - enemyPosition.y()), static_cast<double>(ownPosition.x() - enemyPosition.y())) : 0; // TODO WTF!?
 
 	return state;
 }

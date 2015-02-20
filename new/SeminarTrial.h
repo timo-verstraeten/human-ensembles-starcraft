@@ -49,7 +49,6 @@ private:
 
 	const Parameters m_parameters;
 
-	FunctionApproximator *m_functionApproximator;
 	SMDPAgent *m_agent;
 
 	unsigned int m_episode;
