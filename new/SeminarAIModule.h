@@ -7,7 +7,9 @@
 
 #include <BWAPI.h>
 
+#include <fstream>
 #include <ostream>
+#include <string>
 #include <windows.h>
 
 class Experiment;
@@ -32,8 +34,11 @@ private:
 	State getState();
 	void executeAction(Action action);
 
+	static std::string LOG_NAME;
+
 	Experiment *m_experiment;
 	Trial *m_trial;
+	std::ofstream m_log_file;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H

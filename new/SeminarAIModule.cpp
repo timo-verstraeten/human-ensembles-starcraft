@@ -11,11 +11,14 @@
 
 using namespace BWAPI;
 
-int numKilled, numDied; // TODO move
+std::string SeminarAIModule::LOG_NAME = ""; // "log.txt";
 
 SeminarAIModule::SeminarAIModule()
 	: m_experiment(0), m_trial(0)
 {
+	if (LOG_NAME != "") {
+		m_log_file.open(LOG_NAME.c_str());
+	}
 }
 
 SeminarAIModule::~SeminarAIModule()
@@ -60,6 +63,9 @@ void SeminarAIModule::onFrame()
 		std::string outputString = output.str();
 		if (outputString.length() > 0) {
 			Broodwar->printf("%s", outputString.c_str());
+			if (m_log_file.is_open()) {
+				m_log_file << outputString << std::endl;
+			}
 		}
 	}
 }

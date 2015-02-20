@@ -4,6 +4,9 @@
 
 #include "Trial.h"
 
+class SMDPAgent;
+class FunctionApproximator;
+
 class SeminarTrial : public Trial
 {
 public:
@@ -11,7 +14,7 @@ public:
 	{
 		double alpha;
 		double lambda;
-		int episodes;
+		unsigned int episodes;
 	};
 
 	SeminarTrial(unsigned int number, Parameters parameters);
@@ -31,11 +34,30 @@ private:
 
 	static const double STEP_REWARD;
 
+	static const double GAMMA;
+	static const double EPSILON;
+
+	static const unsigned int CUTOFF_EPISODE_LIMIT;
+
+	static const double DISTANCE_RESOLUTION;
+	static const double HEALTH_RESOLUTION;
+	static const double ANGLE_RESOLUTION;
+	static const std::vector<double> RESOLUTIONS;
+	static const unsigned int TILINGS_PER_GROUP;
+
+	static std::vector<double> makeResolutionsVector();
+
 	const Parameters m_parameters;
+
+	FunctionApproximator *m_functionApproximator;
+	SMDPAgent *m_agent;
 
 	unsigned int m_episode;
 	double m_episodeReward;
 	unsigned int m_step;
+
+	unsigned int m_killed;
+	unsigned int m_died;
 
 	std::vector<EpisodeOutput> m_output;
 };
