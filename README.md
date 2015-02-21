@@ -1,9 +1,9 @@
-## Example config file:
+## Config file
 
-Should be saved as `config.ini` in `F:\Starcraft`.
+- Should be saved as `config.ini` in `F:\Starcraft`.
+- Should create folder `C:\Trials` (used as a fallback)
 
-
-Using following configuration, the log and all trials output will be saved under `G:\Project\Test`.
+Using following configuration, the log and all trials output will be saved under `G:\Project\Test`. Note that this folder **has to exist**.
 
 ```ini
 [TRIAL]
