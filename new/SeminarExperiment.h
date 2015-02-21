@@ -3,6 +3,7 @@
 #define INC_MALS_EXPERIMENT_H
 
 #include "Experiment.h"
+#include "Config.h"
 
 #include "SeminarTrial.h"
 
@@ -12,12 +13,12 @@
 class SeminarExperiment : public Experiment
 {
 public:
-	SeminarExperiment(std::istream &description);
+	SeminarExperiment(Config &config);
 
 	virtual Trial *nextTrial();
 
 private:
-	void readDescription(std::istream &description);
+	void loadParameters(Config &config);
 
 	std::vector<SeminarTrial::Parameters> m_trials;
 	unsigned int m_nextTrial;

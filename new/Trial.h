@@ -6,6 +6,7 @@
 #include "State.h"
 
 #include <ostream>
+#include <string>
 
 class Trial
 {
@@ -17,6 +18,8 @@ public:
 
 	virtual Action step(const State &state, std::ostream &output) = 0;
 	virtual bool nextEpisode(const State &state, std::ostream &output) = 0;
+
+    virtual void writeOutput(const std::string &outputPath) = 0;
 
 private:
 	const unsigned int m_number;

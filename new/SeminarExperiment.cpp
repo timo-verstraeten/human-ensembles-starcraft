@@ -2,10 +2,10 @@
 
 #include <sstream>
 
-SeminarExperiment::SeminarExperiment(std::istream &description)
+SeminarExperiment::SeminarExperiment(Config &config)
 	: m_nextTrial(0)
 {
-	readDescription(description);
+	loadParameters(config);
 }
 
 Trial *SeminarExperiment::nextTrial()
@@ -20,28 +20,15 @@ Trial *SeminarExperiment::nextTrial()
 	}
 }
 
-void SeminarExperiment::readDescription(std::istream &description)
+void SeminarExperiment::loadParameters(Config &config)
 {
-	std::string line;
-	while (std::getline(description, line)) {
-		std::stringstream lineStream(line);
+	int numTrials = config.getNumTrials();
+	for (int i=0; i < numTrials; i++) {
 		SeminarTrial::Parameters parameters;
-		char c;
 
-		if (!(lineStream >> parameters.alpha))
-			continue;
-
-		if (!(lineStream >> c) || c != ',')
-			continue;
-
-		if (!(lineStream >> parameters.lambda))
-			continue;
-
-		if (!(lineStream >> c) || c != ',')
-			continue;
-
-		if (!(lineStream >> parameters.episodes))
-			continue;
+		parameters.alpha = config.getAlpha();
+		parameters.lambda = config.getLambda();
+		parameters.episodes = config.getNumEpisodes();
 
 		m_trials.push_back(parameters);
 	}

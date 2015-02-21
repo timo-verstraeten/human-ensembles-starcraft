@@ -23,14 +23,14 @@ public:
 	virtual Action step(const State &state, std::ostream &output);
 	virtual bool nextEpisode(const State &state, std::ostream &output);
 
+	virtual void writeOutput(const std::string &outputPath);
+
 private:
 	struct EpisodeOutput
 	{
 		double reward;
 		unsigned int steps;
 	};
-
-	void writeOutput();
 
 	static const double STEP_REWARD;
 

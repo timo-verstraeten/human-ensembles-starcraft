@@ -40,7 +40,8 @@ SeminarTrial::SeminarTrial(unsigned int number, Parameters parameters)
 
 SeminarTrial::~SeminarTrial()
 {
-	writeOutput();
+	// WriteOutput is now manually called, as it needs the path to be passed
+	// writeOutput();
 	delete m_agent;
 }
 
@@ -64,7 +65,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	output << "MAL SEMINAR 2014-2015" << std::endl;
 	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
-	
+
 	++m_step;
 
 	return action;
@@ -83,7 +84,7 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 	m_episodeReward += state.hitPointDifference;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
-	
+
 	EpisodeOutput episodeOutput;
 	episodeOutput.reward = m_episodeReward;
 	episodeOutput.steps = m_step;
@@ -94,10 +95,10 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 	return ++m_episode < m_parameters.episodes;
 }
 
-void SeminarTrial::writeOutput()
+void SeminarTrial::writeOutput(const std::string &outputPath)
 {
 	std::stringstream ss;
-	ss << "trial" << number() << "_out.txt";
+	ss << outputPath << "\\trial" << number() << "_out.txt";
 
 	std::ofstream file(ss.str().c_str());
 	for (unsigned int i = 0; i < m_output.size(); ++i) {

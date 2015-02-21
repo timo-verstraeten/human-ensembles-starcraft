@@ -4,6 +4,7 @@
 
 #include "Action.h"
 #include "State.h"
+#include "Config.h"
 
 #include <BWAPI.h>
 
@@ -24,7 +25,7 @@ public:
 	virtual void onStart();
 	virtual void onFrame();
 	virtual void onUnitDestroy(BWAPI::Unit* unit);
-	
+
 	virtual void onSendText(std::string text);
 
 private:
@@ -34,11 +35,13 @@ private:
 	State getState();
 	void executeAction(Action action);
 
-	static std::string LOG_NAME;
-
 	Experiment *m_experiment;
 	Trial *m_trial;
 	std::ofstream m_log_file;
+
+	std::string m_outputPath;
+
+	Config *m_config;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H

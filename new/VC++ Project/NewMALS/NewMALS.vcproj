@@ -259,6 +259,14 @@
 			RelativePath="..\..\Trial.h"
 			>
 		</File>
+		<File
+			RelativePath="..\..\Config.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\Config.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
