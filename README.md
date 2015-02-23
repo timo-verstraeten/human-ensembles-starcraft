@@ -10,6 +10,8 @@ Using following configuration, the log and all trials output will be saved under
 alpha = 0.40
 lambda = 0.90
 numEpisodes = 200
+resolutionScale = 1.0
+numTilings = 1
 shapingWeight = 1.0
 
 [EXPERIMENT]

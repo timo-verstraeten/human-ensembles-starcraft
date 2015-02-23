@@ -2,31 +2,30 @@
 #ifndef INC_CONFIG_H
 #define INC_CONFIG_H
 
-#include <string>
-#include <Windows.h>
-#include <tchar.h>
+#include "inih/INIReader.h"
 
+#include <string>
 
 class Config
 {
 public:
-    Config();
-    virtual ~Config() {};
+	Config(const std::string &fileName);
 
-    virtual double getAlpha();
-    virtual double getLambda();
-    virtual unsigned int getNumEpisodes();
-    virtual double getShapingWeight();
+	double getAlpha();
+	double getLambda();
+	unsigned int getNumEpisodes();
+	double getResolutionScale();
+	unsigned int getNumTilings();
+	double getShapingWeight();
 
-    virtual std::string getExperimentName();
-    virtual unsigned int getNumTrials();
+	std::string getExperimentName();
+	unsigned int getNumTrials();
 
-    virtual std::string getOutputPath();
-    virtual bool getEnableLogging();
+	std::string getOutputPath();
+	bool getEnableLogging();
 
 private:
-    LPCTSTR m_filename;
-
+	INIReader m_reader;
 };
 
 #endif // INC_CONFIG_H

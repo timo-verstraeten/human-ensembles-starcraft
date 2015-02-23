@@ -1,78 +1,56 @@
 #include "Config.h"
 
-Config::Config()
+Config::Config(const std::string &fileName)
+	: m_reader(fileName)
 {
-    m_filename =  _T(".\\config.ini");
 }
-
 
 double Config::getAlpha()
 {
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("TRIAL"), _T("alpha"), _T("0.4"), buffer, 260, m_filename);
-
-    return _tstof(buffer);
+	return m_reader.GetReal("TRIAL", "alpha", 0.4);
 }
 
 double Config::getLambda()
 {
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("TRIAL"), _T("lambda"), _T("0.9"), buffer, 260, m_filename);
-
-    return _tstof(buffer);
+	return m_reader.GetReal("TRIAL", "lambda", 0.9);
 }
 
 unsigned int Config::getNumEpisodes()
 {
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("TRIAL"), _T("numEpisodes"), _T("10"), buffer, 260, m_filename);
+	return static_cast<unsigned int>(m_reader.GetInteger("TRIAL", "numEpisodes", 10));
+}
 
-    return _ttoi(buffer);
+double Config::getResolutionScale()
+{
+	return m_reader.GetReal("TRIAL", "resolutionScale", 1);
+}
+
+unsigned int Config::getNumTilings()
+{
+	return static_cast<unsigned int>(m_reader.GetInteger("TRIAL", "numTilings", 1));
 }
 
 double Config::getShapingWeight()
 {
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("TRIAL"), _T("shapingWeight"), _T("1.0"), buffer, 260, m_filename);
-
-    return _tstof(buffer);
+	return m_reader.GetReal("TRIAL", "shapingWeight", 25);
 }
 
 std::string Config::getExperimentName()
 {
-
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("EXPERIMENT"), _T("name"), _T("Trials"), buffer, 260, m_filename);
-
-    std::wstring arr_w(buffer);
-    std::string arr_s(arr_w.begin(), arr_w.end());
-    return arr_s;
+	return m_reader.Get("EXPERIMENT", "name", "Trials");
 }
 
 unsigned int Config::getNumTrials()
 {
-    TCHAR buffer[260];
-    GetPrivateProfileString(_T("EXPERIMENT"), _T("numTrials"), _T("1"), buffer, 260, m_filename);
-
-    return _ttoi(buffer);
+	return static_cast<unsigned int>(m_reader.GetInteger("EXPERIMENT", "numTrials", 1));
 }
 
 std::string Config::getOutputPath()
 {
-    TCHAR buffer[260];
-
-    GetPrivateProfileString(_T("GENERAL"), _T("outputPath"), _T("C:\\"), buffer, 260, m_filename);
-
-    std::wstring arr_w(buffer);
-    std::string arr_s(arr_w.begin(), arr_w.end());
-    return arr_s;
+	return m_reader.Get("GENERAL", "outputPath", "C:/");
 }
 
 bool Config::getEnableLogging()
 {
-    TCHAR buffer[260];
-
-    GetPrivateProfileString(_T("GENERAL"), _T("enableLogging"), _T("0"), buffer, 260, m_filename);
-
-    return (_ttoi(buffer) == 1);
+	return m_reader.GetBoolean("GENERAL", "enableLogging", false);
 }

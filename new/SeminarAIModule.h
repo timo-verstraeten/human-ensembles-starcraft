@@ -3,15 +3,14 @@
 #define INC_SEMINAR_AI_MODULE_H
 
 #include "Action.h"
-#include "State.h"
 #include "Config.h"
+#include "State.h"
 
 #include <BWAPI.h>
 
 #include <fstream>
 #include <ostream>
 #include <string>
-#include <windows.h>
 
 class Experiment;
 class Trial;
@@ -35,13 +34,13 @@ private:
 	State getState();
 	void executeAction(Action action);
 
-	Experiment *m_experiment;
-	Trial *m_trial;
+	Config m_config;
 	std::ofstream m_log_file;
 
-	std::string m_outputPath;
+	Experiment *m_experiment;
+	Trial *m_trial;
 
-	Config *m_config;
+	static const std::string CONFIG_FILE_NAME;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H

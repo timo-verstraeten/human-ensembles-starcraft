@@ -11,16 +11,14 @@
 
 using namespace BWAPI;
 
+const std::string SeminarAIModule::CONFIG_FILE_NAME = "config.ini";
 
 SeminarAIModule::SeminarAIModule()
-	: m_experiment(0), m_trial(0)
+	: m_config(CONFIG_FILE_NAME), m_experiment(0), m_trial(0)
 {
-	m_config = new Config();
-
-	m_outputPath = m_config->getOutputPath() + "\\" + m_config->getExperimentName();
-
-	if (m_config->getEnableLogging()) {
-		m_log_file.open((m_outputPath + "\\log.txt").c_str());
+	if (m_config.getEnableLogging()) {
+		std::string logFileName = m_config.getOutputPath() + "/" + m_config.getExperimentName() + "/log.txt";
+		m_log_file.open(logFileName.c_str());
 	}
 }
 
@@ -41,7 +39,7 @@ void SeminarAIModule::onStart()
 	Broodwar->enableFlag(Flag::CompleteMapInformation); // Uncomment to enable complete map information
 	Broodwar->sendText("black sheep wall"); // cheat code to disable fog of war
 
-	m_experiment = new SeminarExperiment(*m_config);
+	m_experiment = new SeminarExperiment(m_config);
 }
 
 void SeminarAIModule::onFrame()
@@ -81,7 +79,6 @@ void SeminarAIModule::onUnitDestroy(Unit *unit)
 
 		bool finishedTrial = !m_trial->nextEpisode(getState(), output);
 		if (finishedTrial) {
-			m_trial->writeOutput(m_outputPath);
 			delete m_trial;
 			m_trial = 0;
 		}
