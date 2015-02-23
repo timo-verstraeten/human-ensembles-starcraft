@@ -32,6 +32,7 @@ void SeminarAIModule::onStart()
 	//Broodwar->setLocalSpeed(-1); // TODO
 	Broodwar->setLocalSpeed(0);
 	//Broodwar->setGUI(false);
+  	Broodwar->setScreenPosition(250,300); 	 // Center the screen so we actually see the enemy
 
 	Broodwar->printf("The map is %s, a %d player map", Broodwar->mapName().c_str(), Broodwar->getStartLocations().size());
 	Broodwar->enableFlag(Flag::UserInput); // Enable some cheat flags
@@ -56,7 +57,7 @@ void SeminarAIModule::onFrame()
 		}
 
 		std::stringstream output;
-		
+
 		if (getOwnUnit() && getEnemyUnit()) {
 			Action nextAction = m_trial->step(getState(), output);
 			executeAction(nextAction);
