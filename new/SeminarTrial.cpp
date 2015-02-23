@@ -1,6 +1,7 @@
 #include "SeminarTrial.h"
 
 #include "CMAC.h"
+#include "Potentials.h"
 #include "SarsaAgent.h"
 
 #include <fstream>
@@ -35,7 +36,7 @@ SeminarTrial::SeminarTrial(unsigned int number, Parameters parameters)
 	: Trial(number), m_parameters(parameters), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
 	FunctionApproximator *functionApproximator = new CMAC(StateResolution(RESOLUTIONS), TILINGS_PER_GROUP);
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator);
+	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential(25));
 }
 
 SeminarTrial::~SeminarTrial()

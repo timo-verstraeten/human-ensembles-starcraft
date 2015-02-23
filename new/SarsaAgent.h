@@ -5,11 +5,12 @@
 #include "SMDPAgent.h"
 
 class FunctionApproximator;
+class Potential;
 
 class SarsaAgent : public SMDPAgent
 {
 public:
-	SarsaAgent(double alpha, double lambda, double gamma, double epsilon, FunctionApproximator *functionApproximator);
+	SarsaAgent(double alpha, double lambda, double gamma, double epsilon, FunctionApproximator *functionApproximator, Potential *potential);
 	virtual ~SarsaAgent();
 
 	virtual Action startEpisode(const State &state, std::ostream &output);
@@ -25,8 +26,10 @@ private:
 	const double m_gamma;
 	const double m_epsilon;
 	FunctionApproximator *m_functionAppoximator;
+	Potential *m_potential;
 
 	double m_lastQ;
+	double m_lastPotential;
 };
 
 #endif // INC_SARSA_AGENT_H

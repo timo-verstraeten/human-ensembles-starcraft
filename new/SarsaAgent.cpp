@@ -1,6 +1,7 @@
 #include "SarsaAgent.h"
 
 #include "FunctionApproximator.h"
+#include "Potential.h"
 
 #include <cassert>
 
@@ -19,8 +20,8 @@ int random_int(int maxRange)
 
 }
 
-SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, double epsilon, FunctionApproximator *functionApproximator)
-	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_epsilon(epsilon), m_functionAppoximator(functionApproximator)
+SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, double epsilon, FunctionApproximator *functionApproximator, Potential *potential)
+	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_epsilon(epsilon), m_functionAppoximator(functionApproximator), m_potential(potential)
 {
 	assert(m_functionAppoximator && "FunctionApproximator is a null pointer!");
 	assert(m_gamma == 1.0 && "Gamma is assumed to be equal to 1.0!");
@@ -30,12 +31,13 @@ SarsaAgent::~SarsaAgent()
 {
 	delete m_functionAppoximator;
 	m_functionAppoximator = 0;
+
+	delete m_potential;
+	m_potential = 0;
 }
 
 Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 {
-	m_lastQ = 0;
-
 	m_functionAppoximator->decayTraces(0);
 
 	m_functionAppoximator->setState(state);
@@ -43,6 +45,11 @@ Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 	Action action = selectAction(output);
 	m_lastQ = m_functionAppoximator->computeQ(action);
 	m_functionAppoximator->updateTraces(action);
+
+	m_lastPotential = 0;
+	if (m_potential) {
+		m_lastPotential = m_potential->get(state, action);
+	}
 
 	return action;
 }
@@ -53,10 +60,15 @@ Action SarsaAgent::step(double reward, const State &state, std::ostream &output)
 
 	Action action = selectAction(output);
 	double q = m_functionAppoximator->computeQ(action);
+	double potential = 0;
+	if (m_potential) {
+		potential = m_potential->get(state, action);
+	}
 
-	m_functionAppoximator->updateWeights(reward + m_gamma * q - m_lastQ, m_alpha);
+	m_functionAppoximator->updateWeights(reward + m_gamma * q - m_lastQ + m_gamma * potential - m_lastPotential, m_alpha);
 
 	m_lastQ = m_functionAppoximator->computeQ(action); // need to redo because weights changed
+	m_lastPotential = potential;
 	
 	m_functionAppoximator->decayTraces(m_gamma * m_lambda);
 	for (unsigned int i = 0; i < NUMBER_OF_ACTIONS; ++i) { // clear other than F[a]

@@ -200,6 +200,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\Potential.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\Potentials.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\SarsaAgent.cpp"
 			>
 		</File>
