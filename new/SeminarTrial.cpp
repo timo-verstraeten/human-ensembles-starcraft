@@ -20,7 +20,7 @@ std::vector<double> SeminarTrial::makeResolutionsVector()
 
 const double SeminarTrial::STEP_REWARD = -0.3;
 
-const double SeminarTrial::GAMMA = 0.1;
+const double SeminarTrial::GAMMA = 1.0;
 const double SeminarTrial::EPSILON = 0.1;
 
 const unsigned int SeminarTrial::CUTOFF_EPISODE_LIMIT = 1000;
@@ -46,7 +46,6 @@ SeminarTrial::~SeminarTrial()
 
 Action SeminarTrial::step(const State &state, std::ostream &output)
 {
-
 	Action action;
 	if (m_step > CUTOFF_EPISODE_LIMIT) {
 		output << "Cutoff episode: Trying to die" << std::endl;
