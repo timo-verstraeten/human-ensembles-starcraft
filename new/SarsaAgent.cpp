@@ -38,6 +38,10 @@ SarsaAgent::~SarsaAgent()
 
 Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 {
+	if (m_gamma != 1.0) {
+		output << "ERROR: Gamma is not equal to 1!" << std::endl;
+	}
+
 	m_functionAppoximator->decayTraces(0);
 
 	m_functionAppoximator->setState(state);
@@ -91,11 +95,11 @@ Action SarsaAgent::selectAction(std::ostream &output)
 {
 	output << " In Select";
 	if (random() < m_epsilon)	{
-		output << " RandA";
+		output << " RandA" << std::endl;
 		return static_cast<Action>(random_int(NUMBER_OF_ACTIONS));
 	}
 	else {
-		output << " ArgMax";
+		output << " ArgMax" << std::endl;
 		return argmaxQ(output);
 	}
 }
