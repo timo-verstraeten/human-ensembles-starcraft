@@ -9,7 +9,7 @@
 class ZeroPotential : public Potential
 {
 public:
-	ZeroPotential(double scaling) : Potential(scaling) {}
+	ZeroPotential() : Potential(0) {}
 	virtual ~ZeroPotential() {}
 
 protected:

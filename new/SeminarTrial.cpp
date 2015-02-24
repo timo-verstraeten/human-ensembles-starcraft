@@ -23,7 +23,7 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 	: Trial(number), m_alpha(config.getAlpha()), m_lambda(config.getLambda()), m_episodes(config.getNumEpisodes()), m_outputPath(config.getOutputPath() + "/" + config.getExperimentName()), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
 	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-	m_agent = new SarsaAgent(m_alpha, m_lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential(25)));
+	m_agent = new SarsaAgent(m_alpha, m_lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential());
 }
 
 SeminarTrial::~SeminarTrial()
