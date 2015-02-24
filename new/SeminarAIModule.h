@@ -3,6 +3,7 @@
 #define INC_SEMINAR_AI_MODULE_H
 
 #include "Action.h"
+#include "Config.h"
 #include "State.h"
 
 #include <BWAPI.h>
@@ -10,7 +11,6 @@
 #include <fstream>
 #include <ostream>
 #include <string>
-#include <windows.h>
 
 class Experiment;
 class Trial;
@@ -24,7 +24,7 @@ public:
 	virtual void onStart();
 	virtual void onFrame();
 	virtual void onUnitDestroy(BWAPI::Unit* unit);
-	
+
 	virtual void onSendText(std::string text);
 
 private:
@@ -34,11 +34,13 @@ private:
 	State getState();
 	void executeAction(Action action);
 
-	static std::string LOG_NAME;
+	Config m_config;
+	std::ofstream m_log_file;
 
 	Experiment *m_experiment;
 	Trial *m_trial;
-	std::ofstream m_log_file;
+
+	static const std::string CONFIG_FILE_NAME;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H

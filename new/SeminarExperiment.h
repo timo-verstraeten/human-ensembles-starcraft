@@ -9,17 +9,19 @@
 #include <istream>
 #include <vector>
 
+class Config;
+
 class SeminarExperiment : public Experiment
 {
 public:
-	SeminarExperiment(std::istream &description);
+	SeminarExperiment(Config &config);
 
 	virtual Trial *nextTrial();
 
 private:
-	void readDescription(std::istream &description);
+	Config &m_config;
+	const unsigned int m_trials;
 
-	std::vector<SeminarTrial::Parameters> m_trials;
 	unsigned int m_nextTrial;
 };
 

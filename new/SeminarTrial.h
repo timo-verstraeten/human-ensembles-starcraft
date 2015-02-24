@@ -4,20 +4,13 @@
 
 #include "Trial.h"
 
+class Config;
 class SMDPAgent;
-class FunctionApproximator;
 
 class SeminarTrial : public Trial
 {
 public:
-	struct Parameters
-	{
-		double alpha;
-		double lambda;
-		unsigned int episodes;
-	};
-
-	SeminarTrial(unsigned int number, Parameters parameters);
+	SeminarTrial(unsigned int number, Config &config);
 	virtual ~SeminarTrial();
 
 	virtual Action step(const State &state, std::ostream &output);
@@ -30,7 +23,25 @@ private:
 		unsigned int steps;
 	};
 
+	std::vector<double> makeResolutionsVector(double scale);
 	void writeOutput();
+
+	const double m_alpha;
+	const double m_lambda;
+	const unsigned int m_episodes;
+	const std::string m_outputPath;
+
+	SMDPAgent *m_agent;
+
+	unsigned int m_episode;
+	double m_episodeReward;
+	unsigned int m_step;
+
+	unsigned int m_killed;
+	unsigned int m_died;
+
+	std::vector<EpisodeOutput> m_output;
+
 
 	static const double STEP_REWARD;
 
@@ -44,21 +55,6 @@ private:
 	static const double ANGLE_RESOLUTION;
 	static const std::vector<double> RESOLUTIONS;
 	static const unsigned int TILINGS_PER_GROUP;
-
-	static std::vector<double> makeResolutionsVector();
-
-	const Parameters m_parameters;
-
-	SMDPAgent *m_agent;
-
-	unsigned int m_episode;
-	double m_episodeReward;
-	unsigned int m_step;
-
-	unsigned int m_killed;
-	unsigned int m_died;
-
-	std::vector<EpisodeOutput> m_output;
 };
 
 #endif // INC_MALS_TRIAL_H

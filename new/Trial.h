@@ -6,6 +6,7 @@
 #include "State.h"
 
 #include <ostream>
+#include <string>
 
 class Trial
 {

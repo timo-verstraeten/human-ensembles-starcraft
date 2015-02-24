@@ -171,6 +171,26 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="inih"
+			>
+			<File
+				RelativePath="..\..\inih\ini.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\inih\ini.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\inih\INIReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\inih\INIReader.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\Action.h"
 			>
@@ -181,6 +201,14 @@
 		</File>
 		<File
 			RelativePath="..\..\CMAC.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\Config.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\Config.h"
 			>
 		</File>
 		<File

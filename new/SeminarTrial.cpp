@@ -1,23 +1,12 @@
 #include "SeminarTrial.h"
 
 #include "CMAC.h"
+#include "Config.h"
 #include "Potentials.h"
 #include "SarsaAgent.h"
 
 #include <fstream>
 #include <sstream>
-
-std::vector<double> SeminarTrial::makeResolutionsVector()
-{
-	std::vector<double> resolutions;
-	resolutions.push_back(SeminarTrial::DISTANCE_RESOLUTION);
-	resolutions.push_back(SeminarTrial::DISTANCE_RESOLUTION);
-	resolutions.push_back(SeminarTrial::DISTANCE_RESOLUTION);
-	resolutions.push_back(SeminarTrial::HEALTH_RESOLUTION);
-	resolutions.push_back(0.9);
-	resolutions.push_back(SeminarTrial::ANGLE_RESOLUTION);
-	return resolutions;
-}
 
 const double SeminarTrial::STEP_REWARD = -0.3;
 
@@ -29,14 +18,12 @@ const unsigned int SeminarTrial::CUTOFF_EPISODE_LIMIT = 1000;
 const double SeminarTrial::DISTANCE_RESOLUTION = 30;
 const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
-const std::vector<double> SeminarTrial::RESOLUTIONS = makeResolutionsVector();
-const unsigned int SeminarTrial::TILINGS_PER_GROUP = 1;
 
-SeminarTrial::SeminarTrial(unsigned int number, Parameters parameters)
-	: Trial(number), m_parameters(parameters), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+SeminarTrial::SeminarTrial(unsigned int number, Config &config)
+	: Trial(number), m_alpha(config.getAlpha()), m_lambda(config.getLambda()), m_episodes(config.getNumEpisodes()), m_outputPath(config.getOutputPath() + "/" + config.getExperimentName()), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
-	FunctionApproximator *functionApproximator = new CMAC(StateResolution(RESOLUTIONS), TILINGS_PER_GROUP);
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential(25));
+	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
+	m_agent = new SarsaAgent(m_alpha, m_lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential(25)));
 }
 
 SeminarTrial::~SeminarTrial()
@@ -62,9 +49,9 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 
 	output << "Action: " << action << std::endl;
 	output << "MAL SEMINAR 2014-2015" << std::endl;
-	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
+	output << "Alpha: " << m_alpha << ", lambda: " << m_lambda << std::endl;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
-	
+
 	++m_step;
 
 	return action;
@@ -83,7 +70,7 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 	m_episodeReward += state.hitPointDifference;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
-	
+
 	EpisodeOutput episodeOutput;
 	episodeOutput.reward = m_episodeReward;
 	episodeOutput.steps = m_step;
@@ -91,13 +78,25 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 	m_step = 0;
 	m_episodeReward = 0;
-	return ++m_episode < m_parameters.episodes;
+	return ++m_episode < m_episodes;
+}
+
+std::vector<double> SeminarTrial::makeResolutionsVector(double scale)
+{
+	std::vector<double> resolutions;
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::HEALTH_RESOLUTION);
+	resolutions.push_back(0.9);
+	resolutions.push_back(scale * SeminarTrial::ANGLE_RESOLUTION);
+	return resolutions;
 }
 
 void SeminarTrial::writeOutput()
 {
 	std::stringstream ss;
-	ss << "trial" << number() << "_out.txt";
+	ss << m_outputPath << "/trial" << number() << "_out.txt";
 
 	std::ofstream file(ss.str().c_str());
 	for (unsigned int i = 0; i < m_output.size(); ++i) {

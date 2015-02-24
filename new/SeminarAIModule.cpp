@@ -13,13 +13,14 @@
 
 using namespace BWAPI;
 
-std::string SeminarAIModule::LOG_NAME = ""; // "log.txt";
+const std::string SeminarAIModule::CONFIG_FILE_NAME = "config.ini";
 
 SeminarAIModule::SeminarAIModule()
-	: m_experiment(0), m_trial(0)
+	: m_config(CONFIG_FILE_NAME), m_experiment(0), m_trial(0)
 {
-	if (LOG_NAME != "") {
-		m_log_file.open(LOG_NAME.c_str());
+	if (m_config.getEnableLogging()) {
+		std::string logFileName = m_config.getOutputPath() + "/" + m_config.getExperimentName() + "/log.txt";
+		m_log_file.open(logFileName.c_str());
 	}
 }
 
@@ -41,8 +42,7 @@ void SeminarAIModule::onStart()
 	Broodwar->enableFlag(Flag::CompleteMapInformation); // Uncomment to enable complete map information
 	Broodwar->sendText("black sheep wall"); // cheat code to disable fog of war
 
-	std::ifstream configFile("trials.cfg");
-	m_experiment = new SeminarExperiment(configFile);
+	m_experiment = new SeminarExperiment(m_config);
 }
 
 void SeminarAIModule::onFrame()
