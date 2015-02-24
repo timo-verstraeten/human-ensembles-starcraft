@@ -6,6 +6,9 @@
 #include "State.h"
 #include "StateResolution.h"
 
+#include <istream>
+#include <ostream>
+
 class FunctionApproximator
 {
 public:
@@ -20,6 +23,9 @@ public:
 	virtual void clearTraces(Action action) = 0;
 	virtual void decayTraces(double decayRate) = 0;
 	virtual void updateTraces(Action action) = 0;
+
+	virtual void saveWeights(std::ostream &output) = 0;
+	virtual void loadWeights(std::istream &input) = 0;
 
 protected:
 	StateResolution m_stateResolution;

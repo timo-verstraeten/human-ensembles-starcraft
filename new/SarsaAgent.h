@@ -17,6 +17,9 @@ public:
 	virtual Action step(double reward, const State &state, std::ostream &output);
 	virtual void endEpisode(double reward);
 
+	virtual void saveWeights(std::ostream &output);
+	virtual void loadWeights(std::istream &input);
+
 private:
 	Action selectAction(std::ostream &output);
 	Action argmaxQ(std::ostream &output);
@@ -25,7 +28,7 @@ private:
 	const double m_lambda;
 	const double m_gamma;
 	const double m_epsilon;
-	FunctionApproximator *m_functionAppoximator;
+	FunctionApproximator *m_functionApproximator;
 	Potential *m_potential;
 
 	double m_lastQ;

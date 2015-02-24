@@ -23,6 +23,12 @@ CMAC::CMAC(const StateResolution &stateResolution, unsigned int tilingsPerGroup)
 	GetTiles(tmp, 1, 1, tmpf, 0); // A dummy call to set the hashing table
 }
 
+CMAC::~CMAC()
+{
+	delete m_collisionTable;
+	m_collisionTable = 0;
+}
+
 void CMAC::setState(const State &state)
 {
 	FunctionApproximator::setState(state);
@@ -79,6 +85,30 @@ void CMAC::updateTraces(Action action)
 	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
 		setTrace(m_tiles[action][i], 1.0); 
 	} 
+}
+
+void CMAC::saveWeights(std::ostream &output)
+{
+	output.write(reinterpret_cast<char*>(&m_weights), RL_MEMORY_SIZE * sizeof(double));
+
+	output.write(reinterpret_cast<char*>(&m_collisionTable->m), sizeof(long));
+	output.write(reinterpret_cast<char*>(m_collisionTable->data), m_collisionTable->m * sizeof(long));
+	output.write(reinterpret_cast<char*>(&m_collisionTable->safe), sizeof(int));
+	output.write(reinterpret_cast<char*>(&m_collisionTable->calls), sizeof(long));
+	output.write(reinterpret_cast<char*>(&m_collisionTable->clearhits), sizeof(long));
+	output.write(reinterpret_cast<char*>(&m_collisionTable->collisions), sizeof(long));
+}
+
+void CMAC::loadWeights(std::istream &input)
+{
+	input.read(reinterpret_cast<char*>(&m_weights), RL_MEMORY_SIZE * sizeof(double));
+
+	input.read(reinterpret_cast<char*>(&m_collisionTable->m), sizeof(long));
+	input.read(reinterpret_cast<char*>(m_collisionTable->data), m_collisionTable->m * sizeof(long));
+	input.read(reinterpret_cast<char*>(&m_collisionTable->safe), sizeof(int));
+	input.read(reinterpret_cast<char*>(&m_collisionTable->calls), sizeof(long));
+	input.read(reinterpret_cast<char*>(&m_collisionTable->clearhits), sizeof(long));
+	input.read(reinterpret_cast<char*>(&m_collisionTable->collisions), sizeof(long));
 }
 
 void CMAC::loadTiles()

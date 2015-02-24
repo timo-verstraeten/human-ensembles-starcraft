@@ -17,12 +17,14 @@ public:
 	double getResolutionScale();
 	unsigned int getNumTilings();
 	double getShapingWeight();
+	std::string getLoadInitialWeights();
 
 	std::string getExperimentName();
 	unsigned int getNumTrials();
 
 	std::string getOutputPath();
 	bool getEnableLogging();
+	bool getSaveWeights();
 
 private:
 	INIReader m_reader;

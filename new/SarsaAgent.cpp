@@ -21,16 +21,16 @@ int random_int(int maxRange)
 }
 
 SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, double epsilon, FunctionApproximator *functionApproximator, Potential *potential)
-	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_epsilon(epsilon), m_functionAppoximator(functionApproximator), m_potential(potential)
+	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_epsilon(epsilon), m_functionApproximator(functionApproximator), m_potential(potential)
 {
-	assert(m_functionAppoximator && "FunctionApproximator is a null pointer!");
+	assert(m_functionApproximator && "FunctionApproximator is a null pointer!");
 	assert(m_gamma == 1.0 && "Gamma is assumed to be equal to 1.0!");
 }
 
 SarsaAgent::~SarsaAgent()
 {
-	delete m_functionAppoximator;
-	m_functionAppoximator = 0;
+	delete m_functionApproximator;
+	m_functionApproximator = 0;
 
 	delete m_potential;
 	m_potential = 0;
@@ -42,13 +42,13 @@ Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 		output << "ERROR: Gamma is not equal to 1!" << std::endl;
 	}
 
-	m_functionAppoximator->decayTraces(0);
+	m_functionApproximator->decayTraces(0);
 
-	m_functionAppoximator->setState(state);
+	m_functionApproximator->setState(state);
 
 	Action action = selectAction(output);
-	m_lastQ = m_functionAppoximator->computeQ(action);
-	m_functionAppoximator->updateTraces(action);
+	m_lastQ = m_functionApproximator->computeQ(action);
+	m_functionApproximator->updateTraces(action);
 
 	m_lastPotential = 0;
 	if (m_potential) {
@@ -60,35 +60,45 @@ Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 
 Action SarsaAgent::step(double reward, const State &state, std::ostream &output)
 {
-	m_functionAppoximator->setState(state);
+	m_functionApproximator->setState(state);
 
 	Action action = selectAction(output);
-	double q = m_functionAppoximator->computeQ(action);
+	double q = m_functionApproximator->computeQ(action);
 	double potential = 0;
 	if (m_potential) {
 		potential = m_potential->get(state, action);
 	}
 
-	m_functionAppoximator->updateWeights(reward + m_gamma * q - m_lastQ + m_gamma * potential - m_lastPotential, m_alpha);
+	m_functionApproximator->updateWeights(reward + m_gamma * q - m_lastQ + m_gamma * potential - m_lastPotential, m_alpha);
 
-	m_lastQ = m_functionAppoximator->computeQ(action); // need to redo because weights changed
+	m_lastQ = m_functionApproximator->computeQ(action); // need to redo because weights changed
 	m_lastPotential = potential;
 	
-	m_functionAppoximator->decayTraces(m_gamma * m_lambda);
+	m_functionApproximator->decayTraces(m_gamma * m_lambda);
 	for (unsigned int i = 0; i < NUMBER_OF_ACTIONS; ++i) { // clear other than F[a]
 		Action a = static_cast<Action>(i);
 		if (a != action) {
-			m_functionAppoximator->clearTraces(a);
+			m_functionApproximator->clearTraces(a);
 		}
 	}
-	m_functionAppoximator->updateTraces(action);
+	m_functionApproximator->updateTraces(action);
 
 	return action;
 }
 
 void SarsaAgent::endEpisode(double reward)
 {
-	m_functionAppoximator->updateWeights(reward - m_lastQ, m_alpha);
+	m_functionApproximator->updateWeights(reward - m_lastQ, m_alpha);
+}
+
+void SarsaAgent::saveWeights(std::ostream &output)
+{
+	m_functionApproximator->saveWeights(output);
+}
+
+void SarsaAgent::loadWeights(std::istream &input)
+{
+	m_functionApproximator->loadWeights(input);
 }
 
 Action SarsaAgent::selectAction(std::ostream &output)
@@ -109,13 +119,13 @@ Action SarsaAgent::argmaxQ(std::ostream &output)
 	unsigned int ties = 0;
 
 	Action maxAction = static_cast<Action>(0);
-	double maxQ = m_functionAppoximator->computeQ(maxAction);
+	double maxQ = m_functionApproximator->computeQ(maxAction);
 
 	output << "Q[" << maxAction << "] = " << maxQ << std::endl;
 
 	for (unsigned int i = 1; i < NUMBER_OF_ACTIONS; ++i) {
 		Action action = static_cast<Action>(i);
-		double q = m_functionAppoximator->computeQ(action);
+		double q = m_functionApproximator->computeQ(action);
 		output << "Q[" << action << "] = " << q << std::endl;
 
 		if (q > maxQ) {

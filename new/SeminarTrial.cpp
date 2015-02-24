@@ -20,15 +20,23 @@ const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
 SeminarTrial::SeminarTrial(unsigned int number, Config &config)
-	: Trial(number), m_alpha(config.getAlpha()), m_lambda(config.getLambda()), m_episodes(config.getNumEpisodes()), m_outputPath(config.getOutputPath() + "/" + config.getExperimentName()), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+	: Trial(number), m_alpha(config.getAlpha()), m_lambda(config.getLambda()), m_episodes(config.getNumEpisodes()), m_outputPath(config.getOutputPath() + "/" + config.getExperimentName()), m_saveWeights(config.getSaveWeights()), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
 	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
 	m_agent = new SarsaAgent(m_alpha, m_lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential());
+
+	std::string initialWeights = config.getLoadInitialWeights();
+	if (initialWeights != "") {
+		readWeights(initialWeights);
+	}
 }
 
 SeminarTrial::~SeminarTrial()
 {
 	writeOutput();
+	if (m_saveWeights) {
+		writeWeights();
+	}
 	delete m_agent;
 }
 
@@ -93,6 +101,12 @@ std::vector<double> SeminarTrial::makeResolutionsVector(double scale)
 	return resolutions;
 }
 
+void SeminarTrial::readWeights(const std::string &fileName)
+{
+	std::ifstream file(fileName.c_str(), std::ios::in | std::ios::binary);
+	m_agent->loadWeights(file);
+}
+
 void SeminarTrial::writeOutput()
 {
 	std::stringstream ss;
@@ -102,4 +116,13 @@ void SeminarTrial::writeOutput()
 	for (unsigned int i = 0; i < m_output.size(); ++i) {
 		file << i << ',' << m_output[i].reward << ',' << m_output[i].steps << std::endl;
 	}
+}
+
+void SeminarTrial::writeWeights()
+{
+	std::stringstream ss;
+	ss << m_outputPath << "/trial" << number() << "_weights";
+
+	std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
+	m_agent->saveWeights(file);
 }

@@ -16,6 +16,7 @@ class CMAC : public FunctionApproximator
 {
 public:
 	CMAC(const StateResolution &stateResolution, unsigned int tilingsPerGroup);
+	virtual ~CMAC();
 
 	virtual void setState(const State &state);
 
@@ -25,6 +26,9 @@ public:
 	virtual void clearTraces(Action action);
 	virtual void decayTraces(double decayRate);
 	virtual void updateTraces(Action action);
+
+	virtual void saveWeights(std::ostream &output);
+	virtual void loadWeights(std::istream &input);
 
 private:
 	void loadTiles();

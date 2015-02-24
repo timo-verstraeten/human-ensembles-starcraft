@@ -35,6 +35,11 @@ double Config::getShapingWeight()
 	return m_reader.GetReal("TRIAL", "shapingWeight", 25);
 }
 
+std::string Config::getLoadInitialWeights()
+{
+	return m_reader.Get("TRIAL", "loadInitialWeights", "");
+}
+
 std::string Config::getExperimentName()
 {
 	return m_reader.Get("EXPERIMENT", "name", "Trials");
@@ -53,4 +58,9 @@ std::string Config::getOutputPath()
 bool Config::getEnableLogging()
 {
 	return m_reader.GetBoolean("GENERAL", "enableLogging", false);
+}
+
+bool Config::getSaveWeights()
+{
+	return m_reader.GetBoolean("GENERAL", "saveWeights", false);
 }

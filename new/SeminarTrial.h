@@ -5,6 +5,7 @@
 #include "Trial.h"
 
 class Config;
+class FunctionApproximator;
 class SMDPAgent;
 
 class SeminarTrial : public Trial
@@ -24,12 +25,15 @@ private:
 	};
 
 	std::vector<double> makeResolutionsVector(double scale);
+	void readWeights(const std::string &fileName);
 	void writeOutput();
+	void writeWeights();
 
 	const double m_alpha;
 	const double m_lambda;
 	const unsigned int m_episodes;
 	const std::string m_outputPath;
+	const bool m_saveWeights;
 
 	SMDPAgent *m_agent;
 

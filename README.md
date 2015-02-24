@@ -13,6 +13,7 @@ numEpisodes = 200
 resolutionScale = 1.0
 numTilings = 1
 shapingWeight = 1.0
+;loadInitialWeights = ./weights
 
 [EXPERIMENT]
 name = Test
@@ -22,6 +23,7 @@ showLearning = 0
 [GENERAL]
 outputPath = G:\Project\
 enableLogging = 1
+saveWeights = 1
 saveReplay = 0
 ```
 
