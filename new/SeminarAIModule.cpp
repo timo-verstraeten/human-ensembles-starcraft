@@ -1,6 +1,7 @@
 #include "SeminarAIModule.h"
 
 #include "Experiment.h"
+#include "HumanAdvice.h"
 #include "SeminarExperiment.h"
 #include "Trial.h"
 
@@ -13,7 +14,20 @@
 
 using namespace BWAPI;
 
+namespace
+{
+
+std::vector<Key> createKeyVector()
+{
+	std::vector<Key> keys;
+	keys.push_back(K_A);
+	return keys;
+}
+
+}
+
 const std::string SeminarAIModule::CONFIG_FILE_NAME = "config.ini";
+const std::vector<BWAPI::Key> SeminarAIModule::INPUT_KEYS = createKeyVector();
 
 SeminarAIModule::SeminarAIModule()
 	: m_config(CONFIG_FILE_NAME), m_experiment(0), m_trial(0)
@@ -47,6 +61,13 @@ void SeminarAIModule::onStart()
 
 void SeminarAIModule::onFrame()
 {
+	if (m_experiment && m_trial) {
+		HumanAdvice *humanAdvice = m_trial->humanAdvice();
+		if (humanAdvice) {
+			updateHumanAdvice(*humanAdvice);
+		}
+	}
+	
 	if (m_experiment && Broodwar->getFrameCount() % 30 == 0) {
 		if (!m_trial) {
 			m_trial = m_experiment->nextTrial();
@@ -177,5 +198,14 @@ void SeminarAIModule::executeAction(Action action)
 		break;
 	default:
 		assert(false && "Unknown action encountered!");
+	}
+}
+
+void SeminarAIModule::updateHumanAdvice(HumanAdvice &humanAdvice)
+{
+	for (unsigned int i = 0; i < INPUT_KEYS.size(); ++i) {
+		if (Broodwar->getKeyState(INPUT_KEYS[i])) {
+			humanAdvice.reward(i);
+		}
 	}
 }

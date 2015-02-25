@@ -14,6 +14,9 @@ resolutionScale = 1.0
 numTilings = 1
 shapingWeight = 1.0
 ;loadInitialWeights = ./weights
+humanAdvice = true
+humanAdviceEpisodes = 5
+humanAdviceGamma = 0.5
 
 [EXPERIMENT]
 name = Test
@@ -22,8 +25,8 @@ showLearning = 0
 
 [GENERAL]
 outputPath = G:\Project\
-enableLogging = 1
-saveWeights = 1
+enableLogging = true
+saveWeights = false
 saveReplay = 0
 ```
 

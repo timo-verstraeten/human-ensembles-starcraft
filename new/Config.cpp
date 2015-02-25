@@ -40,6 +40,21 @@ std::string Config::getLoadInitialWeights()
 	return m_reader.Get("TRIAL", "loadInitialWeights", "");
 }
 
+bool Config::getHumanAdvice()
+{
+	return m_reader.GetBoolean("TRIAL", "humanAdvice", false);
+}
+
+unsigned int Config::getHumanAdviceEpisodes()
+{
+	return static_cast<unsigned int>(m_reader.GetInteger("TRIAL", "humanAdviceEpisodes", 5));
+}
+
+double Config::getHumanAdviceGamma()
+{
+	return m_reader.GetReal("TRIAL", "humanAdviceGamma", 0.5);
+}
+
 std::string Config::getExperimentName()
 {
 	return m_reader.Get("EXPERIMENT", "name", "Trials");

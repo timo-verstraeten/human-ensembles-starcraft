@@ -13,6 +13,7 @@
 #include <string>
 
 class Experiment;
+class HumanAdvice;
 class Trial;
 
 class SeminarAIModule : public BWAPI::AIModule
@@ -33,6 +34,7 @@ private:
 
 	State getState();
 	void executeAction(Action action);
+	void updateHumanAdvice(HumanAdvice &humanAdvice);
 
 	Config m_config;
 	std::ofstream m_log_file;
@@ -41,6 +43,7 @@ private:
 	Trial *m_trial;
 
 	static const std::string CONFIG_FILE_NAME;
+	static const std::vector<BWAPI::Key> INPUT_KEYS;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H

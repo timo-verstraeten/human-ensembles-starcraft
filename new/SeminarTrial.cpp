@@ -2,6 +2,8 @@
 
 #include "CMAC.h"
 #include "Config.h"
+#include "HumanAdvice.h"
+#include "HumanAdvicePotential.h"
 #include "Potentials.h"
 #include "SarsaAgent.h"
 
@@ -20,10 +22,16 @@ const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
 SeminarTrial::SeminarTrial(unsigned int number, Config &config)
-	: Trial(number), m_alpha(config.getAlpha()), m_lambda(config.getLambda()), m_episodes(config.getNumEpisodes()), m_outputPath(config.getOutputPath() + "/" + config.getExperimentName()), m_saveWeights(config.getSaveWeights()), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+	: Trial(number), m_parameters(config), m_humanAdvice(0), m_humanAdvicePotential(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
+	if (config.getHumanAdvice()) {
+		m_humanAdvice = new HumanAdvice(1);
+		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
+		m_humanAdvicePotential = new HumanAdvicePotential(config.getShapingWeight(), *m_humanAdvice, 0, functionApproximator, m_parameters.alpha, m_parameters.lambda, config.getHumanAdviceGamma());
+	}
+
 	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-	m_agent = new SarsaAgent(m_alpha, m_lambda, GAMMA, EPSILON, functionApproximator, new ZeroPotential());
+	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator, m_humanAdvicePotential);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {
@@ -34,10 +42,12 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 SeminarTrial::~SeminarTrial()
 {
 	writeOutput();
-	if (m_saveWeights) {
+	if (m_parameters.saveWeights) {
 		writeWeights();
 	}
 	delete m_agent;
+	delete m_humanAdvice;
+	// m_humanAdvicePotential is owned by m_agent, like any other potential, and should not be deleted here
 }
 
 Action SeminarTrial::step(const State &state, std::ostream &output)
@@ -52,12 +62,15 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	}
 	else {
 		action = m_agent->step(STEP_REWARD, state, output);
+		if (m_humanAdvicePotential && m_episode < m_parameters.humanAdviceEpisodes) {
+			m_humanAdvicePotential->step(state, action);
+		}
 		m_episodeReward += STEP_REWARD;
 	}
 
 	output << "Action: " << action << std::endl;
 	output << "MAL SEMINAR 2014-2015" << std::endl;
-	output << "Alpha: " << m_alpha << ", lambda: " << m_lambda << std::endl;
+	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
 
 	++m_step;
@@ -86,7 +99,12 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 	m_step = 0;
 	m_episodeReward = 0;
-	return ++m_episode < m_episodes;
+	return ++m_episode < m_parameters.episodes;
+}
+
+HumanAdvice *SeminarTrial::humanAdvice()
+{
+	return m_humanAdvice;
 }
 
 std::vector<double> SeminarTrial::makeResolutionsVector(double scale)
@@ -110,7 +128,7 @@ void SeminarTrial::readWeights(const std::string &fileName)
 void SeminarTrial::writeOutput()
 {
 	std::stringstream ss;
-	ss << m_outputPath << "/trial" << number() << "_out.txt";
+	ss << m_parameters.outputPath << "/trial" << number() << "_out.txt";
 
 	std::ofstream file(ss.str().c_str());
 	for (unsigned int i = 0; i < m_output.size(); ++i) {
@@ -121,8 +139,18 @@ void SeminarTrial::writeOutput()
 void SeminarTrial::writeWeights()
 {
 	std::stringstream ss;
-	ss << m_outputPath << "/trial" << number() << "_weights";
+	ss << m_parameters.outputPath << "/trial" << number() << "_weights";
 
 	std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
 	m_agent->saveWeights(file);
+}
+
+SeminarTrial::Parameters::Parameters(Config &config)
+{
+	alpha = config.getAlpha();
+	lambda = config.getLambda();
+	episodes = config.getNumEpisodes();
+	outputPath = config.getOutputPath() + "/" + config.getExperimentName();
+	saveWeights = config.getSaveWeights();
+	humanAdviceEpisodes = config.getHumanAdviceEpisodes();
 }

@@ -18,6 +18,9 @@ public:
 	unsigned int getNumTilings();
 	double getShapingWeight();
 	std::string getLoadInitialWeights();
+	bool getHumanAdvice();
+	unsigned int getHumanAdviceEpisodes();
+	double getHumanAdviceGamma();
 
 	std::string getExperimentName();
 	unsigned int getNumTrials();

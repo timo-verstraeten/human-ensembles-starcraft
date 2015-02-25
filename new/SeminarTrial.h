@@ -6,6 +6,7 @@
 
 class Config;
 class FunctionApproximator;
+class HumanAdvicePotential;
 class SMDPAgent;
 
 class SeminarTrial : public Trial
@@ -17,7 +18,22 @@ public:
 	virtual Action step(const State &state, std::ostream &output);
 	virtual bool nextEpisode(const State &state, std::ostream &output);
 
+	virtual HumanAdvice *humanAdvice();
+
 private:
+	struct Parameters
+	{
+	public:
+		Parameters(Config &config);
+
+		double alpha;
+		double lambda;
+		unsigned int episodes;
+		std::string outputPath;
+		bool saveWeights;
+		unsigned int humanAdviceEpisodes;
+	};
+
 	struct EpisodeOutput
 	{
 		double reward;
@@ -29,12 +45,10 @@ private:
 	void writeOutput();
 	void writeWeights();
 
-	const double m_alpha;
-	const double m_lambda;
-	const unsigned int m_episodes;
-	const std::string m_outputPath;
-	const bool m_saveWeights;
+	const Parameters m_parameters;
 
+	HumanAdvice *m_humanAdvice;
+	HumanAdvicePotential *m_humanAdvicePotential;
 	SMDPAgent *m_agent;
 
 	unsigned int m_episode;

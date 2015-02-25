@@ -228,6 +228,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\HumanAdvice.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\HumanAdvice.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\HumanAdvicePotential.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\HumanAdvicePotential.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\Potential.h"
 			>
 		</File>

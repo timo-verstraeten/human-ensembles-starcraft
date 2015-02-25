@@ -8,6 +8,8 @@
 #include <ostream>
 #include <string>
 
+class HumanAdvice;
+
 class Trial
 {
 public:
@@ -18,6 +20,8 @@ public:
 
 	virtual Action step(const State &state, std::ostream &output) = 0;
 	virtual bool nextEpisode(const State &state, std::ostream &output) = 0;
+
+	virtual HumanAdvice *humanAdvice() { return 0; }
 
 private:
 	const unsigned int m_number;
