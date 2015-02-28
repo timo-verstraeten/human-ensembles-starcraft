@@ -33,7 +33,7 @@ public:
 	virtual ~DistancePotential() {}
 	
 protected:
-	virtual double getUnscaled(const State &state, Action action) { return state.enemyDistance / 1000; }
+	virtual double getUnscaled(const State &state, Action action) { return 1 - state.enemyDistance / 1000; }
 };
 
 class HealthDistancePotential : public Potential
@@ -43,7 +43,7 @@ public:
 	virtual ~HealthDistancePotential() {}
 	
 protected:
-	virtual double getUnscaled(const State &state, Action action) { return state.enemyActive ? (state.hitPointDifference / 100.0) : (state.enemyDistance / 1000); }
+	virtual double getUnscaled(const State &state, Action action) { return state.enemyActive ? (state.hitPointDifference / 100.0) : (1 - state.enemyDistance / 1000); }
 };
 
 #endif // INC_POTENTIALS_H

@@ -2,7 +2,9 @@
 
 #include "tiles2.h"
 
+#include <cmath>
 #include <iostream>
+#include <utility>
 
 CMAC::CMAC(const StateResolution &stateResolution, unsigned int tilingsPerGroup)
 	: FunctionApproximator(stateResolution), m_tilingsPerGroup(tilingsPerGroup)
@@ -43,6 +45,34 @@ double CMAC::computeQ(Action action)
 		q += m_weights[m_tiles[action][i]];
 	}
 	return q;
+}
+
+double CMAC::computeConfidence()
+{
+	std::pair<unsigned int, double> min = std::make_pair(0, computeQ(static_cast<Action>(0)));
+	std::pair<unsigned int, double> max = std::make_pair(0, computeQ(static_cast<Action>(0)));
+	for (unsigned int i = 1; i < NUMBER_OF_ACTIONS; ++i) {
+		double q = computeQ(static_cast<Action>(i));
+		if (q < min.second) {
+			min.first = i;
+			min.second = q;
+		}
+		else if (q > max.second) {
+			max.first = i;
+			max.second = q;
+		}
+	}
+
+	// Paired t-test t-value calculation
+	double S_x = 0;
+	double S_x2 = 0;
+	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
+		double x = m_weights[m_tiles[max.first][i]] - m_weights[m_tiles[min.first][i]];
+		S_x += x;
+		S_x += x * x;
+	}
+	double t = S_x / sqrt((m_numberOfTilings * S_x2 - S_x * S_x) / (m_numberOfTilings - 1));
+	return t;
 }
 
 void CMAC::updateWeights(double delta, double alpha)

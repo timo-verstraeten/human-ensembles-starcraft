@@ -21,6 +21,7 @@ public:
 	virtual void setState(const State &state);
 
 	virtual double computeQ(Action action);
+	virtual double computeConfidence();
 	virtual void updateWeights(double delta, double alpha);
 
 	virtual void clearTraces(Action action);

@@ -1,5 +1,6 @@
 #include "SeminarTrial.h"
 
+#include "AdaptiveObjectiveSelector.h"
 #include "CMAC.h"
 #include "Config.h"
 #include "HumanAdvice.h"
@@ -30,8 +31,9 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		m_humanAdvicePotential = new HumanAdvicePotential(config.getShapingWeight(), *m_humanAdvice, 0, functionApproximator, m_parameters.alpha, m_parameters.lambda, config.getHumanAdviceGamma());
 	}
 
+	ActionSelector *actionSelector = new AdaptiveObjectiveSelector(EPSILON);
 	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, EPSILON, functionApproximator, m_humanAdvicePotential);
+	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, actionSelector, functionApproximator, m_humanAdvicePotential);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {

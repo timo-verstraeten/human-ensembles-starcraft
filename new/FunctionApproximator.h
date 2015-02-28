@@ -18,6 +18,7 @@ public:
 	virtual void setState(const State &state);
 
 	virtual double computeQ(Action action) = 0;
+	virtual double computeConfidence() = 0;
 	virtual void updateWeights(double delta, double alpha) = 0;
 
 	virtual void clearTraces(Action action) = 0;

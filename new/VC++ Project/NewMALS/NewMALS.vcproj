@@ -196,6 +196,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\ActionSelector.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\ActionSelector.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\AdaptiveObjectiveSelector.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\AdaptiveObjectiveSelector.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\CMAC.cpp"
 			>
 		</File>
