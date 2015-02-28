@@ -59,11 +59,15 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	}
 	else if (m_step == 0) {
 		action = m_agent->startEpisode(state, output);
+		if (m_humanAdvice) {
+			m_humanAdvice->reset();
+		}
 	}
 	else {
 		action = m_agent->step(STEP_REWARD, state, output);
 		if (m_humanAdvicePotential && m_episode < m_parameters.humanAdviceEpisodes) {
 			m_humanAdvicePotential->step(state, action);
+			m_humanAdvice->reset();
 		}
 		m_episodeReward += STEP_REWARD;
 	}
