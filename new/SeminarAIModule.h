@@ -11,9 +11,9 @@
 #include <fstream>
 #include <ostream>
 #include <string>
+#include <vector>
 
 class Experiment;
-class HumanAdvice;
 class Trial;
 
 class SeminarAIModule : public BWAPI::AIModule
@@ -34,7 +34,7 @@ private:
 
 	State getState();
 	void executeAction(Action action);
-	void updateHumanAdvice(HumanAdvice &humanAdvice);
+	void updateHumanAdvice(const std::vector<bool*> &humanAdvice);
 
 	Config m_config;
 	std::ofstream m_log_file;

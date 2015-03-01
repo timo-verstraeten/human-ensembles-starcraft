@@ -1,7 +1,6 @@
 #include "SeminarAIModule.h"
 
 #include "Experiment.h"
-#include "HumanAdvice.h"
 #include "ErrorLogger.h"
 #include "SeminarExperiment.h"
 #include "Trial.h"
@@ -20,7 +19,12 @@ namespace
 std::vector<Key> createKeyVector()
 {
 	std::vector<Key> keys;
-	keys.push_back(K_A);
+	keys.push_back(Key::K_A);
+	keys.push_back(Key::K_P);
+	keys.push_back(Key::K_V);
+	keys.push_back(Key::K_U);
+	keys.push_back(Key::K_X);
+	keys.push_back(Key::K_L);
 	return keys;
 }
 
@@ -62,10 +66,7 @@ void SeminarAIModule::onStart()
 void SeminarAIModule::onFrame()
 {
 	if (m_experiment && m_trial) {
-		HumanAdvice *humanAdvice = m_trial->humanAdvice();
-		if (humanAdvice) {
-			updateHumanAdvice(*humanAdvice);
-		}
+		updateHumanAdvice(m_trial->humanAdvice());
 	}
 	
 	if (m_experiment && Broodwar->getFrameCount() % 30 == 0) {
@@ -201,11 +202,11 @@ void SeminarAIModule::executeAction(Action action)
 	}
 }
 
-void SeminarAIModule::updateHumanAdvice(HumanAdvice &humanAdvice)
+void SeminarAIModule::updateHumanAdvice(const std::vector<bool*> &humanAdvice)
 {
-	for (unsigned int i = 0; i < INPUT_KEYS.size(); ++i) {
-		if (Broodwar->getKeyState(INPUT_KEYS[i])) {
-			humanAdvice.reward(i);
+	for (unsigned int i = 0; i < std::min(humanAdvice.size(), INPUT_KEYS.size()); ++i) {
+		if (Broodwar->getKeyState(INPUT_KEYS[i]) && humanAdvice[i]) {
+			*humanAdvice[i] = true;
 		}
 	}
 }

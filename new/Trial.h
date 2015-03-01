@@ -7,8 +7,7 @@
 
 #include <ostream>
 #include <string>
-
-class HumanAdvice;
+#include <vector>
 
 class Trial
 {
@@ -21,7 +20,7 @@ public:
 	virtual Action step(const State &state, std::ostream &output) = 0;
 	virtual bool nextEpisode(const State &state, std::ostream &output) = 0;
 
-	virtual HumanAdvice *humanAdvice() { return 0; }
+	virtual const std::vector<bool*> &humanAdvice() { static std::vector<bool*> vector; return vector; }
 
 private:
 	const unsigned int m_number;

@@ -5,6 +5,7 @@
 #include "inih/INIReader.h"
 
 #include <string>
+#include <vector>
 
 class Config
 {
@@ -16,7 +17,7 @@ public:
 	unsigned int getNumEpisodes();
 	double getResolutionScale();
 	unsigned int getNumTilings();
-	double getShapingWeight();
+	std::vector<std::string> getShapingPotentials();
 	std::string getLoadInitialWeights();
 	bool getHumanAdvice();
 	unsigned int getHumanAdviceEpisodes();

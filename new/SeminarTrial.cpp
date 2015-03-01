@@ -3,11 +3,13 @@
 #include "AdaptiveObjectiveSelector.h"
 #include "CMAC.h"
 #include "Config.h"
+#include "ErrorLogger.h"
 #include "HumanAdvice.h"
 #include "HumanAdvicePotential.h"
 #include "Potentials.h"
 #include "SarsaAgent.h"
 
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 
@@ -23,17 +25,22 @@ const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
 SeminarTrial::SeminarTrial(unsigned int number, Config &config)
-	: Trial(number), m_parameters(config), m_humanAdvice(0), m_humanAdvicePotential(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+	: Trial(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
-	if (config.getHumanAdvice()) {
-		m_humanAdvice = new HumanAdvice(1);
-		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-		m_humanAdvicePotential = new HumanAdvicePotential(config.getShapingWeight(), *m_humanAdvice, 0, functionApproximator, m_parameters.alpha, m_parameters.lambda, config.getHumanAdviceGamma());
+	std::vector<std::string> potentialStrings = config.getShapingPotentials();
+	if (potentialStrings.size() == 0) {
+		potentialStrings.push_back("");
+	}
+
+	std::vector<Potential*> potentials;
+	std::vector<FunctionApproximator*> functionApproximators;
+	for (unsigned int i = 0; i < potentialStrings.size(); ++i) {
+		potentials.push_back(createPotential(potentialStrings[i], config));
+		functionApproximators.push_back(new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings()));
 	}
 
 	ActionSelector *actionSelector = new AdaptiveObjectiveSelector(EPSILON);
-	FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, actionSelector, functionApproximator, m_humanAdvicePotential);
+	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, actionSelector, functionApproximators, potentials);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {
@@ -48,8 +55,12 @@ SeminarTrial::~SeminarTrial()
 		writeWeights();
 	}
 	delete m_agent;
-	delete m_humanAdvice;
-	// m_humanAdvicePotential is owned by m_agent, like any other potential, and should not be deleted here
+	m_agent = 0;
+	for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
+		delete m_humanAdvice[i];
+		m_humanAdvice[i] = 0;
+	}
+	// m_humanAdvicePotentials are owned by m_agent, like any other potential, and should not be deleted here
 }
 
 Action SeminarTrial::step(const State &state, std::ostream &output)
@@ -61,15 +72,17 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	}
 	else if (m_step == 0) {
 		action = m_agent->startEpisode(state, output);
-		if (m_humanAdvice) {
-			m_humanAdvice->reset();
+		for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
+			*m_humanAdvice[i] = false;
 		}
 	}
 	else {
 		action = m_agent->step(STEP_REWARD, state, output);
-		if (m_humanAdvicePotential && m_episode < m_parameters.humanAdviceEpisodes) {
-			m_humanAdvicePotential->step(state, action);
-			m_humanAdvice->reset();
+		if (m_humanAdvicePotentials.size() > 0 && m_episode < m_parameters.humanAdviceEpisodes) {
+			for (unsigned int i = 0; i < m_humanAdvicePotentials.size(); ++i) {
+				m_humanAdvicePotentials[i]->step(state, action);
+				*m_humanAdvice[i] = false;
+			}
 		}
 		m_episodeReward += STEP_REWARD;
 	}
@@ -108,9 +121,52 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 	return ++m_episode < m_parameters.episodes;
 }
 
-HumanAdvice *SeminarTrial::humanAdvice()
+const std::vector<bool*> &SeminarTrial::humanAdvice()
 {
 	return m_humanAdvice;
+}
+
+Potential *SeminarTrial::createPotential(const std::string &description, Config &config)
+{
+	size_t pos = description.find(":");
+	std::string potentialString = description.substr(0, pos);
+	std::transform(potentialString.begin(), potentialString.end(), potentialString.begin(), tolower);
+
+	if (potentialString == "") {
+		return 0;
+	}
+	else if (potentialString == "zero") {
+		return new ZeroPotential();
+	}
+	else if (pos != std::string::npos) {
+		std::string parameters = description.substr(pos + 1);
+		std::replace(parameters.begin(), parameters.end(), ',', ' ');
+		std::istringstream parametersStream(parameters);
+
+		double scaling;
+		parametersStream >> scaling;
+
+		if (potentialString == "health") {
+			return new HealthPotential(scaling);
+		}
+		else if (potentialString == "distance") {
+			return new DistancePotential(scaling);
+		}
+		else if (potentialString == "healthdistance") {
+			return new HealthDistancePotential(scaling);
+		}
+		else if (potentialString == "human" || potentialString == "humanadvice") {
+			bool *humanAdvice = new bool(false);
+			m_humanAdvice.push_back(humanAdvice); // Can't just push back a bool and get a reference to it, since std::vector can reallocate its internal array
+			FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
+			HumanAdvicePotential *humanAdvicePotential = new HumanAdvicePotential(scaling, *humanAdvice, functionApproximator, m_parameters.alpha, m_parameters.lambda, config.getHumanAdviceGamma());
+			m_humanAdvicePotentials.push_back(humanAdvicePotential);
+			return humanAdvicePotential;
+		}
+	}
+	
+	ErrorLogger::instance().assert(false, "Unknown potential string!");
+	return 0;
 }
 
 std::vector<double> SeminarTrial::makeResolutionsVector(double scale)

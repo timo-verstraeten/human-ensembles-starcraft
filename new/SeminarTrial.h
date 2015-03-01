@@ -7,6 +7,7 @@
 class Config;
 class FunctionApproximator;
 class HumanAdvicePotential;
+class Potential;
 class SMDPAgent;
 
 class SeminarTrial : public Trial
@@ -18,7 +19,7 @@ public:
 	virtual Action step(const State &state, std::ostream &output);
 	virtual bool nextEpisode(const State &state, std::ostream &output);
 
-	virtual HumanAdvice *humanAdvice();
+	virtual const std::vector<bool*> &humanAdvice();
 
 private:
 	struct Parameters
@@ -40,6 +41,7 @@ private:
 		unsigned int steps;
 	};
 
+	Potential *createPotential(const std::string &description, Config &config);
 	std::vector<double> makeResolutionsVector(double scale);
 	void readWeights(const std::string &fileName);
 	void writeOutput();
@@ -47,8 +49,8 @@ private:
 
 	const Parameters m_parameters;
 
-	HumanAdvice *m_humanAdvice;
-	HumanAdvicePotential *m_humanAdvicePotential;
+	std::vector<bool*> m_humanAdvice;
+	std::vector<HumanAdvicePotential*> m_humanAdvicePotentials;
 	SMDPAgent *m_agent;
 
 	unsigned int m_episode;

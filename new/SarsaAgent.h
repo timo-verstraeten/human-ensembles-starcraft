@@ -4,6 +4,8 @@
 
 #include "SMDPAgent.h"
 
+#include <vector>
+
 class ActionSelector;
 class FunctionApproximator;
 class Potential;
@@ -11,7 +13,7 @@ class Potential;
 class SarsaAgent : public SMDPAgent
 {
 public:
-	SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential);
+	SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials);
 	virtual ~SarsaAgent();
 
 	virtual Action startEpisode(const State &state, std::ostream &output);
@@ -29,11 +31,11 @@ private:
 	const double m_lambda;
 	const double m_gamma;
 	ActionSelector *m_actionSelector;
-	FunctionApproximator *m_functionApproximator;
-	Potential *m_potential;
+	std::vector<FunctionApproximator*> m_functionApproximators;
+	std::vector<Potential*> m_potentials;
 
-	double m_lastQ;
-	double m_lastPotential;
+	std::vector<double> m_lastQs;
+	std::vector<double> m_lastPotentials;
 };
 
 #endif // INC_SARSA_AGENT_H

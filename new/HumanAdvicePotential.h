@@ -14,7 +14,7 @@ struct State;
 class HumanAdvicePotential : public Potential
 {
 public:
-	HumanAdvicePotential(double scaling, HumanAdvice &humanAdvice, unsigned int advisor, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma);
+	HumanAdvicePotential(double scaling, const bool &humanAdvice, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma);
 	virtual ~HumanAdvicePotential();
 
 	virtual double getUnscaled(const State &state, Action action);
@@ -22,8 +22,7 @@ public:
 	void step(const State &state, Action action);
 
 private:
-	HumanAdvice &m_humanAdvice;
-	unsigned int m_advisor;
+	const bool &m_humanAdvice;
 
 	FunctionApproximator *m_functionApproximator;
 

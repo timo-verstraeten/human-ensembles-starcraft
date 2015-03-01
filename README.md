@@ -12,9 +12,8 @@ lambda = 0.90
 numEpisodes = 200
 resolutionScale = 1.0
 numTilings = 1
-shapingWeight = 1.0
+shapingPotentials = distance:25 human:25 human:50
 ;loadInitialWeights = ./weights
-humanAdvice = true
 humanAdviceEpisodes = 5
 humanAdviceGamma = 0.5
 

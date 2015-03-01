@@ -3,8 +3,8 @@
 #include "FunctionApproximator.h"
 #include "HumanAdvice.h"
 
-HumanAdvicePotential::HumanAdvicePotential(double scaling, HumanAdvice &humanAdvice, unsigned int advisor, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma)
-	: Potential(scaling), m_humanAdvice(humanAdvice), m_advisor(advisor), m_functionApproximator(functionApproximator), m_alpha(alpha), m_lambda(lambda), m_gamma(gamma)
+HumanAdvicePotential::HumanAdvicePotential(double scaling, const bool &humanAdvice, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma)
+	: Potential(scaling), m_humanAdvice(humanAdvice), m_functionApproximator(functionApproximator), m_alpha(alpha), m_lambda(lambda), m_gamma(gamma)
 {
 }
 
@@ -22,7 +22,7 @@ double HumanAdvicePotential::getUnscaled(const State &state, Action action)
 
 void HumanAdvicePotential::step(const State &state, Action action)
 {
-	if (m_humanAdvice.rewarded(m_advisor)) {
+	if (m_humanAdvice) {
 		m_functionApproximator->updateWeights(-1, m_alpha);
 	}
 

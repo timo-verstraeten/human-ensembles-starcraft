@@ -252,14 +252,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\HumanAdvice.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\HumanAdvice.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\HumanAdvicePotential.cpp"
 			>
 		</File>

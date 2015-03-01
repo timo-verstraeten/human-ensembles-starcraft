@@ -1,5 +1,7 @@
 #include "Config.h"
 
+#include <sstream>
+
 Config::Config(const std::string &fileName)
 	: m_reader(fileName)
 {
@@ -30,9 +32,10 @@ unsigned int Config::getNumTilings()
 	return static_cast<unsigned int>(m_reader.GetInteger("TRIAL", "numTilings", 1));
 }
 
-double Config::getShapingWeight()
+std::vector<std::string> Config::getShapingPotentials()
 {
-	return m_reader.GetReal("TRIAL", "shapingWeight", 25);
+	std::istringstream potentialsStream(m_reader.Get("TRIAL", "shapingPotentials", ""));
+	return std::vector<std::string>(std::istream_iterator<std::string>(potentialsStream), std::istream_iterator<std::string>());
 }
 
 std::string Config::getLoadInitialWeights()
