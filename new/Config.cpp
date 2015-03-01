@@ -52,7 +52,7 @@ unsigned int Config::getHumanAdviceEpisodes()
 
 double Config::getHumanAdviceGamma()
 {
-	return m_reader.GetReal("TRIAL", "humanAdviceGamma", 0.5);
+	return m_reader.GetReal("TRIAL", "humanAdviceGamma", 1.0);
 }
 
 std::string Config::getExperimentName()

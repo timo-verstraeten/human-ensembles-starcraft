@@ -69,7 +69,7 @@ double CMAC::computeConfidence()
 	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
 		double x = m_weights[m_tiles[max.first][i]] - m_weights[m_tiles[min.first][i]];
 		S_x += x;
-		S_x += x * x;
+		S_x2 += x * x;
 	}
 	double t = S_x / sqrt((m_numberOfTilings * S_x2 - S_x * S_x) / (m_numberOfTilings - 1));
 	return t;
