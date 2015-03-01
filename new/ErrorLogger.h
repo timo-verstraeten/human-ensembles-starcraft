@@ -9,7 +9,7 @@ class ErrorLogger
 public:
 	virtual ~ErrorLogger();
 
-	static ErrorLogger* instance();
+	static ErrorLogger &instance();
 	void assert(bool condition, const char* message);
 	
 private:
@@ -17,7 +17,6 @@ private:
 	ErrorLogger(ErrorLogger const&) {};
 	ErrorLogger& operator=(ErrorLogger const&) {};
 
-	static ErrorLogger* m_instance;
 	std::ofstream m_outputFile;
 };
 

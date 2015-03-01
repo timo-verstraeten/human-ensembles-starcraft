@@ -6,7 +6,7 @@
 StateResolution::StateResolution(const std::vector<double> &resolutions)
 	: m_resolutions(resolutions)
 {
-	ErrorLogger::instance()->assert(m_resolutions.size() == 6, "Number of given resolutions is not right");
+	ErrorLogger::instance().assert(m_resolutions.size() == 6, "Number of given resolutions is not right");
 }
 
 std::vector<double> StateResolution::scaleState(const State &state)

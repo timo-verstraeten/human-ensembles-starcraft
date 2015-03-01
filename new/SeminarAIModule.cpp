@@ -41,7 +41,6 @@ SeminarAIModule::SeminarAIModule()
 SeminarAIModule::~SeminarAIModule()
 {
 	delete m_experiment;
-	delete Logger::instance();
 }
 
 
@@ -198,7 +197,7 @@ void SeminarAIModule::executeAction(Action action)
 		ownUnit->move(Position(ownUnit->getPosition().x() - 30, ownUnit->getPosition().y()));
 		break;
 	default:
-		ErrorLogger::instance()->assert(false, "Unknown action encountered!");
+		ErrorLogger::instance().assert(false, "Unknown action encountered!");
 	}
 }
 

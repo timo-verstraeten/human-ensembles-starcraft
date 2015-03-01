@@ -5,20 +5,31 @@
 #include "ErrorLogger.h"
 #include "Potential.h"
 
+<<<<<<< Updated upstream
 SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
 	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_actionSelector(actionSelector), m_functionApproximator(functionApproximator), m_potential(potential)
+=======
+#include <cassert>
+
+SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials)
+	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_actionSelector(actionSelector), m_functionApproximators(functionApproximators), m_potentials(potentials)
+>>>>>>> Stashed changes
 {
-	ErrorLogger::instance().assert(m_functionApproximator != 0, "FunctionApproximator is a null pointer!");
-	ErrorLogger::instance().assert(m_gamma == 1.0, "Gamma is assumed to be equal to 1.0!");
+	ErrorLogger::instance()->assert(m_functionApproximator != 0, "FunctionApproximator is a null pointer!");
+	ErrorLogger::instance()->assert(m_gamma == 1.0, "Gamma is assumed to be equal to 1.0!");
 }
 
 SarsaAgent::~SarsaAgent()
 {
-	delete m_potential;
-	m_potential = 0;
+	for (unsigned int i = 0; i < m_potentials.size; ++i) {
+		delete m_potentials[i];
+		m_potentials[i] = 0;
+	}
 
-	delete m_functionApproximator;
-	m_functionApproximator = 0;
+	for (unsigned int i = 0; i < m_functionApproximators.size; ++i) {
+		delete m_functionApproximators[i];
+		m_functionApproximators[i] = 0;
+	}
 
 	delete m_actionSelector;
 	m_actionSelector = 0;
@@ -30,14 +41,14 @@ Action SarsaAgent::startEpisode(const State &state, std::ostream &output)
 		output << "ERROR: Gamma is not equal to 1!" << std::endl;
 	}
 
-	m_functionApproximator->decayTraces(0);
+	for (unsigned int i = 0; i < m_functionApproximators.size(); ++i) {
+		m_functionApproximator->decayTraces(0);
+		m_functionApproximator->setState(state);
+	}
 
-	m_functionApproximator->setState(state);
+	Action action = m_actionSelector->select(m_functionApproximators, output);
 
-	std::vector<FunctionApproximator*> functionApproximators;
-	functionApproximators.push_back(m_functionApproximator);
-	Action action = m_actionSelector->select(functionApproximators, output);
-
+	for (unsigned int i = 0; i < m_functionApproximators.size())
 	m_lastQ = m_functionApproximator->computeQ(action);
 	m_functionApproximator->updateTraces(action);
 
