@@ -2,15 +2,14 @@
 
 #include "ActionSelector.h"
 #include "FunctionApproximator.h"
+#include "ErrorLogger.h"
 #include "Potential.h"
-
-#include <cassert>
 
 SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
 	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_actionSelector(actionSelector), m_functionApproximator(functionApproximator), m_potential(potential)
 {
-	assert(m_functionApproximator && "FunctionApproximator is a null pointer!");
-	assert(m_gamma == 1.0 && "Gamma is assumed to be equal to 1.0!");
+	ErrorLogger::instance()->assert(m_functionApproximator != 0, "FunctionApproximator is a null pointer!");
+	ErrorLogger::instance()->assert(m_gamma == 1.0, "Gamma is assumed to be equal to 1.0!");
 }
 
 SarsaAgent::~SarsaAgent()

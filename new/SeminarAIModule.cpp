@@ -2,12 +2,12 @@
 
 #include "Experiment.h"
 #include "HumanAdvice.h"
+#include "ErrorLogger.h"
 #include "SeminarExperiment.h"
 #include "Trial.h"
 
 #define _USE_MATH_DEFINES
 
-#include <cassert>
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -41,6 +41,7 @@ SeminarAIModule::SeminarAIModule()
 SeminarAIModule::~SeminarAIModule()
 {
 	delete m_experiment;
+	delete Logger::instance();
 }
 
 
@@ -197,7 +198,7 @@ void SeminarAIModule::executeAction(Action action)
 		ownUnit->move(Position(ownUnit->getPosition().x() - 30, ownUnit->getPosition().y()));
 		break;
 	default:
-		assert(false && "Unknown action encountered!");
+		ErrorLogger::instance()->assert(false, "Unknown action encountered!");
 	}
 }
 
