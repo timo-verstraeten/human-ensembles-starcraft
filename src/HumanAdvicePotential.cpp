@@ -1,7 +1,6 @@
 #include "HumanAdvicePotential.h"
 
 #include "FunctionApproximator.h"
-#include "HumanAdvice.h"
 
 HumanAdvicePotential::HumanAdvicePotential(double scaling, const bool &humanAdvice, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma)
 	: Potential(scaling), m_humanAdvice(humanAdvice), m_functionApproximator(functionApproximator), m_alpha(alpha), m_lambda(lambda), m_gamma(gamma)
@@ -20,13 +19,23 @@ double HumanAdvicePotential::getUnscaled(const State &state, Action action)
 	return m_functionApproximator->computeQ(action);
 }
 
+void HumanAdvicePotential::start(const State &state, Action action)
+{
+	m_functionApproximator->decayTraces(0);
+	m_functionApproximator->setState(state);
+	m_lastQ = m_functionApproximator->computeQ(action);
+	m_functionApproximator->updateTraces(action);
+}
+
 void HumanAdvicePotential::step(const State &state, Action action)
 {
-	if (m_humanAdvice) {
-		m_functionApproximator->updateWeights(-1, m_alpha);
-	}
-
 	m_functionApproximator->setState(state);
+
+	double reward = m_humanAdvice ? -1 : 0;
+	double q = m_functionApproximator->computeQ(action);
+	m_functionApproximator->updateWeights(reward + m_gamma * q - m_lastQ, m_alpha);
+	m_lastQ = m_functionApproximator->computeQ(action);
+
 	m_functionApproximator->decayTraces(m_gamma * m_lambda);
 	m_functionApproximator->updateTraces(action);
 }
