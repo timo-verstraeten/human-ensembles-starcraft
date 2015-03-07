@@ -19,12 +19,12 @@ namespace
 std::vector<Key> createKeyVector()
 {
 	std::vector<Key> keys;
-	keys.push_back(Key::K_A);
-	keys.push_back(Key::K_P);
-	keys.push_back(Key::K_V);
-	keys.push_back(Key::K_U);
-	keys.push_back(Key::K_X);
-	keys.push_back(Key::K_L);
+	keys.push_back(BWAPI::K_A);
+	keys.push_back(BWAPI::K_P);
+	keys.push_back(BWAPI::K_V);
+	keys.push_back(BWAPI::K_U);
+	keys.push_back(BWAPI::K_X);
+	keys.push_back(BWAPI::K_L);
 	return keys;
 }
 

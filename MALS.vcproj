@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="NewMALS"
+	Name="Multi-Agent Learning Seminar"
 	ProjectGUID="{BA3CEE6F-05D8-4CFE-9AC2-3B46C60EDEA6}"
-	RootNamespace="NewMALS"
+	RootNamespace="Multi-Agent Learning Seminar"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -175,156 +175,156 @@
 			Name="inih"
 			>
 			<File
-				RelativePath="..\..\inih\ini.c"
+				RelativePath=".\src\inih\ini.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\inih\ini.h"
+				RelativePath=".\src\inih\ini.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\inih\INIReader.cpp"
+				RelativePath=".\src\inih\INIReader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\inih\INIReader.h"
+				RelativePath=".\src\inih\INIReader.h"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\..\Action.h"
+			RelativePath=".\src\Action.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\ActionSelector.cpp"
+			RelativePath=".\src\ActionSelector.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\ActionSelector.h"
+			RelativePath=".\src\ActionSelector.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\AdaptiveObjectiveSelector.cpp"
+			RelativePath=".\src\AdaptiveObjectiveSelector.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\AdaptiveObjectiveSelector.h"
+			RelativePath=".\src\AdaptiveObjectiveSelector.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\CMAC.cpp"
+			RelativePath=".\src\CMAC.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\CMAC.h"
+			RelativePath=".\src\CMAC.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Config.cpp"
+			RelativePath=".\src\Config.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Config.h"
+			RelativePath=".\src\Config.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Dll.cpp"
+			RelativePath=".\src\Dll.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\ErrorLogger.cpp"
+			RelativePath=".\src\ErrorLogger.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\ErrorLogger.h"
+			RelativePath=".\src\ErrorLogger.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Experiment.h"
+			RelativePath=".\src\Experiment.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\FunctionApproximator.cpp"
+			RelativePath=".\src\FunctionApproximator.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\FunctionApproximator.h"
+			RelativePath=".\src\FunctionApproximator.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\HumanAdvicePotential.cpp"
+			RelativePath=".\src\HumanAdvicePotential.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\HumanAdvicePotential.h"
+			RelativePath=".\src\HumanAdvicePotential.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Potential.h"
+			RelativePath=".\src\Potential.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Potentials.h"
+			RelativePath=".\src\Potentials.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SarsaAgent.cpp"
+			RelativePath=".\src\SarsaAgent.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SarsaAgent.h"
+			RelativePath=".\src\SarsaAgent.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarAIModule.cpp"
+			RelativePath=".\src\SeminarAIModule.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarAIModule.h"
+			RelativePath=".\src\SeminarAIModule.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarExperiment.cpp"
+			RelativePath=".\src\SeminarExperiment.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarExperiment.h"
+			RelativePath=".\src\SeminarExperiment.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarTrial.cpp"
+			RelativePath=".\src\SeminarTrial.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SeminarTrial.h"
+			RelativePath=".\src\SeminarTrial.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\SMDPAgent.h"
+			RelativePath=".\src\SMDPAgent.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\State.h"
+			RelativePath=".\src\State.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\StateResolution.cpp"
+			RelativePath=".\src\StateResolution.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\StateResolution.h"
+			RelativePath=".\src\StateResolution.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\tiles2.cpp"
+			RelativePath=".\src\tiles2.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\tiles2.h"
+			RelativePath=".\src\tiles2.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\Trial.h"
+			RelativePath=".\src\Trial.h"
 			>
 		</File>
 	</Files>

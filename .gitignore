@@ -22,3 +22,5 @@ bld/
 # Visual C++ cache files
 *.ncb
 
+# R things
+.Rhistory

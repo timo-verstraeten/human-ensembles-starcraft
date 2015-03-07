@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewMALS", "NewMALS\NewMALS.vcproj", "{BA3CEE6F-05D8-4CFE-9AC2-3B46C60EDEA6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multi-Agent Learning Seminar", "MALS.vcproj", "{BA3CEE6F-05D8-4CFE-9AC2-3B46C60EDEA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
