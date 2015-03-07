@@ -4,7 +4,6 @@
 #include "CMAC.h"
 #include "Config.h"
 #include "ErrorLogger.h"
-#include "HumanAdvice.h"
 #include "HumanAdvicePotential.h"
 #include "Potentials.h"
 #include "SarsaAgent.h"
@@ -106,9 +105,10 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 		++m_died;
 	}
 
-	m_agent->endEpisode(state.hitPointDifference);
+	double finalReward = (m_step > CUTOFF_EPISODE_LIMIT) ? 0 : state.hitPointDifference;
+	m_agent->endEpisode(finalReward);
 
-	m_episodeReward += state.hitPointDifference;
+	m_episodeReward += finalReward;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
 
 	EpisodeOutput episodeOutput;
