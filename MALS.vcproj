@@ -268,6 +268,22 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\QLearningAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\QLearningAgent.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\QValuesAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\QValuesAgent.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\SarsaAgent.cpp"
 			>
 		</File>
