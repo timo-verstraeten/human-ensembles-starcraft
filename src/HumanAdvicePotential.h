@@ -7,7 +7,6 @@
 #include "Action.h"
 
 class FunctionApproximator;
-class HumanAdvice;
 
 struct State;
 
@@ -19,6 +18,7 @@ public:
 
 	virtual double getUnscaled(const State &state, Action action);
 
+	void start(const State &state, Action action);
 	void step(const State &state, Action action);
 
 private:
@@ -29,6 +29,8 @@ private:
 	const double m_alpha;
 	const double m_lambda;
 	const double m_gamma;
+
+	double m_lastQ;
 };
 
 #endif // HUMAN_ADVICE_POTENTIAL_H

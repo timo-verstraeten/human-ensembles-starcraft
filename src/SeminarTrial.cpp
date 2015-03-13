@@ -72,6 +72,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	else if (m_step == 0) {
 		action = m_agent->startEpisode(state, output);
 		for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
+			m_humanAdvicePotentials[i]->start(state, action);
 			*m_humanAdvice[i] = false;
 		}
 	}
