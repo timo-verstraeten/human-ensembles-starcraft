@@ -7,7 +7,7 @@
 class SarsaAgent : public QValuesAgent
 {
 public:
-	SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials);
+	SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential);
 	virtual ~SarsaAgent();
 
 protected:

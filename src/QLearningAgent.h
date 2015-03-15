@@ -7,7 +7,7 @@
 class QLearningAgent : public QValuesAgent
 {
 public:
-	QLearningAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials);
+	QLearningAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potentials);
 	virtual ~QLearningAgent();
 
 protected:

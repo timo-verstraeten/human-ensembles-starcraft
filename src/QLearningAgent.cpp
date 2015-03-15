@@ -4,8 +4,8 @@
 
 #include <cmath>
 
-QLearningAgent::QLearningAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials)
-	: QValuesAgent(alpha, lambda, gamma, actionSelector, functionApproximators, potentials)
+QLearningAgent::QLearningAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
+	: QValuesAgent(alpha, lambda, gamma, actionSelector, functionApproximator, potential)
 {
 }
 

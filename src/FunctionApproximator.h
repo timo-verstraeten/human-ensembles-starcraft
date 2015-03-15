@@ -16,6 +16,7 @@ public:
 	virtual ~FunctionApproximator() {}
 
 	virtual void setState(const State &state);
+	const State &state();
 
 	virtual double computeQ(Action action) = 0;
 	virtual double computeConfidence() = 0;

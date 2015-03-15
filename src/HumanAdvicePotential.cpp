@@ -39,3 +39,13 @@ void HumanAdvicePotential::step(const State &state, Action action)
 	m_functionApproximator->decayTraces(m_gamma * m_lambda);
 	m_functionApproximator->updateTraces(action);
 }
+
+void HumanAdvicePotential::saveWeights(std::ostream &output)
+{
+	m_functionApproximator->saveWeights(output);
+}
+
+void HumanAdvicePotential::loadWeights(std::istream &input)
+{
+	m_functionApproximator->loadWeights(input);
+}

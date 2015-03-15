@@ -107,7 +107,7 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 	}
 
 	double finalReward = (m_step > CUTOFF_EPISODE_LIMIT) ? 0 : state.hitPointDifference;
-	m_agent->endEpisode(finalReward);
+	m_agent->endEpisode(finalReward, output);
 
 	m_episodeReward += finalReward;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
@@ -201,11 +201,21 @@ void SeminarTrial::writeOutput()
 
 void SeminarTrial::writeWeights()
 {
-	std::stringstream ss;
-	ss << m_parameters.outputPath << "/trial" << number() << "_weights";
+	{
+		std::stringstream ss;
+		ss << m_parameters.outputPath << "/trial" << number() << "_weights";
 
-	std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
-	m_agent->saveWeights(file);
+		std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
+		m_agent->saveWeights(file);
+	}
+
+	for (unsigned int i = 0; i < m_humanAdvicePotentials.size(); ++i) {
+		std::stringstream ss;
+		ss <<  m_parameters.outputPath << "/trial" << number() << "_human_advice_" << i;
+
+		std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
+		m_humanAdvicePotentials[i]->saveWeights(file);
+	}
 }
 
 SeminarTrial::Parameters::Parameters(Config &config)
