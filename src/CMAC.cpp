@@ -2,6 +2,7 @@
 
 #include "tiles2.h"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <utility>
@@ -12,7 +13,7 @@ CMAC::CMAC(const StateResolution &stateResolution, unsigned int tilingsPerGroup)
 	m_minimumTrace = 0.01;
 
 	m_numNonzeroTraces = 0;
-	for (int i = 0; i < RL_MEMORY_SIZE; i++) {
+	for (int i = 0; i < RL_MEMORY_SIZE; ++i) {
 		m_weights[i] = 0;
 		m_traces[i] = 0;
 	}
@@ -41,7 +42,7 @@ void CMAC::setState(const State &state)
 double CMAC::computeQ(Action action)
 {
 	double q = 0;
-	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
+	for (unsigned int i = 0; i < m_numberOfTilings; ++i) {
 		q += m_weights[m_tiles[action][i]];
 	}
 	return q;
@@ -66,7 +67,7 @@ double CMAC::computeConfidence()
 	// Paired t-test t-value calculation
 	double S_x = 0;
 	double S_x2 = 0;
-	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
+	for (unsigned int i = 0; i < m_numberOfTilings; ++i) {
 		double x = m_weights[m_tiles[max.first][i]] - m_weights[m_tiles[min.first][i]];
 		S_x += x;
 		S_x2 += x * x;
@@ -79,7 +80,7 @@ void CMAC::updateWeights(double delta, double alpha)
 {
 	double update = delta * alpha / m_numberOfTilings;
 
-	for (int i = 0; i < m_numNonzeroTraces; i++) {
+	for (int i = 0; i < m_numNonzeroTraces; ++i) {
 		int f = m_nonzeroTraces[i];
 		
 		if (f > RL_MEMORY_SIZE || f < 0)
@@ -91,7 +92,7 @@ void CMAC::updateWeights(double delta, double alpha)
 
 void CMAC::clearTraces(Action action)
 {
-	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
+	for (unsigned int i = 0; i < m_numberOfTilings; ++i) {
 		clearTrace(m_tiles[action][i]);
 	}
 }
@@ -112,17 +113,31 @@ void CMAC::decayTraces(double decayRate)
 
 void CMAC::updateTraces(Action action)
 {
-	for (unsigned int i = 0; i < m_numberOfTilings; i++) {
+	for (unsigned int i = 0; i < m_numberOfTilings; ++i) {
 		setTrace(m_tiles[action][i], 1.0); 
 	} 
 }
 
 void CMAC::saveWeights(std::ostream &output)
 {
-	output.write(reinterpret_cast<char*>(&m_weights), RL_MEMORY_SIZE * sizeof(double));
+	unsigned int size = RL_MEMORY_SIZE - std::count(m_weights, m_weights + RL_MEMORY_SIZE, 0);
+	output.write(reinterpret_cast<char*>(&size), sizeof(unsigned int));
+	for (unsigned int i = 0; i < RL_MEMORY_SIZE; ++i) {
+		if (m_weights[i] != 0) {
+			output.write(reinterpret_cast<char*>(&i), sizeof(unsigned int));
+			output.write(reinterpret_cast<char*>(&m_weights[i]), sizeof(double));
+		}
+	}
 
 	output.write(reinterpret_cast<char*>(&m_collisionTable->m), sizeof(long));
-	output.write(reinterpret_cast<char*>(m_collisionTable->data), m_collisionTable->m * sizeof(long));
+	size = m_collisionTable->m - std::count(m_collisionTable->data, m_collisionTable->data + m_collisionTable->m, -1);
+	output.write(reinterpret_cast<char*>(&size), sizeof(unsigned int));
+	for (unsigned int i = 0; i < m_collisionTable->m; ++i) {
+		if (m_collisionTable->data[i] != -1) {
+			output.write(reinterpret_cast<char*>(&i), sizeof(unsigned int));
+			output.write(reinterpret_cast<char*>(&m_collisionTable->data[i]), sizeof(long));
+		}
+	}
 	output.write(reinterpret_cast<char*>(&m_collisionTable->safe), sizeof(int));
 	output.write(reinterpret_cast<char*>(&m_collisionTable->calls), sizeof(long));
 	output.write(reinterpret_cast<char*>(&m_collisionTable->clearhits), sizeof(long));
@@ -131,10 +146,23 @@ void CMAC::saveWeights(std::ostream &output)
 
 void CMAC::loadWeights(std::istream &input)
 {
-	input.read(reinterpret_cast<char*>(&m_weights), RL_MEMORY_SIZE * sizeof(double));
+	unsigned int size;
+	input.read(reinterpret_cast<char*>(&size), sizeof(unsigned int));
+	std::fill(m_weights, m_weights + RL_MEMORY_SIZE, 0);
+	for (unsigned int j = 0; j < size; ++j) {
+		int i;
+		input.read(reinterpret_cast<char*>(&i), sizeof(unsigned int));
+		input.read(reinterpret_cast<char*>(&m_weights[i]), sizeof(double));
+	}
 
 	input.read(reinterpret_cast<char*>(&m_collisionTable->m), sizeof(long));
-	input.read(reinterpret_cast<char*>(m_collisionTable->data), m_collisionTable->m * sizeof(long));
+	input.read(reinterpret_cast<char*>(&size), sizeof(unsigned int));
+	std::fill(m_collisionTable->data, m_collisionTable->data + m_collisionTable->m, -1);
+	for (unsigned int j = 0; j < size; ++j) {
+		int i;
+		input.read(reinterpret_cast<char*>(&i), sizeof(unsigned int));
+		input.read(reinterpret_cast<char*>(&m_collisionTable->data[i]), sizeof(long));
+	}
 	input.read(reinterpret_cast<char*>(&m_collisionTable->safe), sizeof(int));
 	input.read(reinterpret_cast<char*>(&m_collisionTable->calls), sizeof(long));
 	input.read(reinterpret_cast<char*>(&m_collisionTable->clearhits), sizeof(long));
