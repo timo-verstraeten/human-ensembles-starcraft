@@ -21,7 +21,8 @@ public:
 	virtual void saveWeights(std::ostream &output) = 0;
 	virtual void loadWeights(std::istream &input) = 0;
 
-protected:
+	// These methods should only be used through the 'startEpisode', 'step' and 'endEpisode' methods from above.
+	// ONLY to be directly called if you know what they do (they are public, such that an ensemble agent can call these methods for the agents in the ensemble)
 	virtual void initialize(std::ostream &output) = 0;
 	virtual Action nextAction(const State &state, std::ostream &output) = 0;
 	virtual void applyAction(Action action, std::ostream &output) = 0;

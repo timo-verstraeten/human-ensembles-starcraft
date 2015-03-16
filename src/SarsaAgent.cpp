@@ -2,8 +2,8 @@
 
 #include "FunctionApproximator.h"
 
-SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
-	: QValuesAgent(alpha, lambda, gamma, actionSelector, functionApproximator, potential)
+SarsaAgent::SarsaAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
+	: QValuesAgent(alpha, lambda, gamma, policy, functionApproximator, potential)
 {
 }
 

@@ -12,7 +12,9 @@ public:
 	EnsembleAgent(const std::vector<SMDPAgent*> &agents);
 	virtual ~EnsembleAgent();
 
-protected:
+	virtual void saveWeights(std::ostream &output);
+	virtual void loadWeights(std::istream &input);
+
 	virtual void initialize(std::ostream &output);
 	virtual void applyAction(Action action, std::ostream &output);
 	virtual void giveReward(double reward, std::ostream &output);

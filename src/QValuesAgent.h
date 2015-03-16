@@ -6,14 +6,14 @@
 
 #include <utility>
 
-class ActionSelector;
 class FunctionApproximator;
+class Policy;
 class Potential;
 
 class QValuesAgent : public SMDPAgent
 {
 public:
-	QValuesAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential);
+	QValuesAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential);
 	virtual ~QValuesAgent();
 
 	virtual void saveWeights(std::ostream &output);
@@ -21,7 +21,6 @@ public:
 
 	FunctionApproximator &functionApproximator();
 
-protected:
 	virtual void initialize(std::ostream &output);
 	virtual Action nextAction(const State &state, std::ostream &output);
 	virtual void applyAction(Action action, std::ostream &output);
@@ -34,7 +33,7 @@ private:
 	const double m_alpha;
 	const double m_lambda;
 	const double m_gamma;
-	ActionSelector *m_actionSelector; // TODO Change to some kind of Policy interface
+	Policy *m_policy;
 	FunctionApproximator *m_functionApproximator;
 	Potential *m_potential;
 

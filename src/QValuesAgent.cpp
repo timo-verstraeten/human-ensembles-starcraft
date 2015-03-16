@@ -1,14 +1,14 @@
 #include "QValuesAgent.h"
 
-#include "ActionSelector.h"
 #include "ErrorLogger.h"
 #include "FunctionApproximator.h"
+#include "Policy.h"
 #include "Potential.h"
 
-QValuesAgent::QValuesAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
-	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_actionSelector(actionSelector), m_functionApproximator(functionApproximator), m_potential(potential), m_pendingReward(false, 0)
+QValuesAgent::QValuesAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
+	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_policy(policy), m_functionApproximator(functionApproximator), m_potential(potential), m_pendingReward(false, 0)
 {
-	ErrorLogger::instance().assert(m_actionSelector != 0, "ActionSelector is a null pointer!");
+	ErrorLogger::instance().assert(m_policy != 0, "ActionSelector is a null pointer!");
 	ErrorLogger::instance().assert(m_functionApproximator != 0, "FunctionApproximator is a null pointer!");
 	ErrorLogger::instance().assert(m_gamma == 1.0, "Gamma is assumed to be equal to 1.0!");
 }
@@ -21,8 +21,8 @@ QValuesAgent::~QValuesAgent()
 	delete m_functionApproximator;
 	m_functionApproximator = 0;
 
-	delete m_actionSelector;
-	m_actionSelector = 0;
+	delete m_policy;
+	m_policy = 0;
 }
 
 void QValuesAgent::saveWeights(std::ostream &output)
@@ -52,10 +52,7 @@ void QValuesAgent::initialize(std::ostream &output)
 Action QValuesAgent::nextAction(const State &state, std::ostream &output)
 {
 	m_functionApproximator->setState(state);
-
-	std::vector<FunctionApproximator*> functionApproximators;
-	functionApproximators.push_back(m_functionApproximator); // TODO Remove temporary vector, when ActionSelector is replaced by some kind of Policy interface/
-	m_actionSelector->select(functionApproximators, output);
+	return m_policy->selectAction(*m_functionApproximator, output);
 }
 
 void QValuesAgent::applyAction(Action action, std::ostream &output)

@@ -1,11 +1,13 @@
 #include "SeminarTrial.h"
 
-#include "AdaptiveObjectiveSelector.h"
+#include "AdaptiveObjectiveSelection.h"
 #include "CMAC.h"
 #include "Config.h"
+#include "EpsilonGreedyPolicy.h"
 #include "ErrorLogger.h"
 #include "HumanAdvicePotential.h"
 #include "Potentials.h"
+#include "QLearningAgent.h"
 #include "SarsaAgent.h"
 
 #include <algorithm>
@@ -31,15 +33,15 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		potentialStrings.push_back("");
 	}
 
-	std::vector<Potential*> potentials;
-	std::vector<FunctionApproximator*> functionApproximators;
+	std::vector<QValuesAgent*> agents;
 	for (unsigned int i = 0; i < potentialStrings.size(); ++i) {
-		potentials.push_back(createPotential(potentialStrings[i], config));
-		functionApproximators.push_back(new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings()));
+		Policy *policy = new EpsilonGreedyPolicy(EPSILON);
+		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
+		Potential *potential = createPotential(potentialStrings[i], config);
+		agents.push_back(new QLearningAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
 	}
-
-	ActionSelector *actionSelector = new AdaptiveObjectiveSelector(EPSILON);
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, actionSelector, functionApproximators, potentials);
+	
+	m_agent = new AdaptiveObjectiveSelection(agents, EPSILON);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {

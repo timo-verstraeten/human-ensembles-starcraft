@@ -4,8 +4,8 @@
 
 #include <cmath>
 
-QLearningAgent::QLearningAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, FunctionApproximator *functionApproximator, Potential *potential)
-	: QValuesAgent(alpha, lambda, gamma, actionSelector, functionApproximator, potential)
+QLearningAgent::QLearningAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
+	: QValuesAgent(alpha, lambda, gamma, policy, functionApproximator, potential)
 {
 }
 
