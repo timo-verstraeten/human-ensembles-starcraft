@@ -132,7 +132,7 @@ void CMAC::saveWeights(std::ostream &output)
 	output.write(reinterpret_cast<char*>(&m_collisionTable->m), sizeof(long));
 	size = m_collisionTable->m - std::count(m_collisionTable->data, m_collisionTable->data + m_collisionTable->m, -1);
 	output.write(reinterpret_cast<char*>(&size), sizeof(unsigned int));
-	for (unsigned int i = 0; i < m_collisionTable->m; ++i) {
+	for (unsigned int i = 0; i < static_cast<unsigned long>(m_collisionTable->m); ++i) {
 		if (m_collisionTable->data[i] != -1) {
 			output.write(reinterpret_cast<char*>(&i), sizeof(unsigned int));
 			output.write(reinterpret_cast<char*>(&m_collisionTable->data[i]), sizeof(long));

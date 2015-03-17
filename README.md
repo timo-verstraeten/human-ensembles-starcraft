@@ -20,14 +20,9 @@ humanAdviceGamma = 0.5
 [EXPERIMENT]
 name = Test
 numTrials = 5
-showLearning = 0
 
 [GENERAL]
 outputPath = G:\Project\
 enableLogging = true
 saveWeights = false
-saveReplay = 0
 ```
-
-
-N.B.: `saveReplay` and `showLearning` are unused/unimplemented in `Config`

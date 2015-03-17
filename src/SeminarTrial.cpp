@@ -124,7 +124,12 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 const std::vector<bool*> &SeminarTrial::humanAdvice()
 {
-	return m_humanAdvice;
+	if (m_episode < m_parameters.humanAdviceEpisodes) {
+		return m_humanAdvice;
+	}
+	else {
+		return Trial::humanAdvice();
+	}
 }
 
 Potential *SeminarTrial::createPotential(const std::string &description, Config &config)

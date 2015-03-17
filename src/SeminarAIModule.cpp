@@ -50,7 +50,6 @@ SeminarAIModule::~SeminarAIModule()
 
 void SeminarAIModule::onStart()
 {
-	//Broodwar->setLocalSpeed(-1); // TODO
 	Broodwar->setLocalSpeed(0);
 	//Broodwar->setGUI(false);
   	Broodwar->setScreenPosition(250,300); 	 // Center the screen so we actually see the enemy
@@ -66,7 +65,10 @@ void SeminarAIModule::onStart()
 void SeminarAIModule::onFrame()
 {
 	if (m_experiment && m_trial) {
-		updateHumanAdvice(m_trial->humanAdvice());
+		const std::vector<bool*> &humanAdvice = m_trial->humanAdvice();
+		m_log_file << "Are we huuuuman (advice)? " << humanAdvice.size() << std::endl << std::endl << std::endl;
+		Broodwar->setLocalSpeed(humanAdvice.size() > 0 ? -1 : 0);
+		updateHumanAdvice(humanAdvice);
 	}
 	
 	if (m_experiment && Broodwar->getFrameCount() % 30 == 0) {
