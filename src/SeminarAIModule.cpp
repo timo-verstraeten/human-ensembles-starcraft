@@ -66,7 +66,6 @@ void SeminarAIModule::onFrame()
 {
 	if (m_experiment && m_trial) {
 		const std::vector<bool*> &humanAdvice = m_trial->humanAdvice();
-		m_log_file << "Are we huuuuman (advice)? " << humanAdvice.size() << std::endl << std::endl << std::endl;
 		Broodwar->setLocalSpeed(humanAdvice.size() > 0 ? -1 : 0);
 		updateHumanAdvice(humanAdvice);
 	}
