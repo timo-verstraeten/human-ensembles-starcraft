@@ -1,11 +1,13 @@
 #include "SeminarTrial.h"
 
-#include "AdaptiveObjectiveSelector.h"
+#include "AdaptiveObjectiveSelection.h"
 #include "CMAC.h"
 #include "Config.h"
+#include "EpsilonGreedyPolicy.h"
 #include "ErrorLogger.h"
 #include "HumanAdvicePotential.h"
 #include "Potentials.h"
+#include "QLearningAgent.h"
 #include "SarsaAgent.h"
 
 #include <algorithm>
@@ -31,15 +33,15 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		potentialStrings.push_back("");
 	}
 
-	std::vector<Potential*> potentials;
-	std::vector<FunctionApproximator*> functionApproximators;
+	std::vector<QValuesAgent*> agents;
 	for (unsigned int i = 0; i < potentialStrings.size(); ++i) {
-		potentials.push_back(createPotential(potentialStrings[i], config));
-		functionApproximators.push_back(new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings()));
+		Policy *policy = new EpsilonGreedyPolicy(EPSILON);
+		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
+		Potential *potential = createPotential(potentialStrings[i], config);
+		agents.push_back(new QLearningAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
 	}
-
-	ActionSelector *actionSelector = new AdaptiveObjectiveSelector(EPSILON);
-	m_agent = new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, actionSelector, functionApproximators, potentials);
+	
+	m_agent = new AdaptiveObjectiveSelection(agents, EPSILON);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {
@@ -107,7 +109,7 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 	}
 
 	double finalReward = (m_step > CUTOFF_EPISODE_LIMIT) ? 0 : state.hitPointDifference;
-	m_agent->endEpisode(finalReward);
+	m_agent->endEpisode(finalReward, output);
 
 	m_episodeReward += finalReward;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
@@ -206,11 +208,21 @@ void SeminarTrial::writeOutput()
 
 void SeminarTrial::writeWeights()
 {
-	std::stringstream ss;
-	ss << m_parameters.outputPath << "/trial" << number() << "_weights";
+	{
+		std::stringstream ss;
+		ss << m_parameters.outputPath << "/trial" << number() << "_weights";
 
-	std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
-	m_agent->saveWeights(file);
+		std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
+		m_agent->saveWeights(file);
+	}
+
+	for (unsigned int i = 0; i < m_humanAdvicePotentials.size(); ++i) {
+		std::stringstream ss;
+		ss <<  m_parameters.outputPath << "/trial" << number() << "_human_advice_" << i;
+
+		std::ofstream file(ss.str().c_str(), std::ios::out | std::ios::binary);
+		m_humanAdvicePotentials[i]->saveWeights(file);
+	}
 }
 
 SeminarTrial::Parameters::Parameters(Config &config)

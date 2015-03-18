@@ -6,6 +6,9 @@
 
 #include "Action.h"
 
+#include <istream>
+#include <ostream>
+
 class FunctionApproximator;
 
 struct State;
@@ -20,6 +23,9 @@ public:
 
 	void start(const State &state, Action action);
 	void step(const State &state, Action action);
+
+	void saveWeights(std::ostream &output);
+	void loadWeights(std::istream &input);
 
 private:
 	const bool &m_humanAdvice;

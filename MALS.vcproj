@@ -122,19 +122,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\ActionSelector.cpp"
+			RelativePath=".\src\AdaptiveObjectiveSelection.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\src\ActionSelector.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\AdaptiveObjectiveSelector.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\AdaptiveObjectiveSelector.h"
+			RelativePath=".\src\AdaptiveObjectiveSelection.h"
 			>
 		</File>
 		<File
@@ -158,6 +150,22 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\EnsembleAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\EnsembleAgent.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\EpsilonGreedyPolicy.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\EpsilonGreedyPolicy.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\ErrorLogger.cpp"
 			>
 		</File>
@@ -178,11 +186,23 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\GreedyPolicy.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\GreedyPolicy.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\HumanAdvicePotential.cpp"
 			>
 		</File>
 		<File
 			RelativePath=".\src\HumanAdvicePotential.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\Policy.h"
 			>
 		</File>
 		<File
@@ -239,6 +259,10 @@
 		</File>
 		<File
 			RelativePath=".\src\SeminarTrial.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\SMDPAgent.cpp"
 			>
 		</File>
 		<File

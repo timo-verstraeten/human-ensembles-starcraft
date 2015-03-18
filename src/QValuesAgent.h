@@ -4,38 +4,45 @@
 
 #include "SMDPAgent.h"
 
-#include <vector>
+#include <utility>
 
-class ActionSelector;
 class FunctionApproximator;
+class Policy;
 class Potential;
 
 class QValuesAgent : public SMDPAgent
 {
 public:
-	QValuesAgent(double alpha, double lambda, double gamma, ActionSelector *actionSelector, const std::vector<FunctionApproximator*> &functionApproximators, const std::vector<Potential*> &potentials);
+	QValuesAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential);
 	virtual ~QValuesAgent();
-
-	virtual Action startEpisode(const State &state, std::ostream &output);
-	virtual Action step(double reward, const State &state, std::ostream &output);
-	virtual void endEpisode(double reward);
 
 	virtual void saveWeights(std::ostream &output);
 	virtual void loadWeights(std::istream &input);
 
+	FunctionApproximator &functionApproximator();
+	const Policy &policy() const;
+
+	virtual void initialize(std::ostream &output);
+	virtual Action nextAction(const State &state, std::ostream &output);
+	virtual void applyAction(Action action, std::ostream &output);
+	virtual void giveReward(double reward, std::ostream &output);
+	virtual void finalize(std::ostream &output);
+
 protected:
-	virtual double nextQ(FunctionApproximator *functionApproximator, Action selected) = 0;
+	virtual double nextQ(Action selected) = 0;
+
+	FunctionApproximator *m_functionApproximator;
 
 private:
 	const double m_alpha;
 	const double m_lambda;
 	const double m_gamma;
-	ActionSelector *m_actionSelector;
-	std::vector<FunctionApproximator*> m_functionApproximators;
-	std::vector<Potential*> m_potentials;
+	Policy *m_policy;
+	Potential *m_potential;
 
-	std::vector<double> m_lastQs;
-	std::vector<double> m_lastPotentials;
+	std::pair<bool, double> m_pendingReward;
+	double m_lastQ;
+	double m_lastPotential;
 };
 
 #endif // INC_Q_VALUES_AGENT_H
