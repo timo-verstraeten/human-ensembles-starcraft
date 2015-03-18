@@ -20,6 +20,7 @@ public:
 	virtual void loadWeights(std::istream &input);
 
 	FunctionApproximator &functionApproximator();
+	const Policy &policy() const;
 
 	virtual void initialize(std::ostream &output);
 	virtual Action nextAction(const State &state, std::ostream &output);
@@ -27,14 +28,16 @@ public:
 	virtual void giveReward(double reward, std::ostream &output);
 	virtual void finalize(std::ostream &output);
 
-	virtual double nextQ(FunctionApproximator *functionApproximator, Action selected) = 0; // TODO Make m_functionApproximator protected?
+protected:
+	virtual double nextQ(Action selected) = 0;
+
+	FunctionApproximator *m_functionApproximator;
 
 private:
 	const double m_alpha;
 	const double m_lambda;
 	const double m_gamma;
 	Policy *m_policy;
-	FunctionApproximator *m_functionApproximator;
 	Potential *m_potential;
 
 	std::pair<bool, double> m_pendingReward;

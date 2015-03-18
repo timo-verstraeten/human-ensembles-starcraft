@@ -10,7 +10,8 @@ public:
 	GreedyPolicy();
 	virtual ~GreedyPolicy();
 
-	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output);
+	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
+	virtual std::vector<double> selectionProbabilities(FunctionApproximator &functionApproximator) const;
 };
 
 #endif // INC_GREEDY_POLICY_H

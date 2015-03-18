@@ -20,7 +20,8 @@ public:
 	virtual void giveReward(double reward, std::ostream &output);
 	virtual void finalize(std::ostream &output);
 
-	std::vector<SMDPAgent*> m_agents;
+protected:
+	const std::vector<SMDPAgent*> m_agents;
 };
 
 #endif // INC_ENSEMBLE_AGENT_H

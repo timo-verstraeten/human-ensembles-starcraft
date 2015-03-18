@@ -11,7 +11,7 @@ SarsaAgent::~SarsaAgent()
 {
 }
 
-double SarsaAgent::nextQ(FunctionApproximator *functionApproximator, Action selected)
+double SarsaAgent::nextQ(Action selected)
 {
-	return functionApproximator->computeQ(selected);
+	return m_functionApproximator->computeQ(selected);
 }

@@ -15,7 +15,6 @@ EnsembleAgent::~EnsembleAgent()
 {
 	for (unsigned int i = 0; i < m_agents.size(); ++i) {
 		delete m_agents[i];
-		m_agents[i] = 0;
 	}
 }
 

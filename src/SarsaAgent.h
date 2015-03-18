@@ -10,8 +10,8 @@ public:
 	SarsaAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential);
 	virtual ~SarsaAgent();
 
-protected:
-	virtual double nextQ(FunctionApproximator *functionApproximator, Action selected);
+private:
+	virtual double nextQ(Action selected);
 };
 
 #endif // INC_SARSA_AGENT_H

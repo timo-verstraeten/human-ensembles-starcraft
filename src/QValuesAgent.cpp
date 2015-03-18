@@ -8,7 +8,7 @@
 QValuesAgent::QValuesAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
 	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_policy(policy), m_functionApproximator(functionApproximator), m_potential(potential), m_pendingReward(false, 0)
 {
-	ErrorLogger::instance().assert(m_policy != 0, "ActionSelector is a null pointer!");
+	ErrorLogger::instance().assert(m_policy != 0, "Policy is a null pointer!");
 	ErrorLogger::instance().assert(m_functionApproximator != 0, "FunctionApproximator is a null pointer!");
 	ErrorLogger::instance().assert(m_gamma == 1.0, "Gamma is assumed to be equal to 1.0!");
 }
@@ -40,6 +40,10 @@ FunctionApproximator &QValuesAgent::functionApproximator()
 	return *m_functionApproximator;
 }
 
+const Policy &QValuesAgent::policy() const {
+	return *m_policy;
+}
+
 void QValuesAgent::initialize(std::ostream &output)
 {
 	if (m_gamma != 1.0) {
@@ -57,7 +61,7 @@ Action QValuesAgent::nextAction(const State &state, std::ostream &output)
 
 void QValuesAgent::applyAction(Action action, std::ostream &output)
 {
-	double q = nextQ(m_functionApproximator, action);
+	double q = nextQ(action);
 	double potential = 0;
 	if (m_potential) {
 		potential = m_potential->get(m_functionApproximator->state(), action); // TODO Is this right? Or should this be the resulting action of the nextQ call?
