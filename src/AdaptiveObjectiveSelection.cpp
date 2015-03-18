@@ -3,6 +3,8 @@
 #include "FunctionApproximator.h"
 #include "QValuesAgent.h"
 
+#include <sstream>
+
 AdaptiveObjectiveSelection::AdaptiveObjectiveSelection(const std::vector<QValuesAgent*> &agents, double epsilon)
 	: EnsembleAgent(std::vector<SMDPAgent*>(agents.begin(), agents.end())), m_epsilonGreedyPolicy(epsilon)
 {
@@ -14,8 +16,9 @@ AdaptiveObjectiveSelection::~AdaptiveObjectiveSelection()
 
 Action AdaptiveObjectiveSelection::nextAction(const State &state, std::ostream &output)
 {
+	std::stringstream dummy;
 	for (unsigned int i = 0; i < m_agents.size(); ++i) {
-		m_agents[i]->nextAction(state, output); // Don't care about the chosen action, we just want to make sure the agent has the right state set
+		m_agents[i]->nextAction(state, dummy); // Don't care about the chosen action, we just want to make sure the agent has the right state set
 	}
 
 	return m_epsilonGreedyPolicy.selectAction(selectFunctionApproximator(output), output);
