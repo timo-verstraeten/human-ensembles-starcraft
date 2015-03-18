@@ -22,7 +22,7 @@ public:
 	static unsigned int randomInt(unsigned int maxRange) { return static_cast<unsigned int>(random() * maxRange); }
 	static unsigned int randomChoice(const std::vector<double> &weights) {
 		double total = std::accumulate(weights.begin(), weights.end(), 0.0);
-		double r = total*Policy::random();
+		double r = total*random();
 		unsigned int i = 0;
 		while (weights[i] < r) {
 			r -= weights[i++];

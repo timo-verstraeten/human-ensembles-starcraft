@@ -130,6 +130,30 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\BoltzmannAddition.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannAddition.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannEnsembleAgent.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannEnsembleAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannMultiplication.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannMultiplication.cpp"
+			>
+		</File>
+		<File
 			RelativePath=".\src\CMAC.cpp"
 			>
 		</File>
