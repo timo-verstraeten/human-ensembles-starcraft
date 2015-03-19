@@ -130,15 +130,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\BoltzmannAddition.h"
-			>
-		</File>
-		<File
 			RelativePath=".\src\BoltzmannAddition.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\src\BoltzmannEnsembleAgent.h"
+			RelativePath=".\src\BoltzmannAddition.h"
 			>
 		</File>
 		<File
@@ -146,11 +142,15 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\BoltzmannMultiplication.h"
+			RelativePath=".\src\BoltzmannEnsembleAgent.h"
 			>
 		</File>
 		<File
 			RelativePath=".\src\BoltzmannMultiplication.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\BoltzmannMultiplication.h"
 			>
 		</File>
 		<File
@@ -226,6 +226,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\MajorityVoting.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\MajorityVoting.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\Policy.h"
 			>
 		</File>
@@ -235,6 +243,14 @@
 		</File>
 		<File
 			RelativePath=".\src\Potentials.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\PreferenceBasedEnsembleAgent.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\PreferenceBasedEnsembleAgent.h"
 			>
 		</File>
 		<File
