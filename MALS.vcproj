@@ -295,6 +295,7 @@
 				>
 			</File>
 		</Filter>
+
 		<Filter
 			Name="policies">
 			<File
@@ -319,13 +320,8 @@
 			</File>
 		</Filter>
 
-
 		<File
 			RelativePath=".\src\Dll.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Experiment.h"
 			>
 		</File>
 		<File
@@ -337,19 +333,15 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\SeminarExperiment.cpp"
+			RelativePath=".\src\Experiment.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\src\SeminarExperiment.h"
+			RelativePath=".\src\Experiment.h"
 			>
 		</File>
 		<File
-			RelativePath=".\src\SeminarTrial.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SeminarTrial.h"
+			RelativePath=".\src\Trial.cpp"
 			>
 		</File>
 		<File

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INC_SEMINAR_AI_MODULE_H
-#define INC_SEMINAR_AI_MODULE_H
+#ifndef INC_MAIN_H
+#define INC_MAIN_H
 
 #include "env/Action.h"
 #include "env/State.h"
@@ -16,11 +16,11 @@
 class Experiment;
 class Trial;
 
-class SeminarAIModule : public BWAPI::AIModule
+class Main : public BWAPI::AIModule
 {
 public:
-	SeminarAIModule();
-	virtual ~SeminarAIModule();
+	Main();
+	virtual ~Main();
 
 	virtual void onStart();
 	virtual void onFrame();
@@ -46,4 +46,4 @@ private:
 	static const std::vector<BWAPI::Key> INPUT_KEYS;
 };
 
-#endif // INC_SEMINAR_AI_MODULE_H
+#endif // INC_MAIN_H

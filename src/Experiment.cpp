@@ -1,16 +1,16 @@
-#include "SeminarExperiment.h"
+#include "Experiment.h"
 
 #include "util/Config.h"
 
-SeminarExperiment::SeminarExperiment(Config &config)
+Experiment::Experiment(Config &config)
 	: m_config(config), m_trials(config.getNumTrials()), m_nextTrial(0)
 {
 }
 
-Trial *SeminarExperiment::nextTrial()
+Trial *Experiment::nextTrial()
 {
 	if (m_nextTrial < m_trials) {
-		Trial *trial = new SeminarTrial(m_nextTrial, m_config);
+		Trial *trial = new Trial(m_nextTrial, m_config);
 		++m_nextTrial;
 		return trial;
 	}
