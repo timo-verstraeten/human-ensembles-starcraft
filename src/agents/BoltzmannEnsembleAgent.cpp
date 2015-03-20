@@ -1,6 +1,6 @@
 #include "BoltzmannEnsembleAgent.h"
 
-#include "Policy.h"
+#include "../policies/Policy.h"
 #include "QValuesAgent.h"
 
 #include <algorithm>

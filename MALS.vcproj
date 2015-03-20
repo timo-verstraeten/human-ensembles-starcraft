@@ -98,103 +98,230 @@
 	</References>
 	<Files>
 		<Filter
-			Name="inih"
+			Name="util"
 			>
+			<Filter
+				Name="inih"
+				>
+				<File
+					RelativePath=".\src\util\inih\ini.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\util\inih\ini.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\util\inih\INIReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\util\inih\INIReader.h"
+					>
+				</File>
+			</Filter>
 			<File
-				RelativePath=".\src\inih\ini.c"
+				RelativePath=".\src\util\Config.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\inih\ini.h"
+				RelativePath=".\src\util\Config.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\inih\INIReader.cpp"
+				RelativePath=".\src\util\ErrorLogger.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\inih\INIReader.h"
+				RelativePath=".\src\util\ErrorLogger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\tiles2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\tiles2.h"
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\src\Action.h"
+
+		<Filter
+			Name="agents"
 			>
-		</File>
-		<File
-			RelativePath=".\src\AdaptiveObjectiveSelection.cpp"
+			<File
+				RelativePath=".\src\agents\AdaptiveObjectiveSelection.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\AdaptiveObjectiveSelection.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannAddition.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannAddition.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannEnsembleAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannEnsembleAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannMultiplication.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\BoltzmannMultiplication.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\EnsembleAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\EnsembleAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\PreferenceBasedEnsembleAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\PreferenceBasedEnsembleAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\QLearningAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\QLearningAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\QValuesAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\QValuesAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\SarsaAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\SarsaAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\SMDPAgent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\SMDPAgent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\MajorityVoting.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\MajorityVoting.h"
+				>
+			</File>
+		</Filter>
+
+		<Filter
+			Name="env"
 			>
-		</File>
-		<File
-			RelativePath=".\src\AdaptiveObjectiveSelection.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannAddition.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannAddition.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannEnsembleAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannEnsembleAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannMultiplication.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\BoltzmannMultiplication.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\CMAC.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\CMAC.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Config.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Config.h"
-			>
-		</File>
+			<File
+				RelativePath=".\src\env\Action.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\CMAC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\CMAC.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\State.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\StateResolution.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\StateResolution.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\FunctionApproximator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\FunctionApproximator.h"
+				>
+			</File>
+		</Filter>
+
+		<Filter
+			Name="potentials">
+			<File
+				RelativePath=".\src\potentials\HumanAdvicePotential.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\potentials\HumanAdvicePotential.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\potentials\Potential.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\potentials\Potentials.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="policies">
+			<File
+				RelativePath=".\src\policies\EpsilonGreedyPolicy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\EpsilonGreedyPolicy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\Policy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\GreedyPolicy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\GreedyPolicy.h"
+				>
+			</File>
+		</Filter>
+
+
 		<File
 			RelativePath=".\src\Dll.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\EnsembleAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\EnsembleAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\EpsilonGreedyPolicy.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\EpsilonGreedyPolicy.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\ErrorLogger.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\ErrorLogger.h"
 			>
 		</File>
 		<File
@@ -202,87 +329,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\FunctionApproximator.cpp"
+			RelativePath=".\src\Main.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\src\FunctionApproximator.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\GreedyPolicy.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\GreedyPolicy.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\HumanAdvicePotential.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\HumanAdvicePotential.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\MajorityVoting.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\MajorityVoting.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Policy.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Potential.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\Potentials.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\PreferenceBasedEnsembleAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\PreferenceBasedEnsembleAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\QLearningAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\QLearningAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\QValuesAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\QValuesAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SarsaAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SarsaAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SeminarAIModule.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SeminarAIModule.h"
+			RelativePath=".\src\Main.h"
 			>
 		</File>
 		<File
@@ -299,34 +350,6 @@
 		</File>
 		<File
 			RelativePath=".\src\SeminarTrial.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SMDPAgent.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\SMDPAgent.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\State.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\StateResolution.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\StateResolution.h"
-			>
-		</File>
-		<File
-			RelativePath=".\src\tiles2.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\tiles2.h"
 			>
 		</File>
 		<File

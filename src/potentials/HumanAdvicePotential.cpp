@@ -1,6 +1,6 @@
 #include "HumanAdvicePotential.h"
 
-#include "FunctionApproximator.h"
+#include "../env/FunctionApproximator.h"
 
 HumanAdvicePotential::HumanAdvicePotential(double scaling, const bool &humanAdvice, FunctionApproximator *functionApproximator, double alpha, double lambda, double gamma)
 	: Potential(scaling), m_humanAdvice(humanAdvice), m_functionApproximator(functionApproximator), m_alpha(alpha), m_lambda(lambda), m_gamma(gamma)

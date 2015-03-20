@@ -2,7 +2,7 @@
 #ifndef INC_SMDP_AGENT_H
 #define INC_SMDP_AGENT_H
 
-#include "Action.h"
+#include "../env/Action.h"
 
 #include <istream>
 #include <ostream>

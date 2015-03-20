@@ -1,6 +1,6 @@
 #include "PreferenceBasedEnsembleAgent.h"
 
-#include "Policy.h"
+#include "../policies/Policy.h"
 
 #include <algorithm>
 #include <cmath>

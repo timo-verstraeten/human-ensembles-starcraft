@@ -4,7 +4,7 @@
 
 #include "EnsembleAgent.h"
 
-#include "EpsilonGreedyPolicy.h"
+#include "../policies/EpsilonGreedyPolicy.h"
 
 class QValuesAgent;
 

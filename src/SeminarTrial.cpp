@@ -1,14 +1,18 @@
 #include "SeminarTrial.h"
 
-#include "AdaptiveObjectiveSelection.h"
-#include "CMAC.h"
-#include "Config.h"
-#include "EpsilonGreedyPolicy.h"
-#include "ErrorLogger.h"
-#include "HumanAdvicePotential.h"
-#include "Potentials.h"
-#include "QLearningAgent.h"
-#include "SarsaAgent.h"
+#include "agents/AdaptiveObjectiveSelection.h"
+#include "env/CMAC.h"
+#include "util/Config.h"
+#include "policies/EpsilonGreedyPolicy.h"
+#include "util/ErrorLogger.h"
+#include "potentials/HumanAdvicePotential.h"
+#include "potentials/Potentials.h"
+#include "agents/QLearningAgent.h"
+#include "agents/SarsaAgent.h"
+#include "policies/EpsilonGreedyPolicy.h"
+#include "env/CMAC.h"
+#include "agents/QLearningAgent.h"
+#include "agents/AdaptiveObjectiveSelection.h"
 
 #include <algorithm>
 #include <fstream>

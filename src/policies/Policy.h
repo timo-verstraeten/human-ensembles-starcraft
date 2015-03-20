@@ -2,7 +2,7 @@
 #ifndef INC_POLICY_H
 #define INC_POLICY_H
 
-#include "Action.h"
+#include "../env/Action.h"
 
 #include <numeric>
 #include <ostream>

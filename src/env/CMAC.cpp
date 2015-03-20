@@ -1,6 +1,6 @@
 #include "CMAC.h"
 
-#include "tiles2.h"
+#include "../util/tiles2.h"
 
 #include <algorithm>
 #include <cmath>

@@ -2,7 +2,7 @@
 #ifndef INC_POTENTIAL_H
 #define INC_POTENTIAL_H
 
-#include "Action.h"
+#include "../env/Action.h"
 
 struct State;
 

@@ -4,7 +4,8 @@
 
 #include "Potential.h"
 
-#include "State.h"
+#include "../env/State.h"
+#include "../env/Action.h"
 
 class ZeroPotential : public Potential
 {

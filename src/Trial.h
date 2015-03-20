@@ -2,8 +2,8 @@
 #ifndef INC_TRIAL_H
 #define INC_TRIAL_H
 
-#include "Action.h"
-#include "State.h"
+#include "env/Action.h"
+#include "env/State.h"
 
 #include <ostream>
 #include <string>

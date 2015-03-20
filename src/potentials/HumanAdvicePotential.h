@@ -4,7 +4,7 @@
 
 #include "Potential.h"
 
-#include "Action.h"
+#include "../env/Action.h"
 
 #include <istream>
 #include <ostream>

@@ -2,9 +2,9 @@
 #ifndef INC_SEMINAR_AI_MODULE_H
 #define INC_SEMINAR_AI_MODULE_H
 
-#include "Action.h"
-#include "Config.h"
-#include "State.h"
+#include "env/Action.h"
+#include "env/State.h"
+#include "util/Config.h"
 
 #include <BWAPI.h>
 

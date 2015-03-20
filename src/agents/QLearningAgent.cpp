@@ -1,6 +1,6 @@
 #include "QLearningAgent.h"
 
-#include "FunctionApproximator.h"
+#include "../env/FunctionApproximator.h"
 
 #include <cmath>
 

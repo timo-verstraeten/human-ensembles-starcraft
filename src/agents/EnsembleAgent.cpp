@@ -1,6 +1,6 @@
 #include "EnsembleAgent.h"
 
-#include "ErrorLogger.h"
+#include "../util/ErrorLogger.h"
 
 EnsembleAgent::EnsembleAgent(const std::vector<SMDPAgent*> &agents)
 	: m_agents(agents)

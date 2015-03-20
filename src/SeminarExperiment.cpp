@@ -1,8 +1,6 @@
 #include "SeminarExperiment.h"
 
-#include "Config.h"
-
-#include <sstream>
+#include "util/Config.h"
 
 SeminarExperiment::SeminarExperiment(Config &config)
 	: m_config(config), m_trials(config.getNumTrials()), m_nextTrial(0)

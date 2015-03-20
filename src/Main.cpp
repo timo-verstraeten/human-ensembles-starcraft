@@ -1,7 +1,7 @@
-#include "SeminarAIModule.h"
+#include "Main.h"
 
 #include "Experiment.h"
-#include "ErrorLogger.h"
+#include "util/ErrorLogger.h"
 #include "SeminarExperiment.h"
 #include "Trial.h"
 

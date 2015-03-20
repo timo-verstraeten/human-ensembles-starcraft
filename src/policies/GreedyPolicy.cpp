@@ -1,6 +1,6 @@
 #include "GreedyPolicy.h"
 
-#include "FunctionApproximator.h"
+#include "../env/FunctionApproximator.h"
 
 GreedyPolicy::GreedyPolicy()
 {
