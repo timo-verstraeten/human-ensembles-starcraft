@@ -1,4 +1,4 @@
-#include "Trial.h"
+#include "SeminarTrial.h"
 
 #include "agents/AdaptiveObjectiveSelection.h"
 #include "env/CMAC.h"
@@ -18,19 +18,19 @@
 #include <fstream>
 #include <sstream>
 
-const double Trial::STEP_REWARD = -0.3;
+const double SeminarTrial::STEP_REWARD = -0.3;
 
-const double Trial::GAMMA = 1.0;
-const double Trial::EPSILON = 0.1;
+const double SeminarTrial::GAMMA = 1.0;
+const double SeminarTrial::EPSILON = 0.1;
 
-const unsigned int Trial::CUTOFF_EPISODE_LIMIT = 1000;
+const unsigned int SeminarTrial::CUTOFF_EPISODE_LIMIT = 1000;
 
-const double Trial::DISTANCE_RESOLUTION = 30;
-const double Trial::HEALTH_RESOLUTION = 10;
-const double Trial::ANGLE_RESOLUTION = 0.7;
+const double SeminarTrial::DISTANCE_RESOLUTION = 30;
+const double SeminarTrial::HEALTH_RESOLUTION = 10;
+const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
-Trial::Trial(unsigned int number, Config &config)
-	: m_number(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+SeminarTrial::SeminarTrial(unsigned int number, Config &config)
+	: Trial(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
 {
 	std::vector<std::string> potentialStrings = config.getShapingPotentials();
 	if (potentialStrings.size() == 0) {
@@ -53,7 +53,7 @@ Trial::Trial(unsigned int number, Config &config)
 	}
 }
 
-Trial::~Trial()
+SeminarTrial::~SeminarTrial()
 {
 	writeOutput();
 	if (m_parameters.saveWeights) {
@@ -68,7 +68,7 @@ Trial::~Trial()
 	// m_humanAdvicePotentials are owned by m_agent, like any other potential, and should not be deleted here
 }
 
-Action Trial::step(const State &state, std::ostream &output)
+Action SeminarTrial::step(const State &state, std::ostream &output)
 {
 	Action action;
 	if (m_step > CUTOFF_EPISODE_LIMIT) {
@@ -103,7 +103,7 @@ Action Trial::step(const State &state, std::ostream &output)
 	return action;
 }
 
-bool Trial::nextEpisode(const State &state, std::ostream &output)
+bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 {
 	if (state.hitPointDifference > 0) {
 		++m_killed;
@@ -128,7 +128,7 @@ bool Trial::nextEpisode(const State &state, std::ostream &output)
 	return ++m_episode < m_parameters.episodes;
 }
 
-const std::vector<bool*> &Trial::humanAdvice()
+const std::vector<bool*> &SeminarTrial::humanAdvice()
 {
 	if (m_episode < m_parameters.humanAdviceEpisodes) {
 		return m_humanAdvice;
@@ -138,7 +138,7 @@ const std::vector<bool*> &Trial::humanAdvice()
 	}
 }
 
-Potential *Trial::createPotential(const std::string &description, Config &config)
+Potential *SeminarTrial::createPotential(const std::string &description, Config &config)
 {
 	size_t pos = description.find(":");
 	std::string potentialString = description.substr(0, pos);
@@ -181,25 +181,25 @@ Potential *Trial::createPotential(const std::string &description, Config &config
 	return 0;
 }
 
-std::vector<double> Trial::makeResolutionsVector(double scale)
+std::vector<double> SeminarTrial::makeResolutionsVector(double scale)
 {
 	std::vector<double> resolutions;
-	resolutions.push_back(scale * Trial::DISTANCE_RESOLUTION);
-	resolutions.push_back(scale * Trial::DISTANCE_RESOLUTION);
-	resolutions.push_back(scale * Trial::DISTANCE_RESOLUTION);
-	resolutions.push_back(scale * Trial::HEALTH_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::DISTANCE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::HEALTH_RESOLUTION);
 	resolutions.push_back(0.9);
-	resolutions.push_back(scale * Trial::ANGLE_RESOLUTION);
+	resolutions.push_back(scale * SeminarTrial::ANGLE_RESOLUTION);
 	return resolutions;
 }
 
-void Trial::readWeights(const std::string &fileName)
+void SeminarTrial::readWeights(const std::string &fileName)
 {
 	std::ifstream file(fileName.c_str(), std::ios::in | std::ios::binary);
 	m_agent->loadWeights(file);
 }
 
-void Trial::writeOutput()
+void SeminarTrial::writeOutput()
 {
 	std::stringstream ss;
 	ss << m_parameters.outputPath << "/trial" << number() << "_out.txt";
@@ -210,7 +210,7 @@ void Trial::writeOutput()
 	}
 }
 
-void Trial::writeWeights()
+void SeminarTrial::writeWeights()
 {
 	{
 		std::stringstream ss;
@@ -229,7 +229,7 @@ void Trial::writeWeights()
 	}
 }
 
-Trial::Parameters::Parameters(Config &config)
+SeminarTrial::Parameters::Parameters(Config &config)
 {
 	alpha = config.getAlpha();
 	lambda = config.getLambda();

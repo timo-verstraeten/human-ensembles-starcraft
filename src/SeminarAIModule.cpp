@@ -1,7 +1,9 @@
-#include "Main.h"
+#include "SeminarAIModule.h"
 
 #include "Experiment.h"
 #include "util/ErrorLogger.h"
+#include "SeminarExperiment.h"
+#include "Trial.h"
 
 #define _USE_MATH_DEFINES
 
@@ -28,10 +30,10 @@ std::vector<Key> createKeyVector()
 
 }
 
-const std::string Main::CONFIG_FILE_NAME = "config.ini";
-const std::vector<BWAPI::Key> Main::INPUT_KEYS = createKeyVector();
+const std::string SeminarAIModule::CONFIG_FILE_NAME = "config.ini";
+const std::vector<BWAPI::Key> SeminarAIModule::INPUT_KEYS = createKeyVector();
 
-Main::Main()
+SeminarAIModule::SeminarAIModule()
 	: m_config(CONFIG_FILE_NAME), m_experiment(0), m_trial(0)
 {
 	if (m_config.getEnableLogging()) {
@@ -40,13 +42,13 @@ Main::Main()
 	}
 }
 
-Main::~Main()
+SeminarAIModule::~SeminarAIModule()
 {
 	delete m_experiment;
 }
 
 
-void Main::onStart()
+void SeminarAIModule::onStart()
 {
 	Broodwar->setLocalSpeed(0);
 	//Broodwar->setGUI(false);
@@ -57,10 +59,10 @@ void Main::onStart()
 	Broodwar->enableFlag(Flag::CompleteMapInformation); // Uncomment to enable complete map information
 	Broodwar->sendText("black sheep wall"); // cheat code to disable fog of war
 
-	m_experiment = new Experiment(m_config);
+	m_experiment = new SeminarExperiment(m_config);
 }
 
-void Main::onFrame()
+void SeminarAIModule::onFrame()
 {
 	if (m_experiment && m_trial) {
 		const std::vector<bool*> &humanAdvice = m_trial->humanAdvice();
@@ -96,7 +98,7 @@ void Main::onFrame()
 	}
 }
 
-void Main::onUnitDestroy(Unit *unit)
+void SeminarAIModule::onUnitDestroy(Unit *unit)
 {
 	if (m_trial) {
 		std::stringstream output;
@@ -114,7 +116,7 @@ void Main::onUnitDestroy(Unit *unit)
 	}
 }
 
-void Main::onSendText(std::string text)
+void SeminarAIModule::onSendText(std::string text)
 {
 	if (text=="/speedUp") {
 		Broodwar->setLocalSpeed(0);
@@ -124,7 +126,7 @@ void Main::onSendText(std::string text)
 	}
 }
 
-Unit *Main::getOwnUnit()
+Unit *SeminarAIModule::getOwnUnit()
 {
 	if (Broodwar->self()->getUnits().size() < 1)
 		return 0;
@@ -133,7 +135,7 @@ Unit *Main::getOwnUnit()
 	return unit;
 }
 
-Unit *Main::getEnemyUnit()
+Unit *SeminarAIModule::getEnemyUnit()
 {
 	if (Broodwar->enemy()->getUnits().size() < 1)
 		return 0;
@@ -142,7 +144,7 @@ Unit *Main::getEnemyUnit()
 	return unit;
 }
 
-State Main::getState()
+State SeminarAIModule::getState()
 {
 	State state;
 
@@ -165,7 +167,7 @@ State Main::getState()
 	return state;
 }
 
-void Main::executeAction(Action action)
+void SeminarAIModule::executeAction(Action action)
 {
 	Unit *ownUnit = getOwnUnit();
 	Unit *enemyUnit = getEnemyUnit();
@@ -201,7 +203,7 @@ void Main::executeAction(Action action)
 	}
 }
 
-void Main::updateHumanAdvice(const std::vector<bool*> &humanAdvice)
+void SeminarAIModule::updateHumanAdvice(const std::vector<bool*> &humanAdvice)
 {
 	for (unsigned int i = 0; i < std::min(humanAdvice.size(), INPUT_KEYS.size()); ++i) {
 		if (Broodwar->getKeyState(INPUT_KEYS[i]) && humanAdvice[i]) {
