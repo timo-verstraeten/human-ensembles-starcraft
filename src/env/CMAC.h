@@ -18,6 +18,7 @@ public:
 	CMAC(const StateResolution &stateResolution, unsigned int tilingsPerGroup);
 	virtual ~CMAC();
 
+	// --- FunctionApproximator ---
 	virtual void setState(const State &state);
 
 	virtual double computeQ(Action action);

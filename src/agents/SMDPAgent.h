@@ -63,7 +63,7 @@ public:
 	virtual void applyAction(Action action, std::ostream &output) = 0;
 	/// Notifies the agent of the received reward
 	virtual void giveReward(double reward, std::ostream &output) = 0;
-	/// Finilizes the agent's state at the end of an episode
+	/// Finalizes the agent's state at the end of an episode
 	virtual void finalize(std::ostream &output) = 0;
 };
 

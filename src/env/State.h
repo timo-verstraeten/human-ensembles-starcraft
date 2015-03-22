@@ -4,6 +4,9 @@
 
 #include <vector>
 
+/**
+ * Struct containing the features of the state in which the controlable unit finds itself.
+ */
 struct State
 {
 public:
