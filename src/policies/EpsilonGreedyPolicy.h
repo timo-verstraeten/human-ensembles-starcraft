@@ -6,12 +6,16 @@
 
 #include "GreedyPolicy.h"
 
+/**
+ * Class implementing the epsilon-greedy policy
+ */
 class EpsilonGreedyPolicy : public Policy
 {
 public:
 	EpsilonGreedyPolicy(double epsilon);
 	virtual ~EpsilonGreedyPolicy();
 
+	// --- Policy ---
 	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
 	virtual std::vector<double> selectionProbabilities(FunctionApproximator &functionApproximator) const;
 

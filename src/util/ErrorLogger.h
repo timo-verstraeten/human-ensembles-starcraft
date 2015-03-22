@@ -4,6 +4,10 @@
 
 #include <fstream>
 
+/**
+ * Singleton to log errors to a file.
+ * This should be used to report errors, as it is meant to replace asserts in the code (as they are unpossible to use in this project).
+ */
 class ErrorLogger
 {
 public:

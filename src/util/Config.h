@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 
+/**
+ * Utility class reading the configuration of the AIModule, experiment and trials from an ini file.
+ */
 class Config
 {
 public:

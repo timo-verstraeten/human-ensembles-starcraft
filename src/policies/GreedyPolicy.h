@@ -4,12 +4,16 @@
 
 #include "Policy.h"
 
+/**
+ * Class implementing the greedy policy
+ */
 class GreedyPolicy : public Policy
 {
 public:
 	GreedyPolicy();
 	virtual ~GreedyPolicy();
 
+	// --- Policy ---
 	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
 	virtual std::vector<double> selectionProbabilities(FunctionApproximator &functionApproximator) const;
 };
