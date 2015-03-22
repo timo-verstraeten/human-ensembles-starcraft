@@ -8,6 +8,9 @@
 
 class QValuesAgent;
 
+/**
+ * Ensemble agent implementing the Boltzmann Multiplication action selection.
+ */
 class BoltzmannMultiplication : public BoltzmannEnsembleAgent
 {
 public:

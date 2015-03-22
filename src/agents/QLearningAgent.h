@@ -4,6 +4,9 @@
 
 #include "QValuesAgent.h"
 
+/**
+ * Agent implementing the Q-learning algorithm.
+ */
 class QLearningAgent : public QValuesAgent
 {
 public:
@@ -11,6 +14,7 @@ public:
 	virtual ~QLearningAgent();
 
 private:
+	// --- QValuesAgent ---
 	virtual double nextQ(Action selected);
 };
 

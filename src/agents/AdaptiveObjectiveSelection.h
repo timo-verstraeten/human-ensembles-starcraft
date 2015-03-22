@@ -8,6 +8,9 @@
 
 class QValuesAgent;
 
+/**
+ * Ensemble agent implementing the Adaptive Objective Selection action selection.
+ */
 class AdaptiveObjectiveSelection : public EnsembleAgent
 {
 public:

@@ -6,12 +6,21 @@
 
 #include <vector>
 
+/**
+ * Abstract base class for an agent.
+ */
 class EnsembleAgent : public SMDPAgent
 {
 public:
+	/**
+	 * Constructor
+	 *
+	 * @param	agents	The subagents assembled in this ensemble agent.
+	 */
 	EnsembleAgent(const std::vector<SMDPAgent*> &agents);
 	virtual ~EnsembleAgent();
 
+	// --- SMDPAgent ---
 	virtual void saveWeights(std::ostream &output);
 	virtual void loadWeights(std::istream &input);
 

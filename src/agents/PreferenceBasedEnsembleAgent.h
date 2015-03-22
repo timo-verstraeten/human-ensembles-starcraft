@@ -6,6 +6,9 @@
 
 #include <vector>
 
+/**
+ * Abstract base class for ensemble agents with action selection based on preference values (MajorityVoting).
+ */
 class PreferenceBasedEnsembleAgent : public EnsembleAgent
 {
 public:

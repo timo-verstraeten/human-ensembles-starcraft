@@ -4,6 +4,9 @@
 
 #include "QValuesAgent.h"
 
+/**
+ * Agent implementing the SARSA algorithm.
+ */
 class SarsaAgent : public QValuesAgent
 {
 public:
@@ -11,6 +14,7 @@ public:
 	virtual ~SarsaAgent();
 
 private:
+	// --- QValuesAgent ---
 	virtual double nextQ(Action selected);
 };
 

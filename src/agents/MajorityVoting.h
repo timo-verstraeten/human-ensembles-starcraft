@@ -8,6 +8,9 @@
 
 class QValuesAgent;
 
+/**
+ * Ensemble agent implementing the MajorityVoting action selection.
+ */
 class MajorityVoting : public PreferenceBasedEnsembleAgent
 {
 public:

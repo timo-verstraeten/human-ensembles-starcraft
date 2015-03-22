@@ -8,6 +8,9 @@
 
 class QValuesAgent;
 
+/**
+ * Ensemble agent implementing the Boltzmann Addition action selection.
+ */
 class BoltzmannAddition : public BoltzmannEnsembleAgent
 {
 public:

@@ -11,11 +11,20 @@
 
 class Config;
 
+/**
+ * The main experiment of the Multi-Agent Learning Seminar, combining multiple human advice potential-based reward shapings.
+ */
 class SeminarExperiment : public Experiment
 {
 public:
+	/**
+	 * Constructor.
+	 *
+	 * @param	config		The configuration of the experiment.
+	 */
 	SeminarExperiment(Config &config);
 
+	// --- Experiment ---
 	virtual Trial *nextTrial();
 
 private:

@@ -27,6 +27,9 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 	return TRUE;
 }
 
+/**
+ * The interface of the DLL containing the AIModule to be injecte in Startcraft
+ */
  extern "C" __declspec(dllexport) BWAPI::AIModule* newAIModule(BWAPI::Game* game)
 {
   BWAPI::Broodwar=game;

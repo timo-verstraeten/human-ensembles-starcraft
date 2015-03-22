@@ -10,12 +10,16 @@ class HumanAdvicePotential;
 class Potential;
 class SMDPAgent;
 
+/**
+ * A single trial of the Multi-Agent Learning Seminar.
+ */
 class SeminarTrial : public Trial
 {
 public:
 	SeminarTrial(unsigned int number, Config &config);
 	virtual ~SeminarTrial();
 
+	// -- Trial --
 	virtual Action step(const State &state, std::ostream &output);
 	virtual bool nextEpisode(const State &state, std::ostream &output);
 

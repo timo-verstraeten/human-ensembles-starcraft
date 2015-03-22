@@ -4,11 +4,20 @@
 
 class Trial;
 
+/**
+ * Interface for a full experiment, consisting of (possibly) multiple trials.
+ * Plays factory for the Trial hierarchy.
+ */
 class Experiment
 {
 public:
 	virtual ~Experiment() {}
 	
+	/**
+	 * Returns the next trial.
+	 *
+	 * @return	Trial*	The next trial of the experiment. A null pointer to end the experiment.
+	 */
 	virtual Trial *nextTrial() = 0;
 };
 

@@ -8,6 +8,9 @@
 
 class QValuesAgent;
 
+/**
+ * Abstract base class for ensemble agents that select actions based on Boltzmann distributions (BoltzmannMultiplication and BoltzmannAddition).
+ */
 class BoltzmannEnsembleAgent : public EnsembleAgent
 {
 public:
