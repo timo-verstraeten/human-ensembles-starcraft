@@ -159,7 +159,7 @@ State SeminarAIModule::getState()
 	state.enemyDistance = (ownUnit && enemyUnit) ? ownUnit->getDistance(enemyUnit) : 0;
 	state.hitPointDifference = (ownUnit ? ownUnit->getHitPoints() : 0) - (enemyUnit ? enemyUnit->getHitPoints() : 0);
 	state.enemyActive = enemyUnit && (enemyUnit->isAttacking() || enemyUnit->isMoving() || enemyUnit->isAttackFrame() || enemyUnit->isStartingAttack());
-	state.enemyAngle = (ownUnit && enemyUnit) ? (atan2(static_cast<double>(enemyPosition.y() - ownPosition.y()), static_cast<double>(enemyPosition.x() - ownPosition.x())) - ownUnit->getAngle()) : 0;
+	state.enemyAngle = (ownUnit && enemyUnit) ? atan2(static_cast<double>(enemyPosition.y() - ownPosition.y()), static_cast<double>(enemyPosition.x() - ownPosition.x())) : 0;
 	if (state.enemyAngle < -M_PI) {
 		state.enemyAngle += 2 * M_PI;
 	}
