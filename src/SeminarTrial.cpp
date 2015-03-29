@@ -56,7 +56,7 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		std::stringstream trialLogFileName;
 		trialLogFileName << m_parameters.outputPath << "/trial" << number << "_log.csv";
 		m_trialLogger = new TrialLogger(trialLogFileName.str());
-		m_trialLogger->writeHeader();
+		m_trialLogger->writeHeader(m_humanAdvice.size());
 	}
 }
 
@@ -87,7 +87,6 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 		action = m_agent->startEpisode(state, output);
 		for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
 			m_humanAdvicePotentials[i]->start(state, action);
-			*m_humanAdvice[i] = false;
 		}
 	}
 	else {
@@ -95,7 +94,6 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 		if (m_humanAdvicePotentials.size() > 0 && m_episode < m_parameters.humanAdviceEpisodes) {
 			for (unsigned int i = 0; i < m_humanAdvicePotentials.size(); ++i) {
 				m_humanAdvicePotentials[i]->step(state, action);
-				*m_humanAdvice[i] = false;
 			}
 		}
 		m_episodeReward += STEP_REWARD;
@@ -107,7 +105,11 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
 
 	if (m_trialLogger) {
-		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_killed, m_died);
+		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_killed, m_died, m_humanAdvice);
+	}
+
+	for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
+		*m_humanAdvice[i] = false;
 	}
 
 	++m_step;
