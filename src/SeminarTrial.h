@@ -3,6 +3,7 @@
 #define INC_MALS_TRIAL_H
 
 #include "Trial.h"
+#include "util/TrialLogger.h"
 
 class Config;
 class FunctionApproximator;
@@ -65,6 +66,7 @@ private:
 	unsigned int m_died;
 
 	std::vector<EpisodeOutput> m_output;
+	TrialLogger *m_trialLogger;
 
 
 	static const double STEP_REWARD;

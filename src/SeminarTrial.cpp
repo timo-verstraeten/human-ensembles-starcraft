@@ -51,6 +51,13 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 	if (initialWeights != "") {
 		readWeights(initialWeights);
 	}
+
+	if (config.getEnableLogging()) {
+		std::stringstream trialLogFileName;
+		trialLogFileName << m_parameters.outputPath << "/trial" << number << "_log.csv";
+		m_trialLogger = new TrialLogger(trialLogFileName.str());
+		m_trialLogger->writeHeader();
+	}
 }
 
 SeminarTrial::~SeminarTrial()
@@ -66,6 +73,7 @@ SeminarTrial::~SeminarTrial()
 		m_humanAdvice[i] = 0;
 	}
 	// m_humanAdvicePotentials are owned by m_agent, like any other potential, and should not be deleted here
+	delete m_trialLogger;
 }
 
 Action SeminarTrial::step(const State &state, std::ostream &output)
@@ -97,6 +105,10 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	output << "MAL SEMINAR 2014-2015" << std::endl;
 	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
+
+	if (m_trialLogger) {
+		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_killed, m_died);
+	}
 
 	++m_step;
 

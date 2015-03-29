@@ -137,6 +137,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\util\TrialLogger.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\TrialLogger.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\util\tiles2.cpp"
 				>
 			</File>
