@@ -94,7 +94,7 @@ void QValuesAgent::giveReward(double reward, std::ostream &output)
 void QValuesAgent::finalize(std::ostream &output)
 {
 	if (m_pendingReward.first) {
-		m_functionApproximator->updateWeights(m_pendingReward.second - m_lastQ, m_alpha);	
+		m_functionApproximator->updateWeights(m_pendingReward.second - m_lastQ - m_lastPotential, m_alpha);
 		m_pendingReward.first = false;
 	}
 }
