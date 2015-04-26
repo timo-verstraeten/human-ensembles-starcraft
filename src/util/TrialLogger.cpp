@@ -1,7 +1,7 @@
 #include "TrialLogger.h"
 
 TrialLogger::TrialLogger(const std::string &fileName)
-	: m_outputFile(fileName.c_str(), std::ios::out | std::ios::app)
+	: m_outputFile(fileName.c_str(), std::ios::out)
 {
 }
 
@@ -12,7 +12,8 @@ TrialLogger::~TrialLogger()
 	}
 }
 
-void TrialLogger::writeHeader(unsigned int numHumans) {
+void TrialLogger::writeHeader(unsigned int numHumans)
+{
 	m_outputFile << "episode" << ","
 	             << "step" << ","
 	             << "state.x" << ","
@@ -22,8 +23,6 @@ void TrialLogger::writeHeader(unsigned int numHumans) {
 	             << "state.enemyActive" << ","
 	             << "state.enemyAngle" << ","
 	             << "action" << ","
-	             << "killed" << ","
-	             << "died" << ","
 	             << "episodeReward";
 
 	for (unsigned int i = 1; i <= numHumans; ++i) {
@@ -33,8 +32,8 @@ void TrialLogger::writeHeader(unsigned int numHumans) {
 }
 
 
-void TrialLogger::writeLine(unsigned int episode, unsigned int step, const State &state, Action action, double episodeReward,
-		unsigned int killed, unsigned int died, const std::vector<bool*> &humanAdvice) {
+void TrialLogger::writeLine(unsigned int episode, unsigned int step, const State &state, Action action, double episodeReward, const std::vector<bool*> &humanAdvice)
+{
 	m_outputFile << episode << ","
 	             << step << ","
 	             << state.x << ","
@@ -44,8 +43,6 @@ void TrialLogger::writeLine(unsigned int episode, unsigned int step, const State
 	             << state.enemyActive << ","
 	             << state.enemyAngle << ","
 	             << action << ","
-	             << killed << ","
-	             << died << ","
 	             <<	episodeReward;
 
 	for (unsigned int i = 0; i < humanAdvice.size(); ++i) {

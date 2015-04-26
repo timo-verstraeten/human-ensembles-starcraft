@@ -106,7 +106,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
 
 	if (m_trialLogger) {
-		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_killed, m_died, m_humanAdvice);
+		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_humanAdvice);
 	}
 
 	for (unsigned int i = 0; i < m_humanAdvice.size(); ++i) {
@@ -132,6 +132,10 @@ bool SeminarTrial::nextEpisode(const State &state, std::ostream &output)
 
 	m_episodeReward += finalReward;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", steps: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
+
+	if (m_trialLogger) {
+		m_trialLogger->writeLine(m_episode, m_step, state, static_cast<Action>(-1), m_episodeReward, m_humanAdvice); // The action will be written to file as an integer, so casting -1 to an Action will not be problematic
+	}
 
 	EpisodeOutput episodeOutput;
 	episodeOutput.reward = m_episodeReward;
