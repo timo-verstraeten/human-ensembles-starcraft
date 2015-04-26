@@ -1,18 +1,19 @@
 #include "SeminarTrial.h"
 
 #include "agents/AdaptiveObjectiveSelection.h"
-#include "env/CMAC.h"
-#include "util/Config.h"
-#include "policies/EpsilonGreedyPolicy.h"
-#include "util/ErrorLogger.h"
-#include "potentials/HumanAdvicePotential.h"
-#include "potentials/Potentials.h"
+#include "agents/AdaptiveObjectiveSelection.h"
+#include "agents/QLearningAgent.h"
 #include "agents/QLearningAgent.h"
 #include "agents/SarsaAgent.h"
-#include "policies/EpsilonGreedyPolicy.h"
 #include "env/CMAC.h"
-#include "agents/QLearningAgent.h"
-#include "agents/AdaptiveObjectiveSelection.h"
+#include "env/CMAC.h"
+#include "policies/EpsilonGreedyPolicy.h"
+#include "policies/EpsilonGreedyPolicy.h"
+#include "potentials/HumanAdvicePotential.h"
+#include "potentials/Potentials.h"
+#include "util/Config.h"
+#include "util/ErrorLogger.h"
+#include "util/TrialLogger.h"
 
 #include <algorithm>
 #include <fstream>
@@ -30,7 +31,7 @@ const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
 SeminarTrial::SeminarTrial(unsigned int number, Config &config)
-	: Trial(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0)
+	: Trial(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0), m_trialLogger(0)
 {
 	std::vector<std::string> potentialStrings = config.getShapingPotentials();
 	if (potentialStrings.size() == 0) {
@@ -42,7 +43,7 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		Policy *policy = new EpsilonGreedyPolicy(EPSILON);
 		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
 		Potential *potential = createPotential(potentialStrings[i], config);
-		agents.push_back(new QLearningAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
+		agents.push_back(new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
 	}
 	
 	m_agent = new AdaptiveObjectiveSelection(agents, EPSILON);

@@ -1,7 +1,8 @@
 #include "BoltzmannEnsembleAgent.h"
 
-#include "../policies/Policy.h"
 #include "QValuesAgent.h"
+
+#include "../policies/Policy.h"
 
 #include <algorithm>
 #include <cmath>

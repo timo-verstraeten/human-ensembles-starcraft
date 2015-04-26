@@ -1,9 +1,9 @@
 #include "QValuesAgent.h"
 
-#include "../util/ErrorLogger.h"
 #include "../env/FunctionApproximator.h"
 #include "../policies/Policy.h"
 #include "../potentials/Potential.h"
+#include "../util/ErrorLogger.h"
 
 QValuesAgent::QValuesAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
 	: m_alpha(alpha), m_lambda(lambda), m_gamma(gamma), m_policy(policy), m_functionApproximator(functionApproximator), m_potential(potential), m_pendingReward(false, 0)

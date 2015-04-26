@@ -3,13 +3,13 @@
 #define INC_MALS_TRIAL_H
 
 #include "Trial.h"
-#include "util/TrialLogger.h"
 
 class Config;
 class FunctionApproximator;
 class HumanAdvicePotential;
 class Potential;
 class SMDPAgent;
+class TrialLogger;
 
 /**
  * A single trial of the Multi-Agent Learning Seminar.
@@ -20,7 +20,7 @@ public:
 	SeminarTrial(unsigned int number, Config &config);
 	virtual ~SeminarTrial();
 
-	// -- Trial --
+	// --- Trial ---
 	virtual Action step(const State &state, std::ostream &output);
 	virtual bool nextEpisode(const State &state, std::ostream &output);
 

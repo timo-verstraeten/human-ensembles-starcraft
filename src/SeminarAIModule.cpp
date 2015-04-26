@@ -1,9 +1,10 @@
 #include "SeminarAIModule.h"
 
 #include "Experiment.h"
-#include "util/ErrorLogger.h"
 #include "SeminarExperiment.h"
 #include "Trial.h"
+
+#include "util/ErrorLogger.h"
 
 #define _USE_MATH_DEFINES
 

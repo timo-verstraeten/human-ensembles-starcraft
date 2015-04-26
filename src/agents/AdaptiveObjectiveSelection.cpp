@@ -1,7 +1,8 @@
 #include "AdaptiveObjectiveSelection.h"
 
-#include "../env/FunctionApproximator.h"
 #include "QValuesAgent.h"
+
+#include "../env/FunctionApproximator.h"
 
 #include <sstream>
 

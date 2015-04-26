@@ -1,7 +1,8 @@
 #include "StateResolution.h"
 
-#include "../util/ErrorLogger.h"
 #include "State.h"
+
+#include "../util/ErrorLogger.h"
 
 StateResolution::StateResolution(const std::vector<double> &resolutions)
 	: m_resolutions(resolutions)

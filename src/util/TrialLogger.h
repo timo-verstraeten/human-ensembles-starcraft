@@ -1,9 +1,9 @@
 #ifndef INC_TRIALLOGGER_H
 #define INC_TRIALLOGGER_H
 
-
-#include "../env/State.h"
 #include "../env/Action.h"
+#include "../env/State.h"
+
 #include <fstream>
 
 class TrialLogger {
@@ -18,7 +18,6 @@ public:
 
 private:
     std::ofstream m_outputFile;
-
 };
 
 
