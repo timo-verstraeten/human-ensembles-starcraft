@@ -2,6 +2,8 @@
 
 #include "../env/FunctionApproximator.h"
 
+#include <cassert>
+
 GreedyPolicy::GreedyPolicy()
 {
 }
@@ -10,32 +12,28 @@ GreedyPolicy::~GreedyPolicy()
 {
 }
 
-Action GreedyPolicy::selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const
+
+Action GreedyPolicy::selectAction(const std::vector<double>& preferenceValues, std::ostream &output) const
 {
+	assert(preferenceValues.size() == NUMBER_OF_ACTIONS && "The size of the preference vector should be equal to the number of actions.");
+
 	output << "Greedy policy" << std::endl;
 
 	unsigned int ties = 0;
-
 	Action maxAction = static_cast<Action>(0);
-	double maxQ = functionApproximator.computeQ(maxAction);
-
-	output << "Q[" << maxAction << "] = " << maxQ << std::endl;
-
+	double maxValue = preferenceValues[0];
 	for (unsigned int i = 1; i < NUMBER_OF_ACTIONS; ++i) {
 		Action action = static_cast<Action>(i);
-		double q = functionApproximator.computeQ(action);
-		output << "Q[" << action << "] = " << q << std::endl;
-
-		if (q > maxQ) {
+		if (preferenceValues[i] > maxValue) {
 			ties = 0;
 			maxAction = action;
-			maxQ = q;
+			maxValue = preferenceValues[i];
 		}
-		else if (q == maxQ) {
+		else if (preferenceValues[i] == maxValue) {
 			++ties;
 			if (randomInt(ties + 1)) {
 				maxAction = action;
-				maxQ = q;
+				maxValue = preferenceValues[i];
 			}
 		}
 	}

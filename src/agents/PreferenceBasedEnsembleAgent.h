@@ -4,6 +4,8 @@
 
 #include "EnsembleAgent.h"
 
+#include "../policies/EpsilonGreedyPolicy.h"
+
 #include <vector>
 
 /**
@@ -21,7 +23,7 @@ protected:
 	virtual double preferenceValue(const State &state, Action action) const = 0;
 
 private:
-	double m_epsilon;
+	const EpsilonGreedyPolicy m_epsilonGreedyPolicy;
 };
 
 #endif // INC_PREFERENCE_BASED_ENSEMBLE_AGENT_H

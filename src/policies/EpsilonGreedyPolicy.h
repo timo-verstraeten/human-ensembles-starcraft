@@ -16,7 +16,7 @@ public:
 	virtual ~EpsilonGreedyPolicy();
 
 	// --- Policy ---
-	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
+	virtual Action selectAction(const std::vector<double>& preferenceValues, std::ostream &output) const;
 	virtual std::vector<double> selectionProbabilities(FunctionApproximator &functionApproximator) const;
 
 private:

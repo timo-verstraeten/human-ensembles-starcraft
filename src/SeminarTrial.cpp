@@ -1,13 +1,10 @@
 #include "SeminarTrial.h"
 
 #include "agents/AdaptiveObjectiveSelection.h"
-#include "agents/AdaptiveObjectiveSelection.h"
 #include "agents/QLearningAgent.h"
-#include "agents/QLearningAgent.h"
+#include "agents/RankVoting.h"
 #include "agents/SarsaAgent.h"
 #include "env/CMAC.h"
-#include "env/CMAC.h"
-#include "policies/EpsilonGreedyPolicy.h"
 #include "policies/EpsilonGreedyPolicy.h"
 #include "potentials/HumanAdvicePotential.h"
 #include "potentials/Potentials.h"
@@ -43,10 +40,11 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		Policy *policy = new EpsilonGreedyPolicy(EPSILON);
 		FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
 		Potential *potential = createPotential(potentialStrings[i], config);
-		agents.push_back(new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
+		agents.push_back(new QLearningAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
+		//agents.push_back(new SarsaAgent(m_parameters.alpha, m_parameters.lambda, GAMMA, policy, functionApproximator, potential));
 	}
 	
-	m_agent = new AdaptiveObjectiveSelection(agents, EPSILON);
+	m_agent = new RankVoting(agents, EPSILON);
 
 	std::string initialWeights = config.getLoadInitialWeights();
 	if (initialWeights != "") {

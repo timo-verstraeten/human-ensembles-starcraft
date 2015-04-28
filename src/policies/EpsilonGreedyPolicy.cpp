@@ -1,5 +1,7 @@
 #include "EpsilonGreedyPolicy.h"
 
+#include <cassert>
+
 EpsilonGreedyPolicy::EpsilonGreedyPolicy(double epsilon)
 	: m_epsilon(epsilon)
 {
@@ -9,18 +11,19 @@ EpsilonGreedyPolicy::~EpsilonGreedyPolicy()
 {
 }
 
-Action EpsilonGreedyPolicy::selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const
+Action EpsilonGreedyPolicy::selectAction(const std::vector<double>& preferenceValues, std::ostream &output) const
 {
+	assert(preferenceValues.size() == NUMBER_OF_ACTIONS && "The size of the preference vector should be equal to the number of actions.");
+
 	output << "Epsilon-Greedy policy - ";
 	if (random() < m_epsilon)	{
 		output << "Random" << std::endl;
 		return static_cast<Action>(randomInt(NUMBER_OF_ACTIONS));
 	}
 	else {
-		return m_greedyPolicy.selectAction(functionApproximator, output);
+		return m_greedyPolicy.selectAction(preferenceValues, output);
 	}
 }
-
 
 std::vector<double> EpsilonGreedyPolicy::selectionProbabilities(FunctionApproximator &functionApproximator) const
 {

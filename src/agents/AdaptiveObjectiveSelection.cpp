@@ -22,7 +22,7 @@ Action AdaptiveObjectiveSelection::nextAction(const State &state, std::ostream &
 		m_agents[i]->nextAction(state, dummy); // Don't care about the chosen action, we just want to make sure the agent has the right state set
 	}
 
-	return m_epsilonGreedyPolicy.selectAction(selectFunctionApproximator(output), output);
+	return m_epsilonGreedyPolicy.selectQAction(selectFunctionApproximator(output), output);
 }
 
 FunctionApproximator &AdaptiveObjectiveSelection::selectFunctionApproximator(std::ostream &output)

@@ -21,7 +21,12 @@ public:
 	/**
 	 * Selects an action based on a given function approximator.
 	 */
-	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const = 0;
+	Action selectQAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
+
+	/**
+	 * Selects an action based on a given preference values.
+	 */
+	virtual Action selectAction(const std::vector<double>& preferences, std::ostream &output) const = 0;
 
 	/**
 	 * Returns a vector of the probability that each respective action is selected.

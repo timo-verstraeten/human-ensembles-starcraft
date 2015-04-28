@@ -14,7 +14,7 @@ public:
 	virtual ~GreedyPolicy();
 
 	// --- Policy ---
-	virtual Action selectAction(FunctionApproximator &functionApproximator, std::ostream &output) const;
+	virtual Action selectAction(const std::vector<double>& preferenceValues, std::ostream &output) const;
 	virtual std::vector<double> selectionProbabilities(FunctionApproximator &functionApproximator) const;
 };
 

@@ -198,6 +198,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\agents\MajorityVoting.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\MajorityVoting.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\agents\PreferenceBasedEnsembleAgent.cpp"
 				>
 			</File>
@@ -222,6 +230,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\agents\RankVoting.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\agents\RankVoting.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\agents\SarsaAgent.cpp"
 				>
 			</File>
@@ -235,14 +251,6 @@
 			</File>
 			<File
 				RelativePath=".\src\agents\SMDPAgent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\agents\MajorityVoting.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\agents\MajorityVoting.h"
 				>
 			</File>
 		</Filter>
@@ -311,6 +319,10 @@
 			</File>
 			<File
 				RelativePath=".\src\policies\EpsilonGreedyPolicy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\Policy.cpp"
 				>
 			</File>
 			<File

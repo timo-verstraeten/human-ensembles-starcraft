@@ -56,7 +56,7 @@ void QValuesAgent::initialize(std::ostream &output)
 Action QValuesAgent::nextAction(const State &state, std::ostream &output)
 {
 	m_functionApproximator->setState(state);
-	return m_policy->selectAction(*m_functionApproximator, output);
+	return m_policy->selectQAction(*m_functionApproximator, output);
 }
 
 void QValuesAgent::applyAction(Action action, std::ostream &output)
