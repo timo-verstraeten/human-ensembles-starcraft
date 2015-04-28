@@ -31,5 +31,5 @@ double RankVoting::preferenceValue(const State &state, Action action) const
 		}
 	}
 
-	return static_cast<double>(rank);
+	return rank;
 }

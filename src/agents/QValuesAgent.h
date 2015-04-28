@@ -44,7 +44,7 @@ protected:
 
 	FunctionApproximator *m_functionApproximator;
 
-private:
+protected:
 	const double m_alpha;
 	const double m_lambda;
 	const double m_gamma;

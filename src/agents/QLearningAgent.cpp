@@ -5,12 +5,21 @@
 #include <cmath>
 
 QLearningAgent::QLearningAgent(double alpha, double lambda, double gamma, Policy *policy, FunctionApproximator *functionApproximator, Potential *potential)
-	: QValuesAgent(alpha, lambda, gamma, policy, functionApproximator, potential)
+	: QValuesAgent(alpha, lambda, gamma, policy, functionApproximator, potential), m_lastProposedQ(0)
 {
 }
 
 QLearningAgent::~QLearningAgent()
 {
+}
+
+void QLearningAgent::applyAction(Action action, std::ostream &output)
+{
+	QValuesAgent::applyAction(action, output);
+	if (m_lastQ != m_lastProposedQ) {
+		m_functionApproximator->decayTraces(0);
+		m_functionApproximator->updateTraces(action);
+	}
 }
 
 double QLearningAgent::nextQ(Action)
@@ -22,5 +31,6 @@ double QLearningAgent::nextQ(Action)
 		Action a = static_cast<Action>(i);
 		maxQ = std::max(maxQ, m_functionApproximator->computeQ(a));
 	}
+	m_lastProposedQ = maxQ;
 	return maxQ;
 }

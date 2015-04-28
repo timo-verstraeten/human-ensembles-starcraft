@@ -51,6 +51,7 @@ void QValuesAgent::initialize(std::ostream &output)
 	}
 	
 	m_functionApproximator->decayTraces(0);
+	m_pendingReward.first = false;
 }
 
 Action QValuesAgent::nextAction(const State &state, std::ostream &output)
@@ -64,7 +65,7 @@ void QValuesAgent::applyAction(Action action, std::ostream &output)
 	double q = nextQ(action);
 	double potential = 0;
 	if (m_potential) {
-		potential = m_potential->get(m_functionApproximator->state(), action); // TODO Is this right? Or should this be the resulting action of the nextQ call?
+		potential = m_potential->get(m_functionApproximator->state(), action);
 	}
 
 	if (m_pendingReward.first) {
@@ -76,6 +77,7 @@ void QValuesAgent::applyAction(Action action, std::ostream &output)
 	m_lastPotential = potential;
 	
 	m_functionApproximator->decayTraces(m_gamma * m_lambda);
+
 	for (unsigned int j = 0; j < NUMBER_OF_ACTIONS; ++j) { // clear other than F[a]
 		Action a = static_cast<Action>(j);
 		if (a != action) {

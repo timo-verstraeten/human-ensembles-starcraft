@@ -23,5 +23,5 @@ double MajorityVoting::preferenceValue(const State &state, Action action) const
 		}
 	}
 
-	return static_cast<double>(count);
+	return count;
 }
