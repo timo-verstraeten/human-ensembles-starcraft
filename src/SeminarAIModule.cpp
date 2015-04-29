@@ -55,7 +55,9 @@ void SeminarAIModule::onStart()
 	//Broodwar->setGUI(false);
   	Broodwar->setScreenPosition(250,300); 	 // Center the screen so we actually see the enemy
 
-	Broodwar->printf("The map is %s, a %d player map", Broodwar->mapName().c_str(), Broodwar->getStartLocations().size());
+	if (m_config.getShowDebug()) {
+		Broodwar->printf("The map is %s, a %d player map", Broodwar->mapName().c_str(), Broodwar->getStartLocations().size());
+	}
 	Broodwar->enableFlag(Flag::UserInput); // Enable some cheat flags
 	Broodwar->enableFlag(Flag::CompleteMapInformation); // Uncomment to enable complete map information
 	Broodwar->sendText("black sheep wall"); // cheat code to disable fog of war
@@ -90,7 +92,9 @@ void SeminarAIModule::onFrame()
 
 			std::string outputString = output.str();
 			if (outputString.length() > 0) {
-				Broodwar->printf("%s", outputString.c_str());
+				if (m_config.getShowDebug()) {
+					Broodwar->printf("%s", outputString.c_str());
+				}
 				if (m_log_file.is_open()) {
 					m_log_file << outputString << std::endl;
 				}
@@ -111,7 +115,7 @@ void SeminarAIModule::onUnitDestroy(Unit *unit)
 		}
 
 		std::string outputString = output.str();
-		if (outputString.length() > 0) {
+		if (outputString.length() > 0 && m_config.getShowDebug()) {
 			Broodwar->printf("%s", outputString.c_str());
 		}
 	}

@@ -82,3 +82,7 @@ bool Config::getSaveWeights()
 {
 	return m_reader.GetBoolean("GENERAL", "saveWeights", false);
 }
+
+bool Config::getShowDebug() {
+	return m_reader.GetBoolean("GENERAL", "showDebug", true);
+}

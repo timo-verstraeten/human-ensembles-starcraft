@@ -33,6 +33,7 @@ public:
 	bool getEnableLogging();
 	bool getSaveWeights();
 
+	bool getShowDebug();
 private:
 	INIReader m_reader;
 };
