@@ -24,7 +24,7 @@ public:
 	std::string getLoadInitialWeights();
 	bool getHumanAdvice();
 	unsigned int getHumanAdviceEpisodes();
-	double getHumanAdviceGamma();
+	double getHumanAdviceAlpha();
 
 	std::string getExperimentName();
 	unsigned int getNumTrials();

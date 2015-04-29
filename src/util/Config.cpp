@@ -53,9 +53,9 @@ unsigned int Config::getHumanAdviceEpisodes()
 	return static_cast<unsigned int>(m_reader.GetInteger("TRIAL", "humanAdviceEpisodes", 5));
 }
 
-double Config::getHumanAdviceGamma()
+double Config::getHumanAdviceAlpha()
 {
-	return m_reader.GetReal("TRIAL", "humanAdviceGamma", 1.0);
+	return m_reader.GetReal("TRIAL", "humanAdviceAlpha", 0.5);
 }
 
 std::string Config::getExperimentName()
