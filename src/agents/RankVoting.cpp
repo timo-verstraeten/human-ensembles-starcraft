@@ -23,9 +23,9 @@ double RankVoting::preferenceValue(const State &state, Action action) const
 	for (unsigned int i = 0; i < m_agents.size(); ++i) {
 		QValuesAgent* agent = static_cast<QValuesAgent*>(m_agents[i]);
 
-		std::vector<double> probabilities = agent->policy().selectionProbabilities(agent->functionApproximator());
+		double q = agent->functionApproximator().computeQ(action);
 		for (unsigned int a = 0; a < NUMBER_OF_ACTIONS; ++a) {
-			if (probabilities[action] >= probabilities[a]) {
+			if (q >= agent->functionApproximator().computeQ(static_cast<Action>(a))) {
 				++rank;
 			}
 		}
