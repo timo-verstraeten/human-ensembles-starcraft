@@ -25,6 +25,7 @@ public:
 	bool getHumanAdvice();
 	unsigned int getHumanAdviceEpisodes();
 	double getHumanAdviceAlpha();
+	double getHumanAdviceLambda();
 
 	std::string getExperimentName();
 	unsigned int getNumTrials();

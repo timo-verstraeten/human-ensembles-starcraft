@@ -58,6 +58,10 @@ double Config::getHumanAdviceAlpha()
 	return m_reader.GetReal("TRIAL", "humanAdviceAlpha", 0.5);
 }
 
+double Config::getHumanAdviceLambda() {
+	return m_reader.GetReal("TRIAL", "humanAdviceLambda", 0.9);
+}
+
 std::string Config::getExperimentName()
 {
 	return m_reader.Get("EXPERIMENT", "name", "Trials");
@@ -86,3 +90,4 @@ bool Config::getSaveWeights()
 bool Config::getShowDebug() {
 	return m_reader.GetBoolean("GENERAL", "showDebug", true);
 }
+

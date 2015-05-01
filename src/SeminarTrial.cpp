@@ -188,7 +188,10 @@ Potential *SeminarTrial::createPotential(const std::string &description, Config 
 			bool *humanAdvice = new bool(false);
 			m_humanAdvice.push_back(humanAdvice); // Can't just push back a bool and get a reference to it, since std::vector can reallocate its internal array
 			FunctionApproximator *functionApproximator = new CMAC(StateResolution(makeResolutionsVector(config.getResolutionScale())), config.getNumTilings());
-			HumanAdvicePotential *humanAdvicePotential = new HumanAdvicePotential(scaling, *humanAdvice, functionApproximator, config.getHumanAdviceAlpha(), m_parameters.lambda,
+			HumanAdvicePotential *humanAdvicePotential = new HumanAdvicePotential(scaling, *humanAdvice,
+																				  functionApproximator,
+																				  config.getHumanAdviceAlpha(),
+																				  config.getHumanAdviceLambda(),
 																				  GAMMA);
 			m_humanAdvicePotentials.push_back(humanAdvicePotential);
 			return humanAdvicePotential;
