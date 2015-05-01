@@ -43,6 +43,10 @@ SeminarAIModule::SeminarAIModule()
 		std::string logFileName = m_config.getOutputPath() + "/" + m_config.getExperimentName() + "/log.txt";
 		m_log_file.open(logFileName.c_str());
 	}
+
+	std::ofstream copiedConfig((m_config.getOutputPath() + "/" + m_config.getExperimentName() + "/" + CONFIG_FILE_NAME).c_str());
+	std::ifstream originalConfig(CONFIG_FILE_NAME.c_str());
+	copiedConfig << originalConfig.rdbuf();
 }
 
 SeminarAIModule::~SeminarAIModule()
