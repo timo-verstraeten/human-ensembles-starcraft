@@ -7,10 +7,10 @@ SeminarExperiment::SeminarExperiment(Config &config)
 {
 }
 
-Trial *SeminarExperiment::nextTrial()
+Trial *SeminarExperiment::nextTrial(std::ostream &output)
 {
 	if (m_nextTrial < m_trials) {
-		Trial *trial = new SeminarTrial(m_nextTrial, m_config);
+		Trial *trial = new SeminarTrial(m_nextTrial, m_config, output);
 		++m_nextTrial;
 		return trial;
 	}

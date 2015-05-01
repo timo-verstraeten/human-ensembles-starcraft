@@ -25,7 +25,7 @@ public:
 	SeminarExperiment(Config &config);
 
 	// --- Experiment ---
-	virtual Trial *nextTrial();
+	virtual Trial *nextTrial(std::ostream &output);
 
 private:
 	Config &m_config;

@@ -17,7 +17,7 @@ class TrialLogger;
 class SeminarTrial : public Trial
 {
 public:
-	SeminarTrial(unsigned int number, Config &config);
+	SeminarTrial(unsigned int number, Config &config, std::ostream &output);
 	virtual ~SeminarTrial();
 
 	// --- Trial ---

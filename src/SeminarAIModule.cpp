@@ -74,8 +74,10 @@ void SeminarAIModule::onFrame()
 	}
 	
 	if (m_experiment && Broodwar->getFrameCount() % 30 == 0) {
+		std::stringstream output;
+
 		if (!m_trial) {
-			m_trial = m_experiment->nextTrial();
+			m_trial = m_experiment->nextTrial(output);
 			if (!m_trial) {
 				delete m_experiment;
 				m_experiment = 0;
@@ -84,20 +86,18 @@ void SeminarAIModule::onFrame()
 			}
 		}
 
-		std::stringstream output;
-
 		if (getOwnUnit() && getEnemyUnit()) {
 			Action nextAction = m_trial->step(getState(), output);
 			executeAction(nextAction);
+		}
 
-			std::string outputString = output.str();
-			if (outputString.length() > 0) {
-				if (m_config.getShowDebug()) {
-					Broodwar->printf("%s", outputString.c_str());
-				}
-				if (m_log_file.is_open()) {
-					m_log_file << outputString << std::endl;
-				}
+		std::string outputString = output.str();
+		if (outputString.length() > 0) {
+			if (m_config.getShowDebug()) {
+				Broodwar->printf("%s", outputString.c_str());
+			}
+			if (m_log_file.is_open()) {
+				m_log_file << outputString << std::endl;
 			}
 		}
 	}

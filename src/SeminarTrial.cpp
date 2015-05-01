@@ -13,6 +13,7 @@
 #include "util/TrialLogger.h"
 
 #include <algorithm>
+#include <ctime>
 #include <fstream>
 #include <sstream>
 
@@ -27,7 +28,7 @@ const double SeminarTrial::DISTANCE_RESOLUTION = 30;
 const double SeminarTrial::HEALTH_RESOLUTION = 10;
 const double SeminarTrial::ANGLE_RESOLUTION = 0.7;
 
-SeminarTrial::SeminarTrial(unsigned int number, Config &config)
+SeminarTrial::SeminarTrial(unsigned int number, Config &config, std::ostream &output)
 	: Trial(number), m_parameters(config), m_humanAdvice(0), m_agent(0), m_episode(0), m_episodeReward(0.0), m_step(0), m_killed(0), m_died(0), m_trialLogger(0)
 {
 	std::vector<std::string> potentialStrings = config.getShapingPotentials();
@@ -57,6 +58,16 @@ SeminarTrial::SeminarTrial(unsigned int number, Config &config)
 		m_trialLogger = new TrialLogger(trialLogFileName.str());
 		m_trialLogger->writeHeader(m_humanAdvice.size());
 	}
+
+	long seed = config.getRandomSeed();
+	if (seed == -1) {
+		seed = static_cast<long>(time(NULL));
+	}
+	else {
+		seed += number;
+	}
+	srand(seed);
+	output << "Random seed: " << seed << std::endl << std::endl;
 }
 
 SeminarTrial::~SeminarTrial()

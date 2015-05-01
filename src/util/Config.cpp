@@ -77,6 +77,11 @@ std::string Config::getOutputPath()
 	return m_reader.Get("GENERAL", "outputPath", "C:/");
 }
 
+long Config::getRandomSeed()
+{
+	return m_reader.GetInteger("EXPERIMENT", "randomSeed", -1);
+}
+
 bool Config::getEnableLogging()
 {
 	return m_reader.GetBoolean("GENERAL", "enableLogging", false);

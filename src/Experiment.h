@@ -2,6 +2,8 @@
 #ifndef INC_EXPERIMENT_H
 #define INC_EXPERIMENT_H
 
+#include <ostream>
+
 class Trial;
 
 /**
@@ -18,7 +20,7 @@ public:
 	 *
 	 * @return	Trial*	The next trial of the experiment. A null pointer to end the experiment.
 	 */
-	virtual Trial *nextTrial() = 0;
+	virtual Trial *nextTrial(std::ostream &output) = 0;
 };
 
 #endif // INC_EXPERIMENT_H

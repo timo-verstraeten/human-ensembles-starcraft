@@ -29,12 +29,13 @@ public:
 
 	std::string getExperimentName();
 	unsigned int getNumTrials();
+	long getRandomSeed();
 
 	std::string getOutputPath();
 	bool getEnableLogging();
 	bool getSaveWeights();
-
 	bool getShowDebug();
+
 private:
 	INIReader m_reader;
 };
