@@ -33,6 +33,8 @@ std::vector<Key> createKeyVector()
 
 const std::string SeminarAIModule::CONFIG_FILE_NAME = "config.ini";
 const std::vector<BWAPI::Key> SeminarAIModule::INPUT_KEYS = createKeyVector();
+const int SeminarAIModule::HUMAN_BASE_SPEED = 40;
+const BWAPI::Key SeminarAIModule::HUMAN_SPEED_ACCELERATION_KEY = BWAPI::K_F12;
 
 SeminarAIModule::SeminarAIModule()
 	: m_config(CONFIG_FILE_NAME), m_experiment(0), m_trial(0)
@@ -69,7 +71,7 @@ void SeminarAIModule::onFrame()
 {
 	if (m_experiment && m_trial) {
 		const std::vector<bool*> &humanAdvice = m_trial->humanAdvice();
-		Broodwar->setLocalSpeed(humanAdvice.size() > 0 ? -1 : 0);
+		Broodwar->setLocalSpeed(humanAdvice.size() > 0 ? (Broodwar->getKeyState(HUMAN_SPEED_ACCELERATION_KEY) ? HUMAN_BASE_SPEED / 3 : HUMAN_BASE_SPEED) : 0);
 		updateHumanAdvice(humanAdvice);
 	}
 	

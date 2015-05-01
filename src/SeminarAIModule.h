@@ -63,6 +63,8 @@ private:
 
 	static const std::string CONFIG_FILE_NAME;
 	static const std::vector<BWAPI::Key> INPUT_KEYS;
+	static const int HUMAN_BASE_SPEED;
+	static const BWAPI::Key HUMAN_SPEED_ACCELERATION_KEY;
 };
 
 #endif // INC_SEMINAR_AI_MODULE_H
