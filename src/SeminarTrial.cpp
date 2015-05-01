@@ -80,7 +80,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	Action action;
 	if (m_step > CUTOFF_EPISODE_LIMIT) {
 		output << "Cutoff episode: Trying to die" << std::endl;
-		action = MOVE_TOWARDS_ENEMY;
+		action = ATTACK; // MOVE_TOWARDS_ENEMY would be better when this action is enabled.
 	}
 	else if (m_step == 0) {
 		action = m_agent->startEpisode(state, output);

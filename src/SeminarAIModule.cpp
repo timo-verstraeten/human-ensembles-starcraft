@@ -186,11 +186,11 @@ void SeminarAIModule::executeAction(Action action)
 			ownUnit->attack(enemyUnit->getPosition());
 		}
 		break;
-	case MOVE_TOWARDS_ENEMY:
-		if (enemyUnit->isVisible()) {
-			ownUnit->move(enemyUnit->getPosition());
-		}
-		break;
+//	case MOVE_TOWARDS_ENEMY:
+//		if (enemyUnit->isVisible()) {
+//			ownUnit->move(enemyUnit->getPosition());
+//		}
+//		break;
 	case MOVE_SOUTH:
 		ownUnit->move(Position(ownUnit->getPosition().x(), ownUnit->getPosition().y() + 30));
 		break;

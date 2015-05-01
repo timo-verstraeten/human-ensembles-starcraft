@@ -9,7 +9,7 @@ enum Action
 {
 	STOP = 0, // Start counting from 0, to be able to loop!
 	ATTACK,
-	MOVE_TOWARDS_ENEMY,
+	//MOVE_TOWARDS_ENEMY, // Removed due to its ambiguity to other MOVE actions during human feedback. (Also disabled in SeminarAIModule and SeminarTrial)
 	MOVE_SOUTH,
 	MOVE_NORTH,
 	MOVE_EAST,
