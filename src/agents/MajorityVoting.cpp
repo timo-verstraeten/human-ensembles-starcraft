@@ -17,8 +17,14 @@ double MajorityVoting::preferenceValue(const State &state, Action action) const
 {
 	std::stringstream dummy;
 	unsigned int count = 0;
+	
+
 	for (unsigned int i = 0; i < m_agents.size(); ++i) {
-		if (action == m_agents[i]->nextAction(state, dummy)) {
+		QValuesAgent* agent = static_cast<QValuesAgent*>(m_agents[i]);
+
+		Action maxAction = m_policy.selectQAction(agent->functionApproximator(), dummy);
+
+		if (action == maxAction) {
 			++count;
 		}
 	}

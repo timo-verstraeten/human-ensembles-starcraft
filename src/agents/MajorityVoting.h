@@ -19,6 +19,8 @@ public:
 
 private:
 	virtual double preferenceValue(const State &state, Action action) const;
+	
+	GreedyPolicy m_policy;
 };
 
 #endif // INC_MAJORITY_VOTING_H
