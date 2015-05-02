@@ -6,4 +6,5 @@
 
 # Info
 - Keys for human advice: `A P V U X L`
+- Fast forward when giving human advice: `F12`
 - Gamma is hardcoded to 1.0

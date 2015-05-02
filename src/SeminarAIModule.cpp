@@ -121,8 +121,13 @@ void SeminarAIModule::onUnitDestroy(Unit *unit)
 		}
 
 		std::string outputString = output.str();
-		if (outputString.length() > 0 && m_config.getShowDebug()) {
-			Broodwar->printf("%s", outputString.c_str());
+		if (outputString.length() > 0) {
+			if (m_config.getShowDebug()) {
+				Broodwar->printf("%s", outputString.c_str());
+			}
+			if (m_log_file.is_open()) {
+				m_log_file << outputString << std::endl;
+			}
 		}
 	}
 }
