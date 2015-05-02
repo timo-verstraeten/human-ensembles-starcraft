@@ -31,7 +31,7 @@ Action GreedyPolicy::selectAction(const std::vector<double>& preferenceValues, s
 		}
 		else if (preferenceValues[i] == maxValue) {
 			++ties;
-			if (randomInt(ties + 1)) {
+			if (randomInt(ties + 1) == 0) {
 				maxAction = action;
 				maxValue = preferenceValues[i];
 			}
