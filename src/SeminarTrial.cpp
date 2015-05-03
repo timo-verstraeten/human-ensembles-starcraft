@@ -112,7 +112,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	output << "Action: " << action << std::endl;
 	output << "MAL SEMINAR 2014-2015" << std::endl;
 	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
-	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << std::endl;
+	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;
 
 	if (m_trialLogger) {
 		m_trialLogger->writeLine(m_episode, m_step, state, action, m_episodeReward, m_humanAdvice);
