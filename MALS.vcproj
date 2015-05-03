@@ -100,6 +100,38 @@
 		<Filter
 			Name="util"
 			>
+			<File
+				RelativePath=".\src\util\Config.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\Config.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\ErrorLogger.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\ErrorLogger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\tiles2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\tiles2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\TrialLogger.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\util\TrialLogger.h"
+				>
+			</File>
 			<Filter
 				Name="inih"
 				>
@@ -120,40 +152,7 @@
 					>
 				</File>
 			</Filter>
-			<File
-				RelativePath=".\src\util\Config.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\Config.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\ErrorLogger.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\ErrorLogger.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\TrialLogger.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\TrialLogger.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\tiles2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\util\tiles2.h"
-				>
-			</File>
 		</Filter>
-
 		<Filter
 			Name="agents"
 			>
@@ -254,7 +253,6 @@
 				>
 			</File>
 		</Filter>
-
 		<Filter
 			Name="env"
 			>
@@ -271,6 +269,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\env\FunctionApproximator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\env\FunctionApproximator.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\env\State.h"
 				>
 			</File>
@@ -282,18 +288,10 @@
 				RelativePath=".\src\env\StateResolution.h"
 				>
 			</File>
-			<File
-				RelativePath=".\src\env\FunctionApproximator.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\env\FunctionApproximator.h"
-				>
-			</File>
 		</Filter>
-
 		<Filter
-			Name="potentials">
+			Name="potentials"
+			>
 			<File
 				RelativePath=".\src\potentials\HumanAdvicePotential.cpp"
 				>
@@ -312,21 +310,14 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="policies">
+			Name="policies"
+			>
 			<File
 				RelativePath=".\src\policies\EpsilonGreedyPolicy.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\policies\EpsilonGreedyPolicy.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\policies\Policy.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\policies\Policy.h"
 				>
 			</File>
 			<File
@@ -337,9 +328,19 @@
 				RelativePath=".\src\policies\GreedyPolicy.h"
 				>
 			</File>
+			<File
+				RelativePath=".\src\policies\Policy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\policies\Policy.h"
+				>
+			</File>
 		</Filter>
-
-
+		<File
+			RelativePath=".\src\env\Action.cpp"
+			>
+		</File>
 		<File
 			RelativePath=".\src\Dll.cpp"
 			>

@@ -109,7 +109,7 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 		m_episodeReward += STEP_REWARD;
 	}
 
-	output << "Action: " << action << std::endl;
+	output << "Action: " << actionToString(action) << std::endl;
 	output << "MAL SEMINAR 2014-2015" << std::endl;
 	output << "Alpha: " << m_parameters.alpha << ", lambda: " << m_parameters.lambda << std::endl;
 	output << "Trial: " << number() << ", episode: " << m_episode << ", step: " << m_step << ", reward: " << m_episodeReward << " (" << m_killed << " to " << m_died << ")" << std::endl;

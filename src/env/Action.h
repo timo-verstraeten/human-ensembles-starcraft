@@ -2,6 +2,8 @@
 #ifndef INC_ACTION_H
 #define INC_ACTION_H
 
+#include <string>
+
 /**
  * Enumeration of the supported actions.
  */
@@ -16,5 +18,7 @@ enum Action
 	MOVE_WEST,
 	NUMBER_OF_ACTIONS // Final enumeration value to get the number of actions!
 };
+
+std::string actionToString(Action action);
 
 #endif // INC_ACTION_H
