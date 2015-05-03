@@ -101,11 +101,11 @@ Action SeminarTrial::step(const State &state, std::ostream &output)
 	}
 	else {
 		action = m_agent->step(STEP_REWARD, state, output);
-		if (m_humanAdvicePotentials.size() > 0 && m_episode < m_parameters.humanAdviceEpisodes) {
+		//if (m_humanAdvicePotentials.size() > 0 && m_episode < m_parameters.humanAdviceEpisodes) {
 			for (unsigned int i = 0; i < m_humanAdvicePotentials.size(); ++i) {
 				m_humanAdvicePotentials[i]->step(state, action);
 			}
-		}
+		//}
 		m_episodeReward += STEP_REWARD;
 	}
 

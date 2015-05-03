@@ -37,6 +37,13 @@ void HumanAdvicePotential::step(const State &state, Action action)
 	m_lastQ = m_functionApproximator->computeQ(action);
 
 	m_functionApproximator->decayTraces(m_gamma * m_lambda);
+
+	for (unsigned int j = 0; j < NUMBER_OF_ACTIONS; ++j) { // clear other than F[a]
+		Action a = static_cast<Action>(j);
+		if (a != action) {
+			m_functionApproximator->clearTraces(a);
+		}
+	}
 	m_functionApproximator->updateTraces(action);
 }
 
